@@ -1,0 +1,80 @@
+name: schedule_gen_and_time_management
+description: "A new Flutter project."
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.17
+  flutter_spinkit: ^5.2.1
+  file_picker: ^8.1.7
+  intl: ^0.20.2
+  flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.3
+  cupertino_icons: ^1.0.8
+  flutter_bloc: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_gen_runner: ^5.8.0
+  build_runner: ^2.4.14
+  flutter_lints: ^5.0.0
+
+
+
+flutter:
+  assets:
+   - lib/res/drawables/
+  uses-material-design: true
+
+  fonts:
+    - family: InterBlack 
+      fonts:
+        - asset: lib/res/fonts/Inter-Black.ttf
+    - family: InterBold 
+      fonts:
+        - asset: lib/res/fonts/Inter-Bold.ttf
+    - family: InterExtraBold 
+    
+      fonts:
+        - asset: lib/res/fonts/Inter-ExtraBold.ttf
+    - family: InterExtraLight 
+      fonts:
+        - asset: lib/res/fonts/Inter-ExtraLight.ttf
+    - family: InterLight 
+      fonts:
+        - asset: lib/res/fonts/Inter-Light.ttf
+    - family: InterMedium 
+      fonts:
+        - asset: lib/res/fonts/Inter-Medium.ttf
+    - family: InterRegular 
+      fonts:
+        - asset: lib/res/fonts/Inter-Regular.ttf
+    - family: InterSemiBold 
+      fonts:
+        - asset: lib/res/fonts/Inter-SemiBold.ttf
+    - family: InterThin 
+      fonts:
+        - asset: lib/res/fonts/Inter-Thin.ttf
+
+flutter_native_splash:
+  color: "93b3fb"  # Màu nền
+  image: lib/res/drawables/img_test_splash.png  # Đưa ảnh vào thư mục assets
+  android: true
+  ios: true
+  web: false
+  fullscreen: true
+  android_12:
+    image: lib/res/drawables/img_test_splash.png
+    color: "#93b3fb"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "lib/res/drawables/ic_app.png"
