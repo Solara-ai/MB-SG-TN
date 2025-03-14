@@ -47,3 +47,4 @@ windows/
 
 # Thư mục không cần đẩy lên Git
 .qodo/
+.qodo
