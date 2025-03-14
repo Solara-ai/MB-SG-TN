@@ -1,0 +1,49 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# Thư mục lịch sử không cần đẩy lên Git
+.history
+
+# IntelliJ / Android Studio related
+*.iml
+.idea/
+
+# VS Code (nếu không muốn đẩy lên Git)
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio build artifacts
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# Chỉ giữ lại Android, bỏ macOS, Linux, Windows vì bạn không sử dụng chúng
+linux/
+macos/
+windows/
+
+# Thư mục không cần đẩy lên Git
+.qodo/
