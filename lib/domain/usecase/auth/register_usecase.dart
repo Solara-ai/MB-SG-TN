@@ -21,6 +21,6 @@ class RegisterUsecase extends ResultUseCase<
       final AuthRepository _authRepository = GetIt.I<AuthRepository>();
       @override
   Future<Result<EmptyData?>> call(({DateTime birthDay, String email, String fullName, String gender, String hobbies, String occupation, String password, String phone}) input) {
-      return _authRepository.registerUser(RegisterUserRequest(fullName: input.fullName, email: input.email, phone: input .phone, gender: input.gender, hobbies: input.hobbies, occupation: input.occupation, dateOfBirthd: input.birthDay.formatToString(DateFormatType.ddMMyyyy.pattern), password: input.password));
+      return _authRepository.registerUser(RegisterUserRequest(fullName: input.fullName, email: input.email, phone: input .phone, gender: input.gender, hobbies: input.hobbies, occupation: input.occupation, dateOfBirthd: input.birthDay.formatToString(DateFormatType.yyyyMMdd.pattern), password: input.password));
   }
     }

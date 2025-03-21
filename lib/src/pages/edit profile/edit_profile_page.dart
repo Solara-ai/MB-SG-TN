@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/edit%20profile/male_user.dart';
+import 'package:schedule_gen_and_time_management/src/pages/register/model/gender.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_form.dart';

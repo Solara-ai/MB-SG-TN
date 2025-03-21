@@ -1,8 +1,8 @@
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/drop_down_form_field.dart';
 
 enum MaleUser implements DropDownFormFieldItem {
-    MALE ('Male'),
-    FEMALE ('Female');
+    MALE ('MALE'),
+    FEMALE ('FEMALE');
 
     final String gender; 
     const MaleUser (this.gender);
