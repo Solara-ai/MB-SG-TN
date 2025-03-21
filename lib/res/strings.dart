@@ -3,20 +3,28 @@ class Strings {
   final String yes = 'Yes';
   final String no = 'No';
   final String add = 'Add';
+  final String open = 'Open';
+  final String gender = 'Gender';
   final String login = 'Login';
   final String edit_task = 'Edit task';
   final String edit_epic = 'Edit epic';
   final String sign_up = 'Sign Up';
+  final String hobbies = 'Hobbies';
+  final String enter_your_hobbies = 'Enter your hobbies';
   final String forgot_password = 'Forgot password ?';
   final String forgot_password2 = 'Forgot password ';
   final String welcome_login = 'Welcome Login';
   final String email = 'Email';
+  final String interest = 'Hobbies'; 
+  final String occupation = 'Ocupation';
+  final String enter_your_ocupation ='Enter your occupation';
   final String profile = 'Profile';
   final String password = 'Password';
   final String description_of_task = 'Description of task';
   final String dont_have_an_account = 'Don’t have an account? ';
   final String create_account = 'Create Account';
   final String full_name = 'Full name';
+  final String Passwords_must_match = 'Passwords must match';
   final String mobile_number = 'Mobile number';
   final String date_of_birth = 'Date of birth';
   final String confirm_password = 'Confirm password';
@@ -57,7 +65,7 @@ class Strings {
   final String type_name_of_epic = 'Type name of epic';
   final String description = 'Description';
   final String type_name = 'Type name';
-  final String gender = 'Gender';
+  final String gender_user = 'Gender of the user';
   final String edit_profile = 'Edit profile';
   final String about_you = 'About you';
   final String more_about_you = 'More about you';
@@ -77,8 +85,12 @@ class Strings {
   final String are_you_sure_deleted_this_epic = 'Are you sure deleted this epic';
   final String are_you_sure_deleted_this_task = 'Are you sure deleted this task';
   final String create_new_plan = 'Crete new plan';
-  final String choice_tasks = 'Choice tasks';
+  final String create_account_success ='Create acoount successfull';
+  final String choose_tasks = 'Choose tasks';
+  final String choose_epic = 'Choose epic';
   final String fedd_back = 'Fedd back';
+  final String about_application = 'About application';
+  final String help = 'Help';
   final String push_notification = 'Push notification';
   final String dark_mode = 'Dark mode';
   final String language = 'Languege';
@@ -89,6 +101,8 @@ class Strings {
   final String name_of_task = 'Name of task ';
   final String name_of_epic = 'Name of epic';
   final String select_type_name_epic = 'Select the type name of epic';
+  final String select_the_tasks = 'Select the tasks';
+  final String select_task = 'Select task';
   final String send = 'Send';
   final String write_description_here = 'Write description here...';
   final String good_afternoon = 'Good afternoon, ';
@@ -104,6 +118,7 @@ class Strings {
   final String error_internet_server_error = 'Internal server error';
   final String error_service_unavailable = 'Service unavailable';
   final String error_unauthorized_request = 'Unauthorized request';
+  final String error_username_or_password = 'Incorrect email or password';
   final String example_email = 'example@example.com';
   final String description_forgot_password =
       'To recover your password, please enter the email you used to log in and fill it in below, then click "Next Step" to proceed with the password recovery.';
@@ -119,6 +134,7 @@ class Strings {
   final String validatePassword = 'Password is required';
   final String errorFormatPassword = 'The password must contain at least 8 characters.';
   final String errorFormatEmail = 'Please enter correct email format eg: exemple@exemple.com';
+  final String image_picked_invalid = 'File format is not supported. Please use PNG, JPG, JPEG, HEIC to continue';
   final String password_change_success = 'Password Has been Changed successfully';
   final String please_enter_your_feddback = ' Please enter your feed back';
   final String type_your_message_here = 'Type your message here.';
@@ -126,5 +142,14 @@ class Strings {
   final String no_event_here = 'There are no event here';
   final String no_task_here = 'There are no tasks here';
   final String please_enter_otp = 'Please enter the otp code';
+  final String choose_from_camera = 'Choose from camera';
+  final String choose_from_library = 'Chose from library';
   String timeStart_timeEnd(String timeStart, String timeEnd) => '$timeStart - $timeEnd';
+  // permision
+  final String permision_camera_title = 'Camera';
+  final String permision_photo_title = 'Photos';
+  final String permision_camera_desscription = 'take photo';
+  final String permision_photos_desscription = 'pick images';
+  String permission_not_granted_title ({required String arg1}) => 'Permission Not Granted $arg1'; 
+  String permission_not_granted_description ({required String permisionName , required String permissionDetail}) => 'Please open Settings and grant $permisionName access to $permissionDetail ';
 }

@@ -30,9 +30,13 @@ class NetworkExceptions {
 
   // Pthuc được tạo để nhận vào response và trả về instance của class ResponseErrorException
   static NetworkExceptions parseErrorResponse(ApiResponse response) {
-    final serverErrorCode = response.code ?? '';
-    final serverErrorMessage = response.message ?? '';
+    final serverErrorCode = response.resultCode ?? '';
+    final serverErrorMessage = response.resultMsg ?? '';
     return NetworkExceptions.responseError(serverErrorCode, serverErrorMessage);
+  }
+
+  static NetworkExceptions parseResoinseError (ApiResponse response) {
+    return NetworkExceptions(errorMessage: response.resultMsg ?? '');
   }
 
   NetworkExceptions copy() {
@@ -40,6 +44,7 @@ class NetworkExceptions {
         errorCode: errorCode, errorMessage: errorMessage, serverMessage: serverMessage);
   }
 
+  // đoạn này chính là nơi sử dụng chính để bắt lỗi 
    static NetworkExceptions parseException(exception) {
     if (exception is NetworkExceptions) {
       return exception;
@@ -92,7 +97,7 @@ class NetworkHttpException extends NetworkExceptions {
   // Kết hợp và sử dụng đối với HttpStatus để có thể trả về các statusCode thông thường từ trên server trả về . 
   static String _errorMessage(DioException exception) {
     return switch (exception.response?.statusCode) {
-      HttpStatus.unauthorized => R.strings.error_unauthorized_request,
+      HttpStatus.unauthorized => R.strings.error_username_or_password,
       HttpStatus.internalServerError => R.strings.error_internet_server_error,
       HttpStatus.serviceUnavailable => R.strings.error_service_unavailable,
       HttpStatus.requestTimeout => R.strings.error_service_unavailable,
