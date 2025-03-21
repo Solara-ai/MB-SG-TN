@@ -13,8 +13,37 @@ class _MainPageState extends BaseState<MainPage> {
   Widget build(BuildContext context) {
     return  Scaffold(
        backgroundColor: R.color.white,
-      //  body: ,
+      body : Drawer(
+        child: ListView(
+          children: [
+            // DrawerHeader(child: )
+          ],
+        ),
+      )
     );
   }
 
+  
+  
+  // Widget buildItemTitle (Widget icon , String title , ) {
+  //   return ListTile(
+      
+  //   )
+  // }
+
+  // Widget buildHeader () {
+  //   return 
+  // }
+
+  // Widget _buildDrawerHe
+}
+
+enum PageItem {
+    Home, 
+    Taskmanage,
+    Schedule, 
+    PlanTodo,
+    Settings, 
+    Logout,
+    
 }
