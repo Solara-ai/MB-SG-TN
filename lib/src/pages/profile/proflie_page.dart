@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/edit%20profile/edit_profile_page.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 
 class ProfliePage extends BasePage {
@@ -15,6 +17,7 @@ class _ProfilePageState extends BaseState<ProfliePage> {
     return Scaffold(
       appBar: appBar(R.strings.profile, action: [
         GestureDetector(
+          onTap: ()=> NavigatorUltils.navigatePage(context, EditProfilePage()),
           child: Container(
             padding: EdgeInsets.only(right: 20),
             child: Text(
@@ -38,7 +41,7 @@ class _ProfilePageState extends BaseState<ProfliePage> {
               width: 100,
               height: 110,
               decoration: BoxDecoration(
-                border: Border.all(color: R.color.bfbfbf),
+                border: Border.all(color: R.color.colorBorder),
                 shape: BoxShape.circle,
                 image: DecorationImage(image: AssetImage(R.drawables.user) , fit: BoxFit.cover)
               ),
@@ -86,7 +89,7 @@ class _ProfilePageState extends BaseState<ProfliePage> {
         Container(
           width: double.infinity,
           height: 1,
-          color: R.color.bfbfbf,
+          color: R.color.colorBorder,
         ),
         SizedBox(height: 30),
         _buildInformationUser()

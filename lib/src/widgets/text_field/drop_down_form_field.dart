@@ -12,14 +12,16 @@ import 'package:schedule_gen_and_time_management/src/widgets/bottom%20sheet/comm
 
 import 'common_text_field.dart';
 import 'form_field_wrapper.dart';
-// thể hiện cho mỗi một item nằm bên trong DropDownFormFiled 
+
+// thể hiện cho mỗi một item nằm bên trong DropDownFormFiled
 abstract class DropDownFormFieldItem {
   final String value;
   final String displayValue;
 
   DropDownFormFieldItem({required this.value, required this.displayValue});
 }
-// DropDownFormFieldBottomSheet chính là nơi để build ra dropDownFormFiled thông qua CommonBottomSheet 
+
+// DropDownFormFieldBottomSheet chính là nơi để build ra dropDownFormFiled thông qua CommonBottomSheet
 class DropDownFormFieldBottomSheet extends StatelessWidget {
   const DropDownFormFieldBottomSheet({
     required DropDownFormFieldItem? selectedItem,
@@ -60,7 +62,8 @@ class DropDownFormFieldBottomSheet extends StatelessWidget {
     );
   }
 }
-// thể hiện cho 1 item trong dropDownFormFiled 
+
+// thể hiện cho 1 item trong dropDownFormFiled
 class DropdownOptionListTile extends StatelessWidget {
   const DropdownOptionListTile({
     required this.item,
@@ -162,8 +165,7 @@ class DropdownFormField<T extends DropDownFormFieldItem> extends FormField<T?> {
           validator: (item) {
             String? result;
             if (isRequired) {
-              result = ValidatorUltils.requiredFileValidator(item?.value,
-                 fileLabel : label ?? '');
+              result = ValidatorUltils.requiredFileValidator(item?.value, fileLabel: label ?? '');
               if (result != null) {
                 return result;
               }
@@ -181,9 +183,8 @@ class DropdownFormField<T extends DropDownFormFieldItem> extends FormField<T?> {
             final defaultRequiredLabel = Text.rich(
               style: labelStyle,
               TextSpan(
-                text: label,
-                style: R.textStyle.inter_regular_16_400.copyWith(color: R.color.text)
-              ),
+                  text: label,
+                  style: R.textStyle.inter_regular_16_400.copyWith(color: R.color.text)),
             );
 
             return FormFieldWrapper(
@@ -264,7 +265,8 @@ class DropdownFormField<T extends DropDownFormFieldItem> extends FormField<T?> {
                 labelStyle: labelStyle,
                 labelBuilder: labelBuilder ?? (isRequired ? defaultRequiredLabel : null),
                 hintText: hintText,
-                hintStyle: hintStyle,
+                hintStyle: hintStyle ??
+                    R.textStyle.inter_regular_16_400.copyWith(color: R.color.hint_text),
                 isRequired: isRequired,
                 prefixIcon: prefixIcon,
                 prefixIconConstraints: prefixIconConstraints,
@@ -403,7 +405,7 @@ class DropDownController<T extends DropDownFormFieldItem> extends ValueNotifier<
         super(initialItem);
 
   final T? initialItem;
-  List<T> itemList ;
+  List<T> itemList;
 
   void refresh() {
     notifyListeners();

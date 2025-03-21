@@ -1,5 +1,13 @@
+part of '../service_locator.dart';
 
-Future <void> _configurePreferencesDependencies  () async {
+    // đây là nơi khai báo SharedPreference . 
+Future<void> _configurePreferencesDependencies() async {
+  // App Preferences
+  (await SharedPreferences.getInstance()).let((sharedPreferences) {
+    final preferences = Preferences(sharedPreferences);
+    GetIt.instance.registerSingleton<AppPreferences>(AppPreferencesImpl(preferences));
+  });
 
-    // Session Usecase: AppClient depends on this, so we have to register here
+  // Session Usecase: AppClient depends on this, so we have to register here
+  GetIt.instance.registerFactory(() => SessionUsecase());
 }
