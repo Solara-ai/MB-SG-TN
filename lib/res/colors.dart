@@ -27,6 +27,9 @@ class Colors {
   Color get F3F4F6 => const Color(0xFFF3F4F6);
   Color get colorBgContainer => const Color(0xFFFFFFFF);
   Color get colorBgContainerDisabled => const Color(0x0A000000);
+  Color get placeholder => const Color(0xFFB9B9B9);
+  Color get colorFillContent => const Color(0x0F000000);
+  Color get gray_black => const Color(0xFF212225);
   // TEXT
   Color get text => const Color(0xFF0D0E0F);
   Color get textStatusDone => const Color(0xFF795CD0);
@@ -46,7 +49,10 @@ class Colors {
   Color get D3BDFF => const Color(0xFFD3BDFF);
   Color get textDescriptionItem => const Color (0xFFA0A3B2);
   Color get textDescriptionFeddBack => const Color (0xFF595959);
-  Color get bfbfbf => const Color(0xFFbfbfbf);
+  Color get hint_text => const Color(0xFFbfbfbf);
+  Color get colorBorder => const Color (0xFFd9d9d9);
+  Color get e9f1ff => const Color (0xFFe9f1ff);
+  Color get bgContainer => const Color(0xFFF2F2F2);
   // tab
   Color get selectTabItem => const Color(0XFF7F3DFF);
   Color get unselectedTab => const Color(0xFFEEE5FF);

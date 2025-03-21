@@ -4,11 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/forgot%20password/forgot_password_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/login/login_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/register/register_page.dart';
-import 'package:schedule_gen_and_time_management/src/utils/extensions/string_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
+import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/utils/validator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/appbar/back_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
@@ -35,11 +37,22 @@ class _LoginPageState extends BaseState<LoginPage> {
 
   @override
   void dispose() {
+     _bloc.close();
     super.dispose();
   }
 
   void _setupBloc() {
     _bloc = LoginBloc();
+    _bloc.listenAction(cancelSubOnDispose, (action) {
+        switch (action) {
+          case ActionShowError():
+            ToastUtils.showErrorToast(context, message: action.error);
+          case ActionLoginSuccessFull():
+            final authen = BlocProvider.of<AuthBloc>(context);
+          authen.add(EventRefreshSession());
+            NavigatorUltils.pushAndRemoveUntilPage(context, HomePage());
+        }
+    });
   }
 
   final _formkey = GlobalKey<FormState>();
@@ -94,7 +107,9 @@ class _LoginPageState extends BaseState<LoginPage> {
               label: R.strings.email,
               isRequired: true,
               hintText: R.strings.example_email,
-              onSaved: (newValue) {},
+              onSaved: (newValue) {
+                _bloc.add(EventEmailSubmited(email: newValue));
+              },
             ),
             SizedBox(height: 20),
             CommonTextFormField(
@@ -125,7 +140,9 @@ class _LoginPageState extends BaseState<LoginPage> {
               label: R.strings.password,
               isRequired: true,
               hintText: R.strings.enter_your_password,
-              onSaved: (newvalue) {},
+              onSaved: (newvalue) {
+                _bloc.add(EventPasswordSubmited(password: newvalue));
+              },
             ),
             SizedBox(height: 52),
             ButtonWithIconWidget(
@@ -183,6 +200,7 @@ class _LoginPageState extends BaseState<LoginPage> {
   void _onLogin() {
     if (_formkey.currentState?.validate() ?? false) {
       _formkey.currentState?.save();
+      _bloc.add(EventHandleLogin());
     }
   }
 }

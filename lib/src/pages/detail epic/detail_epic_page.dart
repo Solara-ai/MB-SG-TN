@@ -76,8 +76,8 @@ class _DetailEpicPageState extends BaseState<DetailEpicPage> {
               style: R.textStyle.inter_semibold_14_600.copyWith(color: R.color.text)) ,
           SizedBox(height: 15,),
           Expanded(child: 
-          // ListView.separated(itemBuilder: (context , index)=>_buildItemTask(listTask[index]), separatorBuilder: (_,  __) =>SizedBox(height: 10,), itemCount: listTask.length , shrinkWrap: true,)
-          EmptyListView(description: R.strings.no_task_here,)
+          ListView.separated(itemBuilder: (context , index)=>_buildItemTask(listTask[index]), separatorBuilder: (_,  __) =>SizedBox(height: 10,), itemCount: listTask.length , shrinkWrap: true,)
+          // EmptyListView(description: R.strings.no_task_here,)
           )
         ],
       ),

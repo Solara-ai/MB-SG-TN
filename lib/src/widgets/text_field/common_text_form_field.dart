@@ -160,7 +160,7 @@ class CommonTextFormField extends FormField<String> {
                     cursorWidth: cursorWidth,
                     cursorHeight: cursorHeight,
                     cursorRadius: cursorRadius,
-                    borderRadius: borderRadius,
+                    borderRadius: borderRadius ?? BorderRadius.circular(10),
                     cursorColor: cursorColor ?? R.color.black,
                     scrollPadding: scrollPadding,
                     scrollPhysics: scrollPhysics,
