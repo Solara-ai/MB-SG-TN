@@ -68,7 +68,7 @@ class RegisterBloc extends BaseBloc<PageAction , PageEvent , PageState> {
      emit(state.copyWith(showloading:  true));
      final result = await _registerUseCase.call((birthDay:  state.dateOfBirthd , email:  state.email , fullName: state.fullName , gender: state.gender , hobbies: state.hobbies , occupation: state.occupation , password: state.conFirmPassword , phone: state.phoneNumber));
 
-    result.when(success: (data) {
+    await result.when(success: (data) {
       addAction(SignUpSuccess());
     }, failure: (error) {
       addAction(SignUpFailed(errorMessage: error.errorMessage));
