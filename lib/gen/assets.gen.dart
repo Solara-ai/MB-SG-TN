@@ -26,6 +26,9 @@ class $LibResGen {
 class $LibResDrawablesGen {
   const $LibResDrawablesGen();
 
+  /// File path: lib/res/drawables/Arrow_right.svg
+  String get arrowRight => 'lib/res/drawables/Arrow_right.svg';
+
   /// File path: lib/res/drawables/check_circle.png
   AssetGenImage get checkCircle =>
       const AssetGenImage('lib/res/drawables/check_circle.png');
@@ -36,6 +39,9 @@ class $LibResDrawablesGen {
 
   /// File path: lib/res/drawables/ic_add.svg
   String get icAdd => 'lib/res/drawables/ic_add.svg';
+
+  /// File path: lib/res/drawables/ic_add_2.svg
+  String get icAdd2 => 'lib/res/drawables/ic_add_2.svg';
 
   /// File path: lib/res/drawables/ic_add_epic.svg
   String get icAddEpic => 'lib/res/drawables/ic_add_epic.svg';
@@ -62,14 +68,30 @@ class $LibResDrawablesGen {
   /// File path: lib/res/drawables/ic_check.svg
   String get icCheck => 'lib/res/drawables/ic_check.svg';
 
+  /// File path: lib/res/drawables/ic_checkbox_selected.svg
+  String get icCheckboxSelected => 'lib/res/drawables/ic_checkbox_selected.svg';
+
+  /// File path: lib/res/drawables/ic_checkbox_un_select.svg
+  String get icCheckboxUnSelect =>
+      'lib/res/drawables/ic_checkbox_un_select.svg';
+
+  /// File path: lib/res/drawables/ic_choose_image.svg
+  String get icChooseImage => 'lib/res/drawables/ic_choose_image.svg';
+
   /// File path: lib/res/drawables/ic_close.svg
   String get icClose => 'lib/res/drawables/ic_close.svg';
+
+  /// File path: lib/res/drawables/ic_close2.svg
+  String get icClose2 => 'lib/res/drawables/ic_close2.svg';
 
   /// File path: lib/res/drawables/ic_delete.svg
   String get icDelete => 'lib/res/drawables/ic_delete.svg';
 
   /// File path: lib/res/drawables/ic_edit.svg
   String get icEdit => 'lib/res/drawables/ic_edit.svg';
+
+  /// File path: lib/res/drawables/ic_edit_2.svg
+  String get icEdit2 => 'lib/res/drawables/ic_edit_2.svg';
 
   /// File path: lib/res/drawables/ic_empty_img_simple.svg
   String get icEmptyImgSimple => 'lib/res/drawables/ic_empty_img_simple.svg';
@@ -125,6 +147,10 @@ class $LibResDrawablesGen {
   /// File path: lib/res/drawables/ic_work.svg
   String get icWork => 'lib/res/drawables/ic_work.svg';
 
+  /// File path: lib/res/drawables/image_user_empty.png
+  AssetGenImage get imageUserEmpty =>
+      const AssetGenImage('lib/res/drawables/image_user_empty.png');
+
   /// File path: lib/res/drawables/img_evening.png
   AssetGenImage get imgEvening =>
       const AssetGenImage('lib/res/drawables/img_evening.png');
@@ -153,11 +179,16 @@ class $LibResDrawablesGen {
   AssetGenImage get imgTestSplash =>
       const AssetGenImage('lib/res/drawables/img_test_splash.png');
 
+  /// File path: lib/res/drawables/user.png
+  AssetGenImage get user => const AssetGenImage('lib/res/drawables/user.png');
+
   /// List of all assets
   List<dynamic> get values => [
+        arrowRight,
         checkCircle,
         emptyImg,
         icAdd,
+        icAdd2,
         icAddEpic,
         icAddPlan,
         icAddTask,
@@ -166,9 +197,14 @@ class $LibResDrawablesGen {
         icArrowDownMore,
         icArrowLeft,
         icCheck,
+        icCheckboxSelected,
+        icCheckboxUnSelect,
+        icChooseImage,
         icClose,
+        icClose2,
         icDelete,
         icEdit,
+        icEdit2,
         icEmptyImgSimple,
         icExpanMore,
         icGoalComplete,
@@ -187,13 +223,15 @@ class $LibResDrawablesGen {
         icTaskComplete,
         icTaskManage,
         icWork,
+        imageUserEmpty,
         imgEvening,
         imgLogoApp,
         imgLogoLogin,
         imgMorning,
         imgSplash,
         imgTask,
-        imgTestSplash
+        imgTestSplash,
+        user
       ];
 }
 

@@ -1,33 +1,37 @@
-// class SessionUsecase {
-//   // final AppPreferences _appPreferences = GetIt.I<AppPreferences>();
+import 'package:get_it/get_it.dart';
+import 'package:schedule_gen_and_time_management/domain/repository/app_preferences.dart';
+import 'package:schedule_gen_and_time_management/src/utils/extensions/string_extension.dart';
 
-//   bool get isLoggedIn => !authToken.isNullOrEmpty();
+class SessionUsecase {
+  final AppPreferences _appPreferences = GetIt.I<AppPreferences>();
 
-//   String? get authToken => _appPreferences.authToken;
-//   String? get refreshToken => _appPreferences.refreshToken;
-//   UserProfile? get userProfile => _appPreferences.userProfile?.let((it) => UserProfile.fromDto(it));
+  bool get isLoggedIn => !authToken.isNullOrEmpty();
 
-//   Future<void> saveToken(String authToken, String refreshToken) async {
-//     await [
-//       _appPreferences.setAuthToken(authToken),
-//       _appPreferences.setRefreshToken(refreshToken),
-//     ].wait;
-//   }
+  String? get authToken => _appPreferences.authToken;
+  String? get refreshToken => _appPreferences.refreshToken;
+  // UserProfile? get userProfile => _appPreferences.userProfile?.let((it) => UserProfile.fromDto(it));
 
-//   Future<bool> saveUserProfile(UserProfile userProfile) {
-//     return _appPreferences.setUserProfile(UserProfileDto.map(userProfile));
-//   }
+  Future<void> saveToken(String authToken, String refreshToken) async {
+    await [
+      _appPreferences.setAuthToken(authToken),
+      _appPreferences.setRefreshToken(refreshToken),
+    ].wait;
+  }
 
-//   PreferencesNotifier listenUserProfileChange(PreferencesNotifierOnChange<UserProfile?> onChange) {
-//     return _appPreferences
-//         .listenUserProfileChange((key, data) => onChange.call(key, data?.let((it) => UserProfile.fromDto(it))));
-//   }
+  // Future<bool> saveUserProfile(UserProfile userProfile) {
+  //   return _appPreferences.setUserProfile(UserProfileDto.map(userProfile));
+  // }
 
-//   Future<void> clearSession() async {
-//     await [
-//       _appPreferences.removeAuthToken(),
-//       _appPreferences.removeRefreshToken(),
-//       _appPreferences.removeUserProfile(),
-//     ].wait;
-//   }
-// }
+  // PreferencesNotifier listenUserProfileChange(PreferencesNotifierOnChange<UserProfile?> onChange) {
+  //   return _appPreferences
+  //       .listenUserProfileChange((key, data) => onChange.call(key, data?.let((it) => UserProfile.fromDto(it))));
+  // }
+
+  Future<void> clearSession() async {
+    await [
+      _appPreferences.removeAuthToken(),
+      _appPreferences.removeRefreshToken(),
+      // _appPreferences.removeUserProfile(),
+    ].wait;
+  }
+}

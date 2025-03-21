@@ -1,9 +1,27 @@
 import 'dart:io';
 
+import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/helper/network_extension.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/intercreptor/auth_interceptor.dart';
 import 'package:schedule_gen_and_time_management/src/env/app_env.dart';
+import 'package:schedule_gen_and_time_management/src/utils/scope_ultils.dart';
 
 class AppClient {
+
+   static Dio createAppClient(Alice? alice) {
+    final dio = createDio();
+    dio.interceptors.addAll([
+      AuthInterceptor(),
+    ]);
+    _addNetworkLoggers(dio, alice);
+    return dio;
+  }
+
   static Dio createDio({String? baseURL, String? token}) {
     return Dio(
       BaseOptions(
@@ -18,8 +36,41 @@ class AppClient {
         },
         headers: {
           Headers.contentTypeHeader: Headers.jsonContentType,
-        },
-      ),
+        }
+      ) ..addAuthHeader(token)
+        ..addAdditionalHeader(),
     );
+  }
+
+    //******************************************************************************
+  // Logger
+  //******************************************************************************
+
+  static bool get showNetworkLogs => kDebugMode || AppEnv.config == DevConfig();
+
+  static Alice? get createAliceLogger =>
+      showNetworkLogs ? Alice(showNotification: false, showInspectorOnShake: true) : null;
+
+  static GlobalKey<NavigatorState>? get loggerNavigatorKey =>
+      showNetworkLogs ? GetIt.I.get<Alice>().getNavigatorKey() : null;
+
+  static void setLoggerNavigatorKey(GlobalKey<NavigatorState> key) {
+    if (showNetworkLogs) {
+      GetIt.I.get<Alice>().setNavigatorKey(key);
+    }
+  }
+
+  static void handleNetworkLogs() {
+    if (showNetworkLogs) {
+      GetIt.I<Alice>().showInspector();
+    }
+  }
+
+  static void _addNetworkLoggers(Dio dio, Alice? alice) {
+    alice?.let((alice) {
+      final logger = PrettyDioLogger(requestHeader: true, requestBody: true);
+      dio.interceptors.add(alice.getDioInterceptor());
+      dio.interceptors.add(logger);
+    });
   }
 }

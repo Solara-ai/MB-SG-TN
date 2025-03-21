@@ -3,9 +3,11 @@
 // ignore_for_file: non_constant_identifier_names
 
 class Drawables {
+	String get Arrow_right => "lib/res/drawables/Arrow_right.svg";
 	String get check_circle => "lib/res/drawables/check_circle.png";
 	String get empty_img => "lib/res/drawables/empty_img.png";
 	String get ic_add => "lib/res/drawables/ic_add.svg";
+	String get ic_add_2 => "lib/res/drawables/ic_add_2.svg";
 	String get ic_add_epic => "lib/res/drawables/ic_add_epic.svg";
 	String get ic_add_plan => "lib/res/drawables/ic_add_plan.svg";
 	String get ic_add_task => "lib/res/drawables/ic_add_task.svg";
@@ -14,7 +16,11 @@ class Drawables {
 	String get ic_arrow_down_more => "lib/res/drawables/ic_arrow_down_more.svg";
 	String get ic_arrow_left => "lib/res/drawables/ic_arrow_left.svg";
 	String get ic_check => "lib/res/drawables/ic_check.svg";
+	String get ic_checkbox_selected => "lib/res/drawables/ic_checkbox_selected.svg";
+	String get ic_checkbox_un_select => "lib/res/drawables/ic_checkbox_un_select.svg";
+	String get ic_choose_image => "lib/res/drawables/ic_choose_image.svg";
 	String get ic_close => "lib/res/drawables/ic_close.svg";
+	String get ic_close2 => "lib/res/drawables/ic_close2.svg";
 	String get ic_delete => "lib/res/drawables/ic_delete.svg";
 	String get ic_edit => "lib/res/drawables/ic_edit.svg";
 	String get ic_edit_2 => "lib/res/drawables/ic_edit_2.svg";

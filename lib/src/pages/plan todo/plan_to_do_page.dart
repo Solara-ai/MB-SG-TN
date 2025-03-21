@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/create%20new%20plan/create_new_plan_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
+import 'package:schedule_gen_and_time_management/src/utils/size_config.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/bottom%20sheet/bottom_sheet_widget.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 
 class PlanToDoPage extends BasePage {
@@ -18,18 +23,18 @@ class _PlanTodoPageState extends BaseState<PlanToDoPage> {
       backgroundColor: R.color.white,
       appBar: appBar(R.strings.plan_to_do),
       body: _buildBody(),
+      bottomNavigationBar: _buildButton(),
     );
   }
 
-  Widget _buildBody () {
+  Widget _buildBody() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
-        child: Column(
-          children: [
-            _buildHeader(),
-
-          ],
-        ),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Column(
+        children: [
+          _buildHeader(),
+        ],
+      ),
     );
   }
 
@@ -101,4 +106,15 @@ class _PlanTodoPageState extends BaseState<PlanToDoPage> {
         ),
         margin: EdgeInsets.only(top: 37));
   }
+
+  Widget _buildButton() {
+    return ButtonWithIconWidget(
+      onPressed: () {
+        BottomSheetUtil.show( maxHeight: SizeConfig.screenHeight*0.8 , context, child: CreateNewPlanPage());
+      },
+      title: R.strings.create_new_plan,
+      iconAsset: R.drawables.ic_add_2,
+    );
+  }
+
 }
