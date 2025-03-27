@@ -231,6 +231,7 @@ class CommonTextFormFieldState extends FormFieldState<String> {
   TextEditingController get effectiveController => _textFormField.controller ?? _controller!.value;
   CommonTextFormField get _textFormField => super.widget as CommonTextFormField;
   bool _hasFirstTimeValidate = false;
+  // đây chính là đoạn code được sử dụng để tắt textFormFiled khi nhấp ra ngoài 
   final _focusNode = FocusNode();
 
   @override

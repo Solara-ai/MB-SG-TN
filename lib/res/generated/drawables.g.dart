@@ -43,10 +43,14 @@ class Drawables {
 	String get ic_task_manage => "lib/res/drawables/ic_task_manage.svg";
 	String get ic_work => "lib/res/drawables/ic_work.svg";
 	String get image_user_empty => "lib/res/drawables/image_user_empty.png";
+	String get img_chatbot => "lib/res/drawables/img_chatbot.png";
+	String get img_chatbot_2 => "lib/res/drawables/img_chatbot_2.png";
+	String get img_chatbot_3 => "lib/res/drawables/img_chatbot_3.png";
 	String get img_evening => "lib/res/drawables/img_evening.png";
 	String get img_logo_app => "lib/res/drawables/img_logo_app.png";
 	String get img_logo_login => "lib/res/drawables/img_logo_login.png";
 	String get img_morning => "lib/res/drawables/img_morning.png";
+	String get img_on_board => "lib/res/drawables/img_on_board.png";
 	String get img_splash => "lib/res/drawables/img_splash.png";
 	String get img_task => "lib/res/drawables/img_task.png";
 	String get img_test_splash => "lib/res/drawables/img_test_splash.png";
