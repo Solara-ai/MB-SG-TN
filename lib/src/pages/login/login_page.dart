@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/preferences/show_intro_usecase.dart';
 import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
@@ -8,6 +9,7 @@ import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/forgot%20password/forgot_password_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/login/login_bloc.dart';
+import 'package:schedule_gen_and_time_management/src/pages/onboarding/on_boarding_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/register/register_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
@@ -37,21 +39,26 @@ class _LoginPageState extends BaseState<LoginPage> {
 
   @override
   void dispose() {
-     _bloc.close();
+    _bloc.close();
     super.dispose();
   }
 
   void _setupBloc() {
+    final ShowIntroUsecase showIntroUsecase = ShowIntroUsecase();
     _bloc = LoginBloc();
     _bloc.listenAction(cancelSubOnDispose, (action) {
-        switch (action) {
-          case ActionShowError():
-            ToastUtils.showErrorToast(context, message: action.error);
-          case ActionLoginSuccessFull():
-            final authen = BlocProvider.of<AuthBloc>(context);
-          authen.add(EventRefreshSession());
-            NavigatorUltils.pushAndRemoveUntilPage(context, HomePage());
-        }
+      switch (action) {
+        case ActionShowError():
+          ToastUtils.showErrorToast(context, message: action.error);
+        case ActionLoginSuccessFull():
+         _testCallAuthBloc ();
+          if (showIntroUsecase.showIntro == true) {
+            NavigatorUltils.pushAndRemoveUntilPage(context, OnBoardingPage());
+          }
+          else {
+            NavigatorUltils.pushAndRemoveUntilPage(context , LoginPage());
+          }
+      }
     });
   }
 
@@ -188,7 +195,10 @@ class _LoginPageState extends BaseState<LoginPage> {
     );
   }
 
-
+  void _testCallAuthBloc () {
+      final authen = BlocProvider.of<AuthBloc>(context);
+      authen.add(EventRefreshSession());
+  }
   void _navigatePage(BuildContext context, Widget widget) {
     NavigatorUltils.navigatePage(context, widget);
   }

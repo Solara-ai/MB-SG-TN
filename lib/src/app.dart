@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/auth/session_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/preferences/show_intro_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 // import 'package:schedule_gen_and_time_management/src/pages/add%20task/add_task_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
@@ -10,6 +12,8 @@ import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
 // import 'package:schedule_gen_and_time_management/src/pages/edit%20epic/edit_epic_page.dart';
 // import 'package:schedule_gen_and_time_management/src/pages/fedd%20back/feed_back_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/onboarding/on_boarding_page.dart';
 // import 'package:schedule_gen_and_time_management/src/pages/login/login_page.dart';
 // import 'package:schedule_gen_and_time_management/src/pages/plan%20todo/plan_to_do_page.dart';
 // import 'package:schedule_gen_and_time_management/src/pages/profile/proflie_page.dart';
@@ -45,16 +49,31 @@ class _AppState extends BaseState<App> {
                 data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
                 child: FToastBuilder()(context, child));
           },
-          home: BlocBuilder<AuthBloc , AuthState>(builder: (context , state) => getStartPage(context , state)),
+          home: BlocBuilder<AuthBloc , AuthState>( builder: (context , state) => getStartPage(context , state)),
         ),
       ),
     );
   }
 
    Widget getStartPage(BuildContext context, AuthState authState) {
-    if (!authState.isLoggedIn) {
+    ShowIntroUsecase showIntroUsecase = ShowIntroUsecase();
+    SessionUsecase sessionUsecase = SessionUsecase();
+    if (!sessionUsecase.isLoggedIn) {
       return StartPage();
     }
-    return HomePage();
+    else {
+        if (showIntroUsecase.showIntro == true)
+        {
+          return OnBoardingPage();
+        }
+        else {
+          return HomePage();
+        }
+    }
+    // else {
+    //   // vi du if onboardingpage.isShow => Home , else => Onboarding
+    //   if ()
+    // }
+
   }
 }

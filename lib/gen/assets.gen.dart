@@ -151,6 +151,18 @@ class $LibResDrawablesGen {
   AssetGenImage get imageUserEmpty =>
       const AssetGenImage('lib/res/drawables/image_user_empty.png');
 
+  /// File path: lib/res/drawables/img_chatbot.png
+  AssetGenImage get imgChatbot =>
+      const AssetGenImage('lib/res/drawables/img_chatbot.png');
+
+  /// File path: lib/res/drawables/img_chatbot_2.png
+  AssetGenImage get imgChatbot2 =>
+      const AssetGenImage('lib/res/drawables/img_chatbot_2.png');
+
+  /// File path: lib/res/drawables/img_chatbot_3.png
+  AssetGenImage get imgChatbot3 =>
+      const AssetGenImage('lib/res/drawables/img_chatbot_3.png');
+
   /// File path: lib/res/drawables/img_evening.png
   AssetGenImage get imgEvening =>
       const AssetGenImage('lib/res/drawables/img_evening.png');
@@ -166,6 +178,10 @@ class $LibResDrawablesGen {
   /// File path: lib/res/drawables/img_morning.png
   AssetGenImage get imgMorning =>
       const AssetGenImage('lib/res/drawables/img_morning.png');
+
+  /// File path: lib/res/drawables/img_on_board.png
+  AssetGenImage get imgOnBoard =>
+      const AssetGenImage('lib/res/drawables/img_on_board.png');
 
   /// File path: lib/res/drawables/img_splash.png
   AssetGenImage get imgSplash =>
@@ -224,10 +240,14 @@ class $LibResDrawablesGen {
         icTaskManage,
         icWork,
         imageUserEmpty,
+        imgChatbot,
+        imgChatbot2,
+        imgChatbot3,
         imgEvening,
         imgLogoApp,
         imgLogoLogin,
         imgMorning,
+        imgOnBoard,
         imgSplash,
         imgTask,
         imgTestSplash,

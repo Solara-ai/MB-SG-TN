@@ -15,8 +15,13 @@ class AuthBloc extends BaseBloc<AuthAction , AuthEvent , AuthState> {
 
   Future<void> _refreshSession(EventRefreshSession event, Emitter<AuthState> emit) async {
     final bool isLoggedIn = _sessionUsecase.isLoggedIn;
+    print("Session isLoggedIn before emit: $isLoggedIn"); // In giá trị trước emit
+
     emit(state.copyWith(hasInitialed: true, isLoggedIn: isLoggedIn));
-  }
+
+    await Future.delayed(Duration(milliseconds: 100));
+    print("AuthBloc state after emit: ${state.isLoggedIn}"); // Kiểm tra state sau emit
+}
 
    Future<void> _onLogout(EventLogout event, Emitter<AuthState> emit) async {
     if (!state.isLoggedIn) {

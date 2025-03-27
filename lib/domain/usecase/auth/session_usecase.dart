@@ -9,6 +9,8 @@ class SessionUsecase {
 
   String? get authToken => _appPreferences.authToken;
   String? get refreshToken => _appPreferences.refreshToken;
+  String? get userId => _appPreferences.userId;
+  bool ? get showIntro => _appPreferences.showIntro;
   // UserProfile? get userProfile => _appPreferences.userProfile?.let((it) => UserProfile.fromDto(it));
 
   Future<void> saveToken(String authToken, String refreshToken) async {
@@ -16,6 +18,14 @@ class SessionUsecase {
       _appPreferences.setAuthToken(authToken),
       _appPreferences.setRefreshToken(refreshToken),
     ].wait;
+  }
+
+  Future<void> saveUserId (String userId ) async {
+      await _appPreferences.setUserId(userId);
+  }
+
+  Future<void> saveShowIntro (bool showIntro) async {
+      await _appPreferences.setShowIntro(showIntro);
   }
 
   // Future<bool> saveUserProfile(UserProfile userProfile) {
@@ -31,6 +41,8 @@ class SessionUsecase {
     await [
       _appPreferences.removeAuthToken(),
       _appPreferences.removeRefreshToken(),
+      _appPreferences.removeUserId(),
+      _appPreferences.removeShowIntro()
       // _appPreferences.removeUserProfile(),
     ].wait;
   }

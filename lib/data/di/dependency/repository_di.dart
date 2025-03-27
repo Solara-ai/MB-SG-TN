@@ -11,4 +11,5 @@ Future<void> _configureRepositoryDependencies() async {
   // GetIt.instance.registerSingleton<AssetRepository>(AssetRepositoryImpl());
   // GetIt.instance.registerSingleton<UserRepository>(UserRepositoryImpl(_appApi));
   GetIt.instance.registerSingleton<AuthRepository>(AuthRepositoryImpl(_appApi));
+  GetIt.instance.registerSingleton<UserRepository>(UserRepositoryImpl(_appApi));
 }

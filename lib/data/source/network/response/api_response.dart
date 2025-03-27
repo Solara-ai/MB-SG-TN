@@ -30,4 +30,5 @@ class ApiResponse<T> {
   Map<String, dynamic> toJson(Object Function(T value) toJsonT) => _$ApiResponseToJson(this, toJsonT);
 
   bool get isSuccess => httpStatus == ResponseStatus.STATUS_SUCCESSFUL;
+  bool get isCreated => httpStatus == ResponseStatus.STATUS_CREATE;
 }

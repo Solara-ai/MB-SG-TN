@@ -127,6 +127,14 @@ class TextStyles {
     letterSpacing: 0,
   );
 
+   final TextStyle inter_regular_14_400 = TextStyle(
+    leadingDistribution: TextLeadingDistribution.even,
+    fontFamily: FontFamily.interRegular,
+    fontSize: 14,
+    height: 22 / 14,
+    letterSpacing: 0,
+  );
+
   final TextStyle inter_medium_12_500 = TextStyle(
     leadingDistribution: TextLeadingDistribution.even,
     fontFamily: FontFamily.interMedium,
@@ -148,6 +156,14 @@ class TextStyles {
     fontFamily: FontFamily.interMedium,
     fontSize: 10,
     height: 12 / 10,
+    letterSpacing: 0,
+  );
+
+  final TextStyle inter_regular_10_400 = TextStyle(
+    leadingDistribution: TextLeadingDistribution.even,
+    fontFamily: FontFamily.interRegular,
+    fontSize: 10,
+    height: 14 / 10,
     letterSpacing: 0,
   );
 

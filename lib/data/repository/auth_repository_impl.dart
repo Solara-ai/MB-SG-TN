@@ -18,7 +18,7 @@ class AuthRepositoryImpl extends BaseNetworkRepository implements AuthRepository
   }
 
   @override
-  Future<Result<EmptyData>> registerUser (RegisterUserRequest param) {
+  Future<Result<EmptyData?>> registerUser (RegisterUserRequest param) {
     return execute(_api.registerUser(param));
   }
 }

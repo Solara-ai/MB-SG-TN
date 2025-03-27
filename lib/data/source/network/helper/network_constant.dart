@@ -26,4 +26,5 @@ class ResponseStatus {
   ResponseStatus._();
 
   static const int STATUS_SUCCESSFUL = 200;
+  static const int STATUS_CREATE = 201;
 }

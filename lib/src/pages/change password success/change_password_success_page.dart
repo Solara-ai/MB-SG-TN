@@ -3,7 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/main/main_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 
 class ChangePasswordSuccessPage extends BasePage {
@@ -21,7 +22,7 @@ class _ChangePasswordSuccessState extends BaseState<ChangePasswordSuccessPage> {
 
   void _setup() {
     Future.delayed(const Duration(seconds: 3), () {
-      NavigatorUltils.pushAndRemoveUntilPage(context, MainPage());
+      NavigatorUltils.pushAndRemoveUntilPage(context, HomePage());
     });
   }
 
