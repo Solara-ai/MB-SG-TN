@@ -34,6 +34,7 @@ class LoginBloc extends BaseBloc<PageAction , PageEvent, PageState> {
       final result = await _loginUseCase.call((email: state.email , password: state.password));
       await result.when(success: (data) {
         _sessionUsecase.saveToken(data.token, data.refreshToken);
+        _sessionUsecase.saveUserId(data.userId);
         addAction(ActionLoginSuccessFull());
       }, failure: (error) {
         addAction(ActionShowError(error.errorMessage));

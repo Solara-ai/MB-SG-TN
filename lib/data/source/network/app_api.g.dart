@@ -34,7 +34,7 @@ class _AppApi implements AppApi {
     )
             .compose(
               _dio.options,
-              '/user/auth',
+              '/users/auth',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -51,7 +51,8 @@ class _AppApi implements AppApi {
   }
 
   @override
-  Future<ApiResponse<EmptyData>> registerUser(RegisterUserRequest param) async {
+  Future<ApiResponse<EmptyData?>> registerUser(
+      RegisterUserRequest param) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -65,7 +66,7 @@ class _AppApi implements AppApi {
     )
             .compose(
               _dio.options,
-              '/user/auth/register',
+              '/users/auth/register',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -74,9 +75,103 @@ class _AppApi implements AppApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = ApiResponse<EmptyData>.fromJson(
+    final _value = ApiResponse<EmptyData?>.fromJson(
       _result.data!,
-      (json) => EmptyData.fromJson(json as Map<String, dynamic>),
+      (json) => json == null
+          ? null
+          : EmptyData.fromJson(json as Map<String, dynamic>),
+    );
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<ListMessageUserAiDto>> userChatAi(
+      MessageUserRequest param) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(param.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<ListMessageUserAiDto>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/ai/chat',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ApiResponse<ListMessageUserAiDto>.fromJson(
+      _result.data!,
+      (json) => ListMessageUserAiDto.fromJson(json as Map<String, dynamic>),
+    );
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<HistoryMessageDto>> historyMessage(String user_id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<HistoryMessageDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/ai/chat/history/${user_id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ApiResponse<HistoryMessageDto>.fromJson(
+      _result.data!,
+      (json) => HistoryMessageDto.fromJson(json as Map<String, dynamic>),
+    );
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<UserProfileDto>> getmyProfile() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<UserProfileDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/user/profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ApiResponse<UserProfileDto>.fromJson(
+      _result.data!,
+      (json) => UserProfileDto.fromJson(json as Map<String, dynamic>),
     );
     return _value;
   }

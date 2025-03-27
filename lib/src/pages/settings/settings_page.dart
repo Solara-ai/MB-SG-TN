@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/fedd%20back/feed_back_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 
@@ -16,9 +17,8 @@ class SettingsPage extends BasePage {
 class _SettingsPageState extends BaseState<SettingsPage> {
    @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: R.color.white,
-      appBar: appBar(R.strings.settings),
+    return BaseScaffoldPage(
+      appbar: appBar(R.strings.settings),
       body: _buildBody() ,
     );
   }
