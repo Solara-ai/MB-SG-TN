@@ -15,9 +15,9 @@ class Strings {
   final String forgot_password2 = 'Forgot password ';
   final String welcome_login = 'Welcome Login';
   final String email = 'Email';
-  final String interest = 'Hobbies'; 
+  final String interest = 'Hobbies';
   final String occupation = 'Ocupation';
-  final String enter_your_ocupation ='Enter your occupation';
+  final String enter_your_ocupation = 'Enter your occupation';
   final String profile = 'Profile';
   final String password = 'Password';
   final String description_of_task = 'Description of task';
@@ -45,12 +45,18 @@ class Strings {
   final String schedule = 'Schedule';
   final String next_event = 'Next event';
   final String chat_ai = 'Chat AI';
+  final String chat_with_AI_now = 'Chat with AI now';
+  final String chat_bot_ai = 'Chat bot AI';
+  final String title_onboard = 'Smart AI – Optimize Your Schedule';
+  final String description_onboard =
+      'Manage your time effectively with AI! Automatically organize, sync, and suggest smart schedules to boost your productivity';
+  final String online = '• Online';
   final String edit = 'Edit';
   final String task_manage = 'Task manage';
   final String plan_to_do = 'Plan to do';
   final String settings = 'Settings';
   final String logout = 'Logout';
-  final String status  = 'Status';
+  final String status = 'Status';
   final String there_are_no_event_here = 'There are no event here ';
   final String all = 'All';
   final String work = 'Work';
@@ -85,7 +91,7 @@ class Strings {
   final String are_you_sure_deleted_this_epic = 'Are you sure deleted this epic';
   final String are_you_sure_deleted_this_task = 'Are you sure deleted this task';
   final String create_new_plan = 'Crete new plan';
-  final String create_account_success ='Create acoount successfull';
+  final String create_account_success = 'Create acoount successfull';
   final String choose_tasks = 'Choose tasks';
   final String choose_epic = 'Choose epic';
   final String fedd_back = 'Fedd back';
@@ -104,6 +110,7 @@ class Strings {
   final String select_the_tasks = 'Select the tasks';
   final String select_task = 'Select task';
   final String send = 'Send';
+  final String write_your_message = 'Write your message';
   final String write_description_here = 'Write description here...';
   final String good_afternoon = 'Good afternoon, ';
   final String good_evening = 'Good evening, ';
@@ -134,7 +141,8 @@ class Strings {
   final String validatePassword = 'Password is required';
   final String errorFormatPassword = 'The password must contain at least 8 characters.';
   final String errorFormatEmail = 'Please enter correct email format eg: exemple@exemple.com';
-  final String image_picked_invalid = 'File format is not supported. Please use PNG, JPG, JPEG, HEIC to continue';
+  final String image_picked_invalid =
+      'File format is not supported. Please use PNG, JPG, JPEG, HEIC to continue';
   final String password_change_success = 'Password Has been Changed successfully';
   final String please_enter_your_feddback = ' Please enter your feed back';
   final String type_your_message_here = 'Type your message here.';
@@ -144,12 +152,15 @@ class Strings {
   final String please_enter_otp = 'Please enter the otp code';
   final String choose_from_camera = 'Choose from camera';
   final String choose_from_library = 'Chose from library';
+  final String dot = '•󠁏󠁏󠁯•󠁏󠁏󠁯•󠁏󠁏';
   String timeStart_timeEnd(String timeStart, String timeEnd) => '$timeStart - $timeEnd';
   // permision
   final String permision_camera_title = 'Camera';
   final String permision_photo_title = 'Photos';
   final String permision_camera_desscription = 'take photo';
   final String permision_photos_desscription = 'pick images';
-  String permission_not_granted_title ({required String arg1}) => 'Permission Not Granted $arg1'; 
-  String permission_not_granted_description ({required String permisionName , required String permissionDetail}) => 'Please open Settings and grant $permisionName access to $permissionDetail ';
+  String permission_not_granted_title({required String arg1}) => 'Permission Not Granted $arg1';
+  String permission_not_granted_description(
+          {required String permisionName, required String permissionDetail}) =>
+      'Please open Settings and grant $permisionName access to $permissionDetail ';
 }

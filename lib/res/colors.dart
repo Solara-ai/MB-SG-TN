@@ -30,6 +30,7 @@ class Colors {
   Color get placeholder => const Color(0xFFB9B9B9);
   Color get colorFillContent => const Color(0x0F000000);
   Color get gray_black => const Color(0xFF212225);
+  Color get item_event => const Color(0xFFe3defc);
   // TEXT
   Color get text => const Color(0xFF0D0E0F);
   Color get textStatusDone => const Color(0xFF795CD0);
@@ -53,6 +54,9 @@ class Colors {
   Color get colorBorder => const Color (0xFFd9d9d9);
   Color get e9f1ff => const Color (0xFFe9f1ff);
   Color get bgContainer => const Color(0xFFF2F2F2);
+  Color get bgMessageUser => const Color (0xFF248AFF);
+  Color get bgChatbot => const Color (0xFFf3f3f3);
+  Color get timeEvent => const Color (0xFF707070);
   // tab
   Color get selectTabItem => const Color(0XFF7F3DFF);
   Color get unselectedTab => const Color(0xFFEEE5FF);

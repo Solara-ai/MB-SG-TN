@@ -9,10 +9,12 @@ part of 'auth_token_dto.dart';
 AuthTokenDto _$AuthTokenDtoFromJson(Map<String, dynamic> json) => AuthTokenDto(
       token: json['token'] as String,
       refreshToken: json['refreshToken'] as String,
+      userId: json['userId'] as String,
     );
 
 Map<String, dynamic> _$AuthTokenDtoToJson(AuthTokenDto instance) =>
     <String, dynamic>{
       'token': instance.token,
       'refreshToken': instance.refreshToken,
+      'userId': instance.userId,
     };

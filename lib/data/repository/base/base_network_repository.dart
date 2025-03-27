@@ -17,7 +17,7 @@ abstract class BaseNetworkRepository {
     NetworkExceptions? exception;
     try {
       final response = await apiCall;
-      if (response.isSuccess) {
+      if (response.isSuccess || response.isCreated) {
         return Result.success(data: response.data as T);
       } else {
         exception = NetworkExceptions.parseErrorResponse(response);

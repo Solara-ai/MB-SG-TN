@@ -1,12 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/add%20epic/add_epic_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/add%20task/add_task_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/task_manage_tab_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage/model/task_manage_tab.dart';
+import 'package:schedule_gen_and_time_management/src/utils/extensions/build_context_extension.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/floating_action_button.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 
@@ -34,19 +39,19 @@ class _TaskManagerPageState extends BaseState<TaskManagerPage> with SingleTicker
 
   @override
   void dispose() {
+    _tabController.dispose();
     _subscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: R.color.white,
-      appBar: appBar(
+    return BaseScaffoldPage(
+      appbar: appBar(
         R.strings.task_manage,
         textStyle: R.textStyle.inter_semibold_18_600.copyWith(color: R.color.text),
       ),
-      floatingActionButton: buildFloatingButton(context: context) ,
+      floatingActionButton: buildFloatingButton(context: context, onPressed: showFunction),
       body: Column(
         children: [
           Container(
@@ -64,7 +69,7 @@ class _TaskManagerPageState extends BaseState<TaskManagerPage> with SingleTicker
               indicatorSize: TabBarIndicatorSize.tab, // chiều dài của Indicator
               unselectedLabelStyle:
                   R.textStyle.inter_regular_16_400.copyWith(color: R.color.colorTextLabel),
-              indicatorWeight: 2 , // độ rộng của Indicator
+              indicatorWeight: 2, // độ rộng của Indicator
               controller: _tabController,
               tabs: tab
                   .map((tab) => Tab(
@@ -83,6 +88,53 @@ class _TaskManagerPageState extends BaseState<TaskManagerPage> with SingleTicker
                   children: tab.map((element) => TaskManageTabPage(tab: element)).toList()))
         ],
       ),
+    );
+  }
+
+  void showFunction() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: R.color.app_color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: SvgPicture.asset(R.drawables.ic_add_task),
+              title: Text(
+                R.strings.add_new_task,
+                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                NavigatorUltils.navigatePage(context, AddTaskPage());
+                // Navigator.pop(context);
+              },
+            ),
+            Container(
+              color: R.color.white,
+              height: 1,
+              width: double.infinity,
+            ),
+            ListTile(
+              leading: SvgPicture.asset(R.drawables.ic_add_epic),
+              title: Text(
+                R.strings.add_new_epic,
+                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),
+                
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                NavigatorUltils.navigatePage(context, AddEpicPage());
+                //  Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

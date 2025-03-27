@@ -6,5 +6,5 @@ import 'package:schedule_gen_and_time_management/data/source/network/response/em
 
 abstract class AuthRepository  {
   Future<Result<AuthTokenDto>> loginWithEmail (LoginUserRequest param);
-  Future<Result<EmptyData>> registerUser (RegisterUserRequest param);
+  Future<Result<EmptyData?>> registerUser (RegisterUserRequest param);
 }

@@ -3,7 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/chat_bot/chat_bot_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/action_icon_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/appbar/action_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/header_decoration.dart';
@@ -26,9 +29,9 @@ class _HomePageState extends BaseState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: R.color.white,
-        appBar: actionAppbar(
+    return BaseScaffoldPage(
+        appbar: actionAppbar(
+          colorIcon: R.color.white,
           backGroundColor: R.color.app_color,
           title: R.strings.home,
           textStyle: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.white),
@@ -49,12 +52,12 @@ class _HomePageState extends BaseState<HomePage> {
                 ),
                 builder: (context) {
                   return Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: ListTile(
                       leading: SvgPicture.asset(Assets.lib.res.drawables.icAi),
                       title: Text(R.strings.chat_ai , style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),),
                       onTap: () {
-         
+                        NavigatorUltils.navigatePage(context, ChatBotPage());
                       },
                     ),
                   );
