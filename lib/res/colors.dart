@@ -57,6 +57,7 @@ class Colors {
   Color get bgMessageUser => const Color (0xFF248AFF);
   Color get bgChatbot => const Color (0xFFf3f3f3);
   Color get timeEvent => const Color (0xFF707070);
+  Color get addCategoryColor => const Color (0xFF6D29F6);
   // tab
   Color get selectTabItem => const Color(0XFF7F3DFF);
   Color get unselectedTab => const Color(0xFFEEE5FF);
