@@ -1,18 +1,17 @@
 // import 'package:flutter/material.dart';
 
-
-
-
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
+
 enum DateFormatType {
   ddMM('dd/MM'),
   ddMMyyyy('dd/MM/yyyy'),
   ddSpaceMMMSpaceyyyy('dd MMM yyyy'),
-  yyyyMMdd('yyyy/MM/dd'),
+  yyyyMMdd('yyyy-MM-dd'),
   ddDashYYDashyyyy('dd-MM-yyyy'),
   yyyyDashMMDashdd('yyyy-MM-dd'),
-  EEEEMMMMddyyyy ('EEEE MMMM dd yyyy '),
+  EEEEMMMMddyyyy('EEEE MMMM dd yyyy '),
   ddMMyyyyAthhmma('dd/MM/yyyy \'at\' hh:mm a'),
   MMMSpacedd('MMM dd'),
   MMMSpaceDDCommaYYYY('MMM dd, yyyy'),
@@ -31,9 +30,6 @@ enum DateFormatType {
   const DateFormatType(this.pattern);
 }
 
-
-
-
 extension DateTimeExtension on DateTime {
   String get timeDescription {
     if (hour >= 0 && hour < 12) {
@@ -46,32 +42,57 @@ extension DateTimeExtension on DateTime {
   }
 }
 
+extension TimeOfDayExtensions on TimeOfDay {
+  /// Chuyển `TimeOfDay` thành chuỗi định dạng hh:mm:ss
+  String toFormattedString() {
+    return "${hour.toString().padLeft(2, '0')}:"
+           "${minute.toString().padLeft(2, '0')}:00"; // Giây mặc định 00
+  }
+}
+
+extension StringToTimeOfDay on String {
+  TimeOfDay toTimeOfDay() {
+    final parts = split(':');
+    if (parts.length != 2) {
+      throw FormatException("Invalid time format. Expected HH:mm");
+    }
+    final hour = int.tryParse(parts[0]) ?? 0;
+    final minute = int.tryParse(parts[1]) ?? 0;
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+}
+
+
+extension ParseDate on String {
+  DateTime toDateTime() {
+    return DateTime.parse(this);
+  }
+}
+
 extension DateTimeExt on DateTime {
-  
   // String get languageCode => Localizations.DEFAULT_LANGUAGE.code;
-  // trả về chuỗi định dạng giờ của đối tượng 
+  // trả về chuỗi định dạng giờ của đối tượng
   String get toHM => DateFormat('Hm').format(this);
-  // trả về chuỗi định dạng tháng , ngày , năm 
-  String get toMdY =>DateFormat('dd/MM/yyyy').format(this);
+  // trả về chuỗi định dạng tháng , ngày , năm
+  String get toMdY => DateFormat('dd/MM/yyyy').format(this);
 
   String get dayNumber => DateFormat('dd').format(this);
 
-  String get dayText =>  DateFormat ('EEE').format(this);
+  String get dayText => DateFormat('EEE').format(this);
 
-  String get 
-  toMdYtext => DateFormat(DateFormatType.EEEEMMMMddyyyy.pattern).format(this);
+  String get toMdYtext => DateFormat(DateFormatType.EEEEMMMMddyyyy.pattern).format(this);
 
-  static String convertToString({required String dateString, required DateFormatType dateFormatType}) {
-  final DateTime dateTime = DateTime.parse(dateString).toLocal();
-  final String formattedDate = DateFormat(dateFormatType.pattern).format(dateTime);
-  return formattedDate;
+  static String convertToString(
+      {required String dateString, required DateFormatType dateFormatType}) {
+    final DateTime dateTime = DateTime.parse(dateString).toLocal();
+    final String formattedDate = DateFormat(dateFormatType.pattern).format(dateTime);
+    return formattedDate;
   }
 
   String formatToString(String dateFormatType) {
-  final String formattedDate = DateFormat(dateFormatType).format(toLocal());
-  return formattedDate;
+    final String formattedDate = DateFormat(dateFormatType).format(toLocal());
+    return formattedDate;
   }
-
 }
 
 //   String toRelativeTime() {

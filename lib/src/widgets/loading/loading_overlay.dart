@@ -20,9 +20,16 @@ class LoadingOverlay extends StatelessWidget {
     return Stack(
       children: <Widget>[
         child,
-        if (isLoading) loadingWidget ?? LoadingWidget(canPop: canPop),
+        if (isLoading) ...[
+          // Lớp overlay tối màu
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withOpacity(0.3), // Màu nền tối hơn một chút
+            ),
+          ),
+          loadingWidget ?? LoadingWidget(canPop: canPop),
+        ],
       ],
     );
   }
-
 }

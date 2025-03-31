@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/otp/otp_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/register/register_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/validator_ultils.dart';
@@ -79,7 +78,8 @@ Widget _buildforgotPassword(BuildContext context) {
             ),
           ),
           SizedBox(height: 90),
-          _buildButton(context, OtpPage(), R.strings.next_step),
+          // cần chỉnh sửa lại đoạn này 
+          _buildButton(context, RegisterPage() , R.strings.next_step),
           SizedBox(height: 70),
           _buildButton(context, RegisterPage(), R.strings.sign_up),
           SizedBox(height: 50),

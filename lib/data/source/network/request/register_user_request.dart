@@ -11,7 +11,7 @@ class RegisterUserRequest {
   final String gender;
   final String hobbies;
   final String occupation;
-  final String dateOfBirthd;
+  final String birthday;
   final String password;
 
   RegisterUserRequest({
@@ -21,7 +21,7 @@ class RegisterUserRequest {
     required this.gender,
     required this.hobbies,
     required this.occupation,
-    required this.dateOfBirthd,
+    required this.birthday,
     required this.password,
   });
 

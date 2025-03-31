@@ -144,6 +144,9 @@ class $LibResDrawablesGen {
   /// File path: lib/res/drawables/ic_task_manage.svg
   String get icTaskManage => 'lib/res/drawables/ic_task_manage.svg';
 
+  /// File path: lib/res/drawables/ic_time_cicle.svg
+  String get icTimeCicle => 'lib/res/drawables/ic_time_cicle.svg';
+
   /// File path: lib/res/drawables/ic_work.svg
   String get icWork => 'lib/res/drawables/ic_work.svg';
 
@@ -238,6 +241,7 @@ class $LibResDrawablesGen {
         icTabCalendar,
         icTaskComplete,
         icTaskManage,
+        icTimeCicle,
         icWork,
         imageUserEmpty,
         imgChatbot,

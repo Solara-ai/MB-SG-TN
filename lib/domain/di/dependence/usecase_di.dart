@@ -5,5 +5,13 @@ Future<void> configureUsecaseDependencies() async {
     GetIt.instance.registerFactory(() => RegisterUsecase());
     GetIt.instance.registerFactory(() => HistoryChatUsecase());
     GetIt.instance.registerFactory(() => UserChatUsecase());
-    GetIt.instance.registerCachedFactory(() => GetProfileUsecase());
+    GetIt.instance.registerFactory(() => GetProfileUsecase());
+    GetIt.instance.registerFactory(() => CreateCategoryUsecase());
+    GetIt.instance.registerFactory(() => GetListCategoryUsecase());
+    GetIt.instance.registerFactory(() => CreateScheduleUsecase());
+    GetIt.instance.registerCachedFactory(() => GetListScheduleByDateUsecase());
+    GetIt.instance.registerFactory(() => DeletedScheduleUsecase());
+    GetIt.instance.registerFactory(() =>UpdateScheduleUscase());
+    GetIt.instance.registerFactory(() => GetListScheduleDataUsecase());
+    GetIt.instance.registerFactory(() => GetScheduleByEventidUsecase());
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/edit%20profile/edit_profile_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/profile/profile_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
@@ -33,7 +34,7 @@ class _ProfilePageState extends BaseState<ProfliePage> {
     _bloc = ProfileBloc();
     _bloc.listenAction(cancelSubOnDispose, (action) {
       switch (action) {
-        case ActionNavigateProFilePage() : NavigatorUltils.navigatePage(context, ProfliePage());
+        case ActionNavigateProFilePage() : NavigatorUltils.navigatePage(context, EditProfilePage());
         case ActionGetMyprofileError () : ToastUtils.showErrorToast(context, message: action.message);
       }
     });
