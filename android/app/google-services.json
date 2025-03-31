@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343480193164",
+    "project_id": "sgtm-backend",
+    "storage_bucket": "sgtm-backend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343480193164:android:8bc4d1a7c6dfe21765aba9",
+        "android_client_info": {
+          "package_name": "com.example.schedule_gen_and_time_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs5YraTu-lCo2CjyP0B1NqtlZ8-KXkkfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
