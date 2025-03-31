@@ -90,6 +90,7 @@ class Strings {
   final String search = 'Search';
   final String add_new_task = 'Add new task';
   final String add_new_epic = 'Add new epic';
+  final String add_epic = 'Add epic';
   final String add_task = 'Add task';
   final String epic_name = 'Epic name';
   final String type_name_of_epic = 'Type name of epic';

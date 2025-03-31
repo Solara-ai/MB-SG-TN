@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/add%20epic/add_epic_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/add_epic/add_epic_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add%20task/add_task_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_category/add_category_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';

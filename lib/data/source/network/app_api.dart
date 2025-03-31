@@ -8,6 +8,7 @@ import 'package:schedule_gen_and_time_management/data/dto/list_message_user_ai_d
 import 'package:schedule_gen_and_time_management/data/dto/schedule_data_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/schedules_by_date_dto.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/create_category_request.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/create_epic_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/create_schedules_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/login_user_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/message_user_request.dart';
@@ -66,4 +67,8 @@ abstract class AppApi {
     @Query("year") int year,
     @Query("month") int month,
   );
+
+  @POST('/users/epic') 
+  Future<ApiResponse<EmptyData?>> createEpic (@Body() CreateEpicRequest param);
+  
 }
