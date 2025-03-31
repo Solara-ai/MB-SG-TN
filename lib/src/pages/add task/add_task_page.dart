@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/edit%20epic/model/epic_name.dart';
+import 'package:schedule_gen_and_time_management/src/pages/edit_epic/model/epic_name.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/all_epic.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/list_app_epic.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/appbar/action_appbar.dart';

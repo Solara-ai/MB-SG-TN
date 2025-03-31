@@ -5,7 +5,7 @@ import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/detail%20epic/model/list_task.dart';
 import 'package:schedule_gen_and_time_management/src/pages/detail%20epic/model/task.dart';
-import 'package:schedule_gen_and_time_management/src/pages/edit%20epic/edit_epic_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/edit_epic/edit_epic_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/all_epic.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/study_epic.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/work_epic.dart';

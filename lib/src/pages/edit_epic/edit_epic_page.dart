@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/edit%20epic/model/epic_name.dart';
-import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/all_epic.dart';
-import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/model/list_app_epic.dart';
+import 'package:schedule_gen_and_time_management/src/pages/edit_epic/model/epic_name.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/appbar/action_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/dialogs/common_dialog.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_form.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_text_form_field.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/drop_down_form_field.dart';
 
-class AddEpicPage extends BasePage {
-  const AddEpicPage({super.key});
-  @override 
-  _AddEpicPageState createState() => _AddEpicPageState();
+class EditEpicPage extends BasePage {
+  const EditEpicPage({super.key});
+  @override
+  _EditEpicPageState createState() => _EditEpicPageState();
 }
 
-class _AddEpicPageState extends BaseState<AddEpicPage> {
+class _EditEpicPageState extends BaseState<EditEpicPage> {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: R.color.white,
-      appBar: actionAppbar(backGroundColor: R.color.white, title: R.strings.add_task),
+      appBar: actionAppbar(backGroundColor: R.color.white, title: R.strings.edit_epic, action: [
+        IconButton(
+            onPressed: () => _showDialogsDelete(),
+            icon: SvgPicture.asset(Assets.lib.res.drawables.icDelete))
+      ]),
       body: _buildBody(_formKey),
       bottomNavigationBar: _buildButtonBottom(_formKey),
     );
   }
 
   Widget _buildBody(GlobalKey<FormState> formkey) {
-    DropDownController<EpicName> dropDownController =
-        DropDownController<EpicName>(initialItemList: EpicName.values);
+    DropDownController<TypeEpic> dropDownController =
+        DropDownController<TypeEpic>(initialItemList: TypeEpic.values);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 27),
       child: CommonForm(
@@ -47,8 +52,9 @@ class _AddEpicPageState extends BaseState<AddEpicPage> {
             SizedBox(
               height: 15,
             ),
-            DropdownFormField<EpicName>(
+            DropdownFormField(
               label: R.strings.type_name_of_epic,
+              hintText: R.strings.select_type_name_epic,
               isRequired: true,
               controller: dropDownController,
             ),
@@ -69,16 +75,42 @@ class _AddEpicPageState extends BaseState<AddEpicPage> {
     );
   }
 
-   Widget _buildButtonBottom(GlobalKey<FormState> formkey) {
+  Future<void> _showDialogsDelete() async {
+    final dialogResult = await NavigatorUltils.pushDialog<bool>(context,
+        dialog: CommonDialog(
+          title: Text(R.strings.deleted ),
+          description: Text(R.strings.are_you_sure_deleted_this_task),
+          actionButtons: [
+            ButtonWithIconWidget(
+              onPressed: () {
+                NavigatorUltils.safePop(context, false);
+              },
+              title: R.strings.no,
+              textColor: R.color.text,
+              backgroundColor: R.color.F2F2F2,
+            ),
+            ButtonWithIconWidget(
+              onPressed: () {
+                NavigatorUltils.safePop(context, true);
+              },
+              title: R.strings.yes,
+            )
+          ],
+        ));
+    if (dialogResult == true) {
+      popPage();
+    } else if (dialogResult == false) {}
+  }
+
+  Widget _buildButtonBottom(GlobalKey<FormState> formkey) {
     return SafeArea(
         child: Container(
             margin: EdgeInsets.symmetric(vertical: 31, horizontal: 15),
             child: ButtonWithIconWidget(
-              title: R.strings.add,
+              title: R.strings.save,
               onPressed: () {
                 if (formkey.currentState?.validate() ?? false) {}
               },
             )));
   }
-
 }
