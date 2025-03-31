@@ -18,7 +18,7 @@ class ActionIconAppbar extends StatelessWidget {
         onPressed: onPressed,
         padding: EdgeInsets.zero,
         alignment: Alignment.centerRight,
-        icon: SvgPicture.asset(iconAsset)
+        icon: SvgPicture.asset(iconAsset , color: iconColor,)
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 
 class ChangePasswordSuccessPage extends BasePage {

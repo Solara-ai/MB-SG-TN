@@ -4,7 +4,7 @@ import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/chat_bot/chat_bot_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/action_icon_appbar.dart';

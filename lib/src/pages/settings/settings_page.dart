@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/fedd%20back/feed_back_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/main/base_scaffold_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 

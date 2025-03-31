@@ -12,4 +12,6 @@ Future<void> _configureRepositoryDependencies() async {
   // GetIt.instance.registerSingleton<UserRepository>(UserRepositoryImpl(_appApi));
   GetIt.instance.registerSingleton<AuthRepository>(AuthRepositoryImpl(_appApi));
   GetIt.instance.registerSingleton<UserRepository>(UserRepositoryImpl(_appApi));
+  GetIt.instance.registerSingleton<CategoryRepository> (CategoryRepositoryImpl(_appApi));
+  GetIt.instance.registerSingleton<ScheduleRepository>(SchedulesRepositoryImpl(_appApi));
 }

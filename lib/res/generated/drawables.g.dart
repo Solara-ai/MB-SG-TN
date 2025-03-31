@@ -41,6 +41,7 @@ class Drawables {
 	String get ic_tab_calendar => "lib/res/drawables/ic_tab_calendar.svg";
 	String get ic_task_complete => "lib/res/drawables/ic_task_complete.svg";
 	String get ic_task_manage => "lib/res/drawables/ic_task_manage.svg";
+	String get ic_time_cicle => "lib/res/drawables/ic_time_cicle.svg";
 	String get ic_work => "lib/res/drawables/ic_work.svg";
 	String get image_user_empty => "lib/res/drawables/image_user_empty.png";
 	String get img_chatbot => "lib/res/drawables/img_chatbot.png";
