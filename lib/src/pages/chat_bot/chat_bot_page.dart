@@ -112,15 +112,19 @@ class _ChatBotPageState extends BaseState<ChatBotPage> {
                       children: [
                         if (message.text.isNotEmpty)
                           ListTile(
-                            title: _buildMessage(message.text, true), // Tin nhắn user
+                            title: _buildMessage(message.text, true, false), // Tin nhắn user
                           ),
                         if (message.reply.isNotEmpty)
+                          // tiếp tục ở đoạn này sẽ là so sánh dữ liệu , ví dụ nếu có chứa ngày tháng hoặc chứa text là bạn có muốn thêm lịch này vào k , thì nó sẽ xuất hiện ra được 1 cái đó chính là có nút add vào trong lịch , tại đây mình sẽ cần có thêm 1 biến bool show button add with calendar
+                          message.reply.containsSlashOrPipe() ? 
                           ListTile(
                             leading: _buildImageChatbot(),
-                            title: _buildMessage(message.reply, false), // Tin nhắn AI
-                          ),
-                        // if (message.reply.isEmpty)
-                        // state.loadingAiReply ?  _buildLoadingAiReply() : SizedBox()
+                            title: _buildMessage(message.reply, false, true), // Tin nhắn AI 
+                          ) : 
+                          ListTile(
+                             leading: _buildImageChatbot(),
+                            title: _buildMessage(message.reply, false, false),
+                          )
                       ],
                     );
                   },
@@ -189,11 +193,11 @@ class _ChatBotPageState extends BaseState<ChatBotPage> {
     );
   }
 
-  Widget _buildMessage(String text, bool isUresMessage) {
+  Widget _buildMessage(String text, bool isUresMessage, bool showAddButton) {
     return Align(
       alignment: isUresMessage ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
           color: isUresMessage ? R.color.bgMessageUser : R.color.white,
           border: Border.all(color: isUresMessage ? R.color.bgMessageUser : R.color.white),
@@ -204,11 +208,45 @@ class _ChatBotPageState extends BaseState<ChatBotPage> {
                   bottomLeft: Radius.circular(12))
               : BorderRadius.circular(12),
         ),
-        child: Text(
-          text,
-          style: R.textStyle.inter_regular_16_400
-              .copyWith(color: isUresMessage ? R.color.white : R.color.text),
-        ),
+        child: showAddButton == true
+            ? Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      text,
+                      style: R.textStyle.inter_regular_16_400
+                          .copyWith(color: isUresMessage ? R.color.white : R.color.text),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    width: double.infinity,
+                    height: 1 ,
+                    color: R.color.colorBorder,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      print('add to calendar click');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(vertical: 7),
+                      width: double.infinity,
+                      height: 30,
+                      child: Text(R.strings.add_tocalendar , style: R.textStyle.inter_medium_14_500.copyWith(color: R.color.backGroundGoalComplete),),
+                    ),
+                  )
+                ],
+              )
+            : Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                  text,
+                  style: R.textStyle.inter_regular_16_400
+                      .copyWith(color: isUresMessage ? R.color.white : R.color.text),
+                ),
+            ),
       ),
     );
   }
