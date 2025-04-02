@@ -4,6 +4,7 @@ class Strings {
   final String no = 'No';
   final String add = 'Add';
   final String add_event = 'Add event';
+  final String add_tocalendar = 'Add to calendar';
   final String update_event = 'Update event';
   final String update_schedule_success = 'Update schedule success';
   final String add_new_category = '+Add new category';

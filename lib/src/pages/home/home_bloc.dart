@@ -29,7 +29,6 @@ class HomeBloc extends BaseBloc<PageAction, PageEvent, PageState> {
           totalPlans: data.totalPlans,
           totalTask: data.totalTasks));
     }, failure: (error) {
-      addAction(ActionLoaddedDataFaild(messsage: error.errorMessage));
     });
   }
 }

@@ -63,6 +63,7 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
           eventId: data.eventId));
           print(  'date event itinize :  ${state.date}');
     }, failure: (error) {
+      emit(state.coppyWith(showLoading: false));
       addAction(ActionLoaddedScheduleByEventIdFaild(message: error.errorMessage));
     });
   }
@@ -72,6 +73,7 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     result.when(success: (data){
       emit(state.coppyWith(listCategory: data as List<Category>?));
     }, failure: (error){
+       emit(state.coppyWith(showLoading: false));
       addAction(ActionLoadedListCategoryFaild( message:  error.errorMessage));
     });
   }

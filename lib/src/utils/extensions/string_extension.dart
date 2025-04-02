@@ -7,6 +7,10 @@ extension StringExtension on String {
   String toDigitalString() {
     return replaceAll(RegExp(r'[^0-9]'), '');
   }
+  
+  bool containsSlashOrPipe() {
+    return contains('/') || contains('|');
+  }
   // Được sử dụng để loại bỏ khoảng trắng thừa giữa các ký tự và chỉ giữ lại 1 khoảng trắng duy nhất .
   String trimBetween() {
     return replaceAll(RegExp('\\s+'), ' ');
