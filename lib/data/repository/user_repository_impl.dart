@@ -5,6 +5,8 @@ import 'package:schedule_gen_and_time_management/data/repository/base/base_netwo
 import 'package:schedule_gen_and_time_management/data/source/network/app_api.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/helper/result.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/message_user_request.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/update_profile_request.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/response/empty_data.dart';
 import 'package:schedule_gen_and_time_management/domain/repository/user_repository.dart';
 
 class UserRepositoryImpl extends BaseNetworkRepository implements UserRepository {
@@ -24,6 +26,11 @@ class UserRepositoryImpl extends BaseNetworkRepository implements UserRepository
   @override
   Future<Result<UserProfileDto>> getMyProfile () {
     return execute(_api.getmyProfile());
+  }
+
+  @override
+  Future<Result<EmptyData?>> updateProfile(UpdateProfileRequest profileRequest) {
+    return execute(_api.updateProfile(profileRequest));
   }
 
 }

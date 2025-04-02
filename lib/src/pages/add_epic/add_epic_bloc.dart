@@ -14,7 +14,7 @@ class AddEpicBloc extends BaseBloc<PageAction , PageEvent , PageState> {
     on<EventAddEpic>(_handleEventAddEpic);
     on<EventChangeDescriptionEpic>(_handleEventChangeDescriptionEpic);
     on<EventChangeEpicName>(_handleEventChangeEpicName);
-    on<EventChangeTypeNameEpic> (_handleEventChangeTypeName);
+    on<EventChangeTypeNameEpic>(_handleEventChangeTypeName);
   }
 
   Future<void> _handleEventChangeDescriptionEpic (EventChangeDescriptionEpic event , Emitter emit) async{

@@ -7,13 +7,22 @@ import 'package:schedule_gen_and_time_management/domain/usecase/category/get_lis
 import 'package:schedule_gen_and_time_management/domain/usecase/chat/history_chat_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/chat/user_chat_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/epic/create_epic_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/epic/delete_epic_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/epic/detail_epic_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/epic/getListEpic_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/epic/total_task_and_plan_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/create_schedule_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/deleted_schedule_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/get_list_schedule_by_date_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/get_list_schedule_data_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/get_schedule_by_eventId_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/update_schedule_uscase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/task/create_task_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/task/delete_task_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/task/detai_task_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/task/get_list_task_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/get_profile_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/user/update_profile_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_bloc.dart';
 
 part 'dependence/usecase_di.dart';

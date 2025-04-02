@@ -61,6 +61,7 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
           categor: data.categories,
           showLoading: false,
           eventId: data.eventId));
+          print(  'date event itinize :  ${state.date}');
     }, failure: (error) {
       addAction(ActionLoaddedScheduleByEventIdFaild(message: error.errorMessage));
     });
@@ -120,7 +121,7 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
       eventId: state.eventId,
       name: state.name,
       repeat: state.repeat,
-      remindMe: state.remindMe,
+      remindMe: false,
       startTime: state.startTime,
       updateType: state.updateType,
       repeatEnddate: state.repeatEnddate,

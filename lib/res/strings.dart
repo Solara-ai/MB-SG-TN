@@ -85,6 +85,7 @@ class Strings {
   final String all = 'All';
   final String work = 'Work';
   final String study = 'Study';
+  
   final String there_are_no_epic_here = 'There are no epic here ';
   final String all_task_of_epic = 'All task of the epic 📋';
   final String search = 'Search';
@@ -114,6 +115,8 @@ class Strings {
   final String save = 'Save';
   final String deleted = 'Deleted';
   final String delete = 'Delete';
+  final String delete_task_success = 'Delete task success';
+  final String delete_epic_success = 'Delete epic success';
   final String are_you_sure_deleted_this_epic = 'Are you sure deleted this epic';
   final String are_you_sure_deleted_this_task = 'Are you sure deleted this task';
   final String create_new_plan = 'Crete new plan';

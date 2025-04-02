@@ -10,6 +10,7 @@ class PageState {
 
   PageState copyWith({String? name, String? description, String? type, bool? showloading}) {
     return PageState(
+        type: type ?? this.type,
         name: name ?? this.name,
         description: description ?? this.description,
         showLoading: showloading ?? this.showLoading);
