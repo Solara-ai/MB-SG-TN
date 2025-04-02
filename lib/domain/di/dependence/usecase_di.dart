@@ -15,4 +15,14 @@ Future<void> configureUsecaseDependencies() async {
     GetIt.instance.registerFactory(() => GetListScheduleDataUsecase());
     GetIt.instance.registerFactory(() => GetScheduleByEventidUsecase());
     GetIt.instance.registerFactory(() => CreateEpicUsecase());
+    GetIt.instance.registerFactory(() => GetlistEpicUsecase());
+    GetIt.instance.registerFactory(() => GetListTaskUsecase());
+    GetIt.instance.registerFactory(() => DetailEpicUsecase());
+    GetIt.instance.registerFactory(() => CreateTaskUsecase());
+    GetIt.instance.registerFactory(() => DetaiTaskUsecase());
+    GetIt.instance.registerFactory(() => DeleteTaskUsecase());
+    GetIt.instance.registerFactory(() => DeleteEpicUsecase());
+    GetIt.instance.registerFactory(() => UpdateProfileUsecase());
+    GetIt.instance.registerFactory(() => TotalTaskAndPlanUsecase());
+    
 }

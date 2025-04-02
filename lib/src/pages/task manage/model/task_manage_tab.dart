@@ -15,4 +15,15 @@ enum TaskManageTab {
         return R.strings.work;
     }
   }
+
+  String  get value {
+    switch (this) {
+      case TaskManageTab.ALL:
+        return '';
+      case TaskManageTab.STUDY:
+        return 'STUDY';
+      case TaskManageTab.WORK:
+        return 'WORK';
+    }
+  }
 }

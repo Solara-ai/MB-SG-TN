@@ -77,7 +77,7 @@ class _ProfilePageState extends BaseState<ProfliePage> {
               decoration: BoxDecoration(
                   border: Border.all(color: R.color.colorBorder),
                   shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage(R.drawables.user), fit: BoxFit.cover)),
+                  image: DecorationImage(image: AssetImage(R.drawables.image_user_empty), fit: BoxFit.cover)),
             ),
             Positioned(
               top: 70,

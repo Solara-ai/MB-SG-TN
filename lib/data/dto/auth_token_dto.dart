@@ -5,8 +5,10 @@ class AuthTokenDto {
   final String token;
   final String refreshToken;
   final String userId ;
+  final bool rememberMe;
 
   AuthTokenDto({
+    required this.rememberMe,
     required this.token,
     required this.refreshToken,
     required this.userId

@@ -39,6 +39,7 @@ class _AddEpicPageState extends BaseState<AddEpicPage> {
     _bloc.listenAction(cancelSubOnDispose, (action) {
       switch (action) {
         case AddEpicSuccess():
+          popPage(result: true);
           ToastUtils.showSuccessToast(context, message: R.strings.add_epic_success);
           popPage();
         case AddEpicFaild():
@@ -54,13 +55,13 @@ class _AddEpicPageState extends BaseState<AddEpicPage> {
       builder: (context, state) => Scaffold(
         backgroundColor: R.color.white,
         appBar: actionAppbar(backGroundColor: R.color.white, title: R.strings.add_epic),
-        body: _buildBody(_formKey),
+        body: _buildBody(_formKey , state),
         bottomNavigationBar: _buildButtonBottom(_formKey),
       ),
     );
   }
 
-  Widget _buildBody(GlobalKey<FormState> formkey) {
+  Widget _buildBody(GlobalKey<FormState> formkey , PageState state) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 27),
       child: CommonForm(
@@ -80,8 +81,10 @@ class _AddEpicPageState extends BaseState<AddEpicPage> {
               label: R.strings.type_name_of_epic,
               isRequired: true,
               controller: dropDownController,
-              onSavedItem: (typeEpic) =>
-                  _bloc.add(EventChangeTypeNameEpic(typeNameEpic: typeEpic?.value ?? '')),
+              onSavedItem: (typeEpic) {
+                 _bloc.add(EventChangeTypeNameEpic(typeNameEpic: typeEpic?.value));
+              }
+                 
             ),
             SizedBox(
               height: 15,
@@ -116,6 +119,7 @@ class _AddEpicPageState extends BaseState<AddEpicPage> {
 
   void _addEvent() {
     if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
       _bloc.add(EventAddEpic());
     }
   }

@@ -53,8 +53,8 @@ extension TimeOfDayExtensions on TimeOfDay {
 extension StringToTimeOfDay on String {
   TimeOfDay toTimeOfDay() {
     final parts = split(':');
-    if (parts.length != 2) {
-      throw FormatException("Invalid time format. Expected HH:mm");
+    if (parts.length < 2) {
+      throw FormatException("Invalid time format. Expected HH:mm or HH:mm:ss");
     }
     final hour = int.tryParse(parts[0]) ?? 0;
     final minute = int.tryParse(parts[1]) ?? 0;
@@ -66,6 +66,12 @@ extension StringToTimeOfDay on String {
 extension ParseDate on String {
   DateTime toDateTime() {
     return DateTime.parse(this);
+  }
+}
+
+extension PareDateTimeReal on String {
+  DateTime toDateTimeReal() {
+    return DateFormat("dd/MM/yyyy").parse(this);
   }
 }
 
