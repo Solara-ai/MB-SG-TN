@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/chat_bot/chat_bot_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/home/home_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
+import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/action_icon_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/appbar/action_appbar.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/empty_list_view.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/header_decoration.dart';
 
 class HomePage extends BasePage {
@@ -19,62 +23,82 @@ class HomePage extends BasePage {
 }
 
 class _HomePageState extends BaseState<HomePage> {
+
   late DateTime dtNow;
+  late HomeBloc _bloc;
 
   @override
   void initState() {
     dtNow = DateTime.now();
+    _setupBloc();
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BaseScaffoldPage(
-        appbar: actionAppbar(
-          colorIcon: R.color.white,
-          backGroundColor: R.color.app_color,
-          title: R.strings.home,
-          textStyle: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.white),
-          action: [
-            ActionIconAppbar(
-              iconAsset: Assets.lib.res.drawables.icNoti,
-              iconColor: R.color.white,
-            )
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: R.color.app_color,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)), 
-                ),
-                builder: (context) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ListTile(
-                      leading: SvgPicture.asset(Assets.lib.res.drawables.icAi),
-                      title: Text(R.strings.chat_ai , style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),),
-                      onTap: () {
-                        NavigatorUltils.navigatePage(context, ChatBotPage());
-                      },
-                    ),
-                  );
-                },
-              );
-            },
-            backgroundColor: R.color.app_color,
-            shape: CircleBorder(),
-            child: SvgPicture.asset(
-              Assets.lib.res.drawables.icAdd,
-              width: 30,
-              height: 30,
-            )),
-        body: _buildBody());
+  void dispose() {
+    _bloc.close();
+    super.dispose();
   }
 
-  Widget _buildBody() {
+  void _setupBloc () {
+    _bloc = HomeBloc();
+    _bloc.listenAction(cancelSubOnDispose, (action) {
+      switch (action) {
+        case ActionLoaddedDataFaild() : ToastUtils.showErrorToast(context, message: action.messsage);
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<HomeBloc , PageState>(
+      bloc: _bloc,
+      builder: (context, state) =>  BaseScaffoldPage(
+          appbar: actionAppbar(
+            colorIcon: R.color.white,
+            backGroundColor: R.color.app_color,
+            title: R.strings.home,
+            textStyle: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.white),
+            action: [
+              ActionIconAppbar(
+                iconAsset: Assets.lib.res.drawables.icNoti,
+                iconColor: R.color.white,
+              )
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor: R.color.app_color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)), 
+                  ),
+                  builder: (context) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ListTile(
+                        leading: SvgPicture.asset(Assets.lib.res.drawables.icAi),
+                        title: Text(R.strings.chat_ai , style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),),
+                        onTap: () {
+                          NavigatorUltils.navigatePage(context, ChatBotPage());
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+              backgroundColor: R.color.app_color,
+              shape: CircleBorder(),
+              child: SvgPicture.asset(
+                Assets.lib.res.drawables.icAdd,
+                width: 30,
+                height: 30,
+              )),
+          body: _buildBody(state)),
+    );
+  }
+
+  Widget _buildBody(PageState state) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -82,7 +106,7 @@ class _HomePageState extends BaseState<HomePage> {
         SizedBox(
           height: 30,
         ),
-        _buildMainPage(name: 'Lam Phuc', dateTimeNow: dtNow)
+        _buildMainPage(name: 'User name', dateTimeNow: dtNow , state: state )
       ],
     );
   }
@@ -110,13 +134,13 @@ class _HomePageState extends BaseState<HomePage> {
     );
   }
 
-  Widget _buildMainPage({required String name, required DateTime dateTimeNow}) {
+  Widget _buildMainPage({required String name, required DateTime dateTimeNow ,required PageState state }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(dateTimeNow.timeDescription + name,
+          Text(dateTimeNow.timeDescription,
               style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.app_color)),
           SizedBox(
             height: 70,
@@ -129,12 +153,12 @@ class _HomePageState extends BaseState<HomePage> {
                 _itemMainPage(
                     title: R.strings.task_incomplete,
                     pathIcon: Assets.lib.res.drawables.icTaskComplete,
-                    totalCompleteOfTitle: '0',
+                    totalCompleteOfTitle: state.totalTask,
                     color: R.color.app_color),
                 _itemMainPage(
                     title: R.strings.goal_incomplete,
                     pathIcon: Assets.lib.res.drawables.icGoalComplete,
-                    totalCompleteOfTitle: '0',
+                    totalCompleteOfTitle: state.totalPlans,
                     color: R.color.backGroundGoalComplete),
               ],
             ),
@@ -152,7 +176,12 @@ class _HomePageState extends BaseState<HomePage> {
             R.strings.next_event,
             style: R.textStyle.inter_medium_14_500.copyWith(color: R.color.D3BDFF),
           ),
+          state.schedule == null ?
+          EmptyListView(
+            description: "No event here",
+          ) :
           _itemNextEvent(
+            state: state,
               eventName: 'code flutter',
               eventDescription: 'Study flutter',
               startTime: dateTimeNow.toHM,
@@ -263,7 +292,7 @@ class _HomePageState extends BaseState<HomePage> {
       {required String eventName,
       required String eventDescription,
       required String startTime,
-      required String endTime}) {
+      required String endTime , required PageState state}) {
     return Container(
       height: 109,
       margin: EdgeInsets.only(top: 13),
@@ -288,7 +317,7 @@ class _HomePageState extends BaseState<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(eventName,
+                    Text(state.schedule!.eventName,
                         style: R.textStyle.inter_bold_16_700.copyWith(color: R.color.app_color)),
                     SizedBox(height: 5),
                     Text(eventDescription,
@@ -303,7 +332,7 @@ class _HomePageState extends BaseState<HomePage> {
                     border: Border.all(color: R.color.app_color),
                     borderRadius: BorderRadius.circular(20)),
                 child: Text(
-                  R.strings.timeStart_timeEnd(startTime, endTime),
+                  R.strings.timeStart_timeEnd(state.schedule!.startTime, state.schedule!.endTime),
                   style: R.textStyle.inter_medium_10_500.copyWith(color: R.color.white),
                 ),
               ),

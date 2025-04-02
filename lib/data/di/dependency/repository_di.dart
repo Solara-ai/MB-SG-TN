@@ -15,4 +15,5 @@ Future<void> _configureRepositoryDependencies() async {
   GetIt.instance.registerSingleton<CategoryRepository> (CategoryRepositoryImpl(_appApi));
   GetIt.instance.registerSingleton<ScheduleRepository>(SchedulesRepositoryImpl(_appApi));
   GetIt.instance.registerSingleton<EpicRepository>(EpicRepositoryImpl(_appApi));
+  GetIt.instance.registerSingleton<TaskRepository>(TaskRepositoryImpl(_appApi));
 }

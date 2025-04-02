@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/auth/session_usecase.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/drawer/drawer_bloc.dart';
@@ -21,6 +23,7 @@ class DrawerBase extends BasePage {
 }
 
 class _DrawerBaseState extends BaseState<DrawerBase> {
+  SessionUsecase _sessionUsecase = GetIt.I<SessionUsecase>();
   late DrawerBloc _drawerBloc;
 
   @override
@@ -81,7 +84,7 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
         child: Column(
           children: [
             CircleAvatar(
-              backgroundImage: AssetImage(R.drawables.user),
+              backgroundImage: AssetImage(R.drawables.image_user_empty),
               radius: 80,
             ),
             SizedBox(
@@ -167,6 +170,7 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
 
   void _NavigateEditProfilePage () {
     _drawerBloc.add(EventNavigateEditProfilePage());
+    print('${_sessionUsecase.userId}'); 
     context.popScreen();
   }
 

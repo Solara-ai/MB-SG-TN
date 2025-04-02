@@ -8,12 +8,14 @@ import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_category/add_category_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_event/model/repeat.dart';
 import 'package:schedule_gen_and_time_management/src/pages/update_schedule/update_schedule_bloc.dart';
+import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/drop_down_controller_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/string_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/bottom%20sheet/show_bottom_sheet_with_icon.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/loading/loading_overlay.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_form.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_text_form_field.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/date_time_form_field.dart';
@@ -36,6 +38,12 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
       DropDownController<Repeat>(initialItemList: Repeat.values);
   final DropDownController<Category> _dropDownControllerCategory =
       DropDownController(initialItemList: []);
+
+  TextEditingController _controllerNameEpic = TextEditingController();
+  TextEditingController _controllerDescriptionEpic = TextEditingController();
+  TextEditingController _controllerDateEpic = TextEditingController();
+  TextEditingController _controllerStartTimeEpic = TextEditingController();
+  TextEditingController _controllerEndTimeEpic = TextEditingController();
 
   @override
   void initState() {
@@ -74,9 +82,19 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
     return BlocBuilder<UpdateScheduleBloc, PageState>(
       bloc: _bloc,
       builder: (context, state) {
+        _dropDownControllerCategory.value = state.category;
+        _dropDownControlleRepeat.value = _stringToRepeat(state.repeat);
+        _controllerDateEpic.text = state.date.formatToString(DateFormatType.ddMMyyyy.pattern);
+        print('date state : ${_controllerDateEpic.text}');
+        print('date hien tai dang dung ${_controllerDateEpic.text.toDateTimeReal()}');
+        _controllerEndTimeEpic.text = state.endTime.format(context);
+        _controllerNameEpic.text = state.name;
+        _controllerDescriptionEpic.text = state.description;
+        _controllerStartTimeEpic.text = state.startTime.format(context);
         _dropDownControllerCategory.updateItemList(state.listCategory);
-        return StatefulBuilder(
-          builder: (context, setState) => Container(
+        return LoadingOverlay(
+          isLoading: state.showLoading,
+          child: Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 28),
             child: Column(
@@ -100,18 +118,18 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                         ),
                         // event name
                         CommonTextFormField(
-                          initialValue: state.name,
-                          hintText: R.strings.event_name,
-                          onSaved: (newValue) {
-                            _bloc.add(EventUserChangeNameEvent(name: newValue));
-                          },
-                          validator: (value) =>
-                              value.isNullOrEmpty() ? R.strings.please_enter_event : null,
-                        ),
+                            controller: _controllerNameEpic,
+                            hintText: R.strings.event_name,
+                            onSaved: (newValue) {
+                              _bloc.add(EventUserChangeNameEvent(name: newValue));
+                            },
+                            validator: (value) {
+                              value.isNullOrEmpty() ? R.strings.please_enter_event : null;
+                            }),
                         SizedBox(height: 12),
                         // DesCription
                         CommonTextFormField(
-                          initialValue: state.description,
+                          controller: _controllerDescriptionEpic,
                           onSaved: (newValue) {
                             _bloc.add(EventUserChangeDescription(desCription: newValue));
                           },
@@ -123,12 +141,14 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                         SizedBox(height: 12),
                         // Date
                         DateTimeFormFieldWidget(
-                          initialDate: state.date,
+                          initialDate: _controllerDateEpic.text.toDateTimeReal(),
+                          textController: _controllerDateEpic,
                           hintText: R.strings.date,
+                          onChanged: (value) {
+                          },
                           onSaved: (value) {
                             _bloc.add(EventUserChangeDate(date: value));
                           },
-                          // ,
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2090),
                         ),
@@ -140,7 +160,8 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                             SizedBox(
                               width: 181,
                               child: TimeFormFieldWidget(
-                                initialTime: state.startTime,
+                                textController: _controllerStartTimeEpic,
+                                initialTime: _controllerStartTimeEpic.text.toTimeOfDay(),
                                 onChanged: (time) {
                                   setState(() {
                                     if (_endTime != null && _compareTime(time, _endTime!) >= 0) {
@@ -165,7 +186,8 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                             SizedBox(
                               width: 181,
                               child: TimeFormFieldWidget(
-                                initialTime: state.endTime,
+                                textController: _controllerEndTimeEpic,
+                                initialTime: _controllerEndTimeEpic.text.toTimeOfDay(),
                                 onChanged: (time) {
                                   setState(() {
                                     if (_startTime != null &&
@@ -229,7 +251,7 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                                 onSavedItem: (value) {
                                   _bloc.add(EventUserChangeRepeat(repeat: value?.value));
                                 },
-                                initialItem: _stringToRepeat(state.repeat),
+                                initialItem: _dropDownControlleRepeat.value,
                                 itemList: Repeat.values,
                                 controller: _dropDownControlleRepeat,
                               ),
@@ -267,7 +289,7 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           DropdownFormField(
-            initialItem: state.category,
+            initialItem: _dropDownControllerCategory.value,
             controller: _dropDownControllerCategory,
             label: R.strings.select_category,
             isRequired: true,
@@ -305,13 +327,14 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
         return;
       }
     }
+    _formKey.currentState?.save();
     _bloc.add(EventChangeStartTime(startTime: _startTime));
     _bloc.add(EventChangeEndTime(endTime: _endTime));
     _bloc.add(EventUpdateSchedule());
   }
 
   int _compareTime(TimeOfDay? t1, TimeOfDay? t2) {
-    if (t1 == null || t2 == null) return -1; // Tránh lỗi null
+    if (t1 == null || t2 == null) return -1;
     if (t1.hour < t2.hour) return -1;
     if (t1.hour > t2.hour) return 1;
     if (t1.minute < t2.minute) return -1;

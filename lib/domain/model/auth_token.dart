@@ -4,9 +4,17 @@ class AuthToken {
   final String token;
   final String refreshToken;
   final String userId;
+  final bool rememberMe;
 
-  AuthToken ({required this.token , required this.refreshToken , required this.userId});
+  AuthToken(
+      {required this.rememberMe,
+      required this.token,
+      required this.refreshToken,
+      required this.userId});
 
-  factory AuthToken.fromDto (AuthTokenDto authDto) => 
-  AuthToken(token: authDto.token, refreshToken: authDto.refreshToken , userId: authDto.userId); 
+  factory AuthToken.fromDto(AuthTokenDto authDto) => AuthToken(
+      token: authDto.token,
+      refreshToken: authDto.refreshToken,
+      userId: authDto.userId,
+      rememberMe: authDto.rememberMe);
 }

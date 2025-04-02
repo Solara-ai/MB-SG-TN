@@ -8,7 +8,6 @@ import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_epic/add_epic_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add%20task/add_task_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/add_category/add_category_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage%20tab/task_manage_tab_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/task%20manage/model/task_manage_tab.dart';
@@ -42,6 +41,13 @@ class _TaskManagerPageState extends BaseState<TaskManagerPage> with SingleTicker
 
   void _setupBloc() {
     _taskManageBloc = TaskManageBloc();
+    _taskManageBloc.listenAction(cancelSubOnDispose, (action) {
+      switch (action) {
+        case ActionNavigateAddEpic():
+          Navigator.pop(context);
+          NavigatorUltils.navigatePage(context, AddEpicPage());
+      }
+    });
   }
 
   @override
@@ -92,10 +98,12 @@ class _TaskManagerPageState extends BaseState<TaskManagerPage> with SingleTicker
               height: 21,
             ),
             Expanded(
-                child: TabBarView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: _tabController,
-                    children: tab.map((element) => TaskManageTabPage(tab: element)).toList()))
+              child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: _tabController,
+                children: tab.map((element) => TaskManageTabPage(tab: element)).toList(),
+              ),
+            )
           ],
         ),
       ),
@@ -114,33 +122,12 @@ class _TaskManagerPageState extends BaseState<TaskManagerPage> with SingleTicker
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: SvgPicture.asset(R.drawables.ic_add_task),
-              title: Text(
-                R.strings.add_new_task,
-                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                NavigatorUltils.navigatePage(context, AddTaskPage());
-                // Navigator.pop(context);
-              },
-            ),
-            Container(
-              color: R.color.white,
-              height: 1,
-              width: double.infinity,
-            ),
-            ListTile(
               leading: SvgPicture.asset(R.drawables.ic_add_epic),
               title: Text(
                 R.strings.add_new_epic,
                 style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.white),
               ),
-              onTap: () {
-                Navigator.pop(context);
-                NavigatorUltils.navigatePage(context, AddEpicPage());
-                //  Navigator.pop(context);
-              },
+              onTap: () => _taskManageBloc.add(EventNavigateAddEpicPage()),
             ),
           ],
         );

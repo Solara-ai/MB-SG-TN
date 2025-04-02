@@ -5,6 +5,7 @@ import 'package:schedule_gen_and_time_management/data/repository/auth_repository
 import 'package:schedule_gen_and_time_management/data/repository/category_repository_impl.dart';
 import 'package:schedule_gen_and_time_management/data/repository/epic_repository_impl.dart';
 import 'package:schedule_gen_and_time_management/data/repository/schedules_repository_impl.dart';
+import 'package:schedule_gen_and_time_management/data/repository/task_repository_impl.dart';
 import 'package:schedule_gen_and_time_management/data/repository/user_repository_impl.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/app_api.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/app_client.dart';
@@ -14,6 +15,7 @@ import 'package:schedule_gen_and_time_management/domain/repository/auth_reposito
 import 'package:schedule_gen_and_time_management/domain/repository/category_repository.dart';
 import 'package:schedule_gen_and_time_management/domain/repository/epic_repository.dart';
 import 'package:schedule_gen_and_time_management/domain/repository/schedule_repository.dart';
+import 'package:schedule_gen_and_time_management/domain/repository/task_repository.dart';
 import 'package:schedule_gen_and_time_management/domain/repository/user_repository.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/auth/session_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/utils/scope_ultils.dart';
