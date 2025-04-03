@@ -28,6 +28,7 @@ class AddEventPage extends BasePage {
 }
 
 class _AddEventPageState extends BaseState<AddEventPage> {
+  DateTime? _selectedDate;
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
   late AddEventBloc _bloc;
@@ -55,14 +56,14 @@ class _AddEventPageState extends BaseState<AddEventPage> {
           ToastUtils.showErrorToast(context, message: action.message);
         case ActionLoadedFaild():
           ToastUtils.showErrorToast(context, message: action.message);
-        case ActionNavigateAddCategory() :
+        case ActionNavigateAddCategory():
           popPage();
           NavigatorUltils.navigatePage(context, AddCategoryPage());
       }
     });
   }
 
-   final DropDownController<Repeat> _dropDownControlleRepeat =
+  final DropDownController<Repeat> _dropDownControlleRepeat =
       DropDownController(initialItem: Repeat.NONE, initialItemList: Repeat.values);
   final DropDownController<Category> _dropDownControllerCategory =
       DropDownController(initialItemList: []);
@@ -74,15 +75,15 @@ class _AddEventPageState extends BaseState<AddEventPage> {
       bloc: _bloc,
       builder: (context, state) {
         _dropDownControllerCategory.updateItemList(state.listCategory);
-        return StatefulBuilder(
-          builder: (context, setState) => Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: CommonForm(
+        return SingleChildScrollView(
+          child: StatefulBuilder(
+            builder: (context, setState) => Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonForm(
                     key: _formKey,
                     child: Column(
                       children: [
@@ -119,7 +120,10 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                         // Date
                         DateTimeFormFieldWidget(
                           hintText: R.strings.date,
-                          onSaved: (date) => _bloc.add(EventUserChangeDate(date: date)),
+                          onSaved: (date) {
+                            _selectedDate = date;
+                            _bloc.add(EventUserChangeDate(date: date));
+                          },
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2090),
                         ),
@@ -215,6 +219,13 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                             SizedBox(
                               width: 165,
                               child: DropdownFormField<Repeat>(
+                                onChangedItem: (item, isReset) {
+                                  if (item != Repeat.NONE) {
+                                    _bloc.add(EventEnableRepetEndate());
+                                  } else {
+                                    _bloc.add(EventdisableRepetEndate());
+                                  }
+                                },
                                 onSavedItem: (value) =>
                                     _bloc.add(EventUserChangeRepeat(repeat: value?.value)),
                                 initialItem: Repeat.NONE,
@@ -224,18 +235,64 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // repet endate
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                R.strings.repetEnddate,
+                                style: R.textStyle.inter_regular_16_400
+                                    .copyWith(color: R.color.timeEvent),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 220,
+                              child: DateTimeFormFieldWidget(
+                                isEnabled: state.showDateFormFiledRepet,
+                                isRequired: state.showDateFormFiledRepet,
+                                hintText: R.strings.repetEnddate,
+                                onChanged: (value) {
+                                  _bloc.add(EventChangeRepetEndDate(repetEndDate: value));
+                                },
+                                onSaved: (date) {
+                                  DateTime savedDate;
+
+                                  if (state.showDateFormFiledRepet) {
+                                    // Nếu người dùng chọn ngày trong Repet End Date thì lưu ngày đó
+                                    savedDate = date;
+                                  } else {
+                                    // Nếu không mở, lấy ngày chính + 1 ngày
+                                    savedDate = (_selectedDate ?? DateTime.now())
+                                        .add(const Duration(days: 1));
+                                    print('Ngày kết thúc tự động tính từ ngày chính: $savedDate');
+                                  }
+                                  _bloc.add(EventChangeRepetEndDate(repetEndDate: savedDate));
+                                },
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2090),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(height: 25),
                         _buildSelectedCategory()
                       ],
                     ),
                   ),
-                ),
-                ButtonWithIconWidget(
-                  onPressed: _addEvent,
-                  title: R.strings.submit,
-                  radius: 10,
-                )
-              ],
+                  SizedBox(
+                    height: 30,
+                  ),
+                  ButtonWithIconWidget(
+                    onPressed: _addEvent,
+                    title: R.strings.submit,
+                    radius: 10,
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -253,6 +310,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
             colorIcon: R.color.colorErrorBase);
         return;
       }
+      _formKey.currentState!.save();
       _bloc.add(EventChangeStartTime(startTime: _startTime));
       _bloc.add(EventChangeEndTime(endTime: _endTime));
       _bloc.add(EventAddEvent());

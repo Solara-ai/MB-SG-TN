@@ -7,10 +7,12 @@ import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_event/add_event_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/chat_bot/chat_bot_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/update_schedule/update_schedule_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/color_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/size_config.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/action_icon_appbar.dart';
@@ -26,8 +28,6 @@ class SchedulePage extends BasePage {
 
 class _SchedulePageState extends BaseState<SchedulePage> {
   late ScheduleBloc _bloc;
-
-
 
   List<ScheduleData> listScheduleData = [];
 
@@ -45,16 +45,22 @@ class _SchedulePageState extends BaseState<SchedulePage> {
 
   void _setupBloc() {
     _bloc = ScheduleBloc();
-    _bloc.listenAction(cancelSubOnDispose, (action) {
+    _bloc.listenAction(cancelSubOnDispose, (action) async {
       switch (action) {
+        case ActionNavigateChatAi():
+          final result = await NavigatorUltils.navigatePage<bool>(context, ChatBotPage());
+          if (result == true) {
+            _bloc.add(EventInitilize());
+            _bloc.add(EventGetListScheduleData());
+          }
         case ActionLoaddedDataFaild():
           ToastUtils.showErrorToast(context, message: action.message);
         case ActionLoaddedDataListScheduleFaild():
           ToastUtils.showErrorToast(context, message: action.message);
         case ActionLoadedScheduleDataError():
           ToastUtils.showErrorToast(context, message: action.message);
-        case ActionDeletedEventSuccess() :
-        ToastUtils.showSuccessToast(context, message: R.strings.deleted_event_success );
+        case ActionDeletedEventSuccess():
+          ToastUtils.showSuccessToast(context, message: R.strings.deleted_event_success);
       }
     });
   }
@@ -75,10 +81,16 @@ class _SchedulePageState extends BaseState<SchedulePage> {
                   style: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.text)),
               backgroundColor: R.color.white,
               actions: [
-                ActionIconAppbar(
-                  iconAsset: R.drawables.ic_noti,
-                  iconColor: R.color.textAppDescription,
-                ),
+                GestureDetector(
+                  onTap: () => _bloc.add(EventNavigateChatAi()),
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        width: 100,
+                        height: 70,
+                        padding: EdgeInsets.only(right: 20),
+                        child: Text(R.strings.chat_ai,
+                            style: R.textStyle.inter_medium_14_500
+                                .copyWith(color: R.color.itemToday))))
               ],
             ),
             body: _buildBody(state),
@@ -86,7 +98,7 @@ class _SchedulePageState extends BaseState<SchedulePage> {
               context: context,
               onPressed: () async {
                 bool? result = await BottomSheetUtil.show<bool>(context,
-                    child: AddEventPage(), maxHeight: SizeConfig.screenHeight * 0.95, radius: 32);
+                    child: AddEventPage(), maxHeight: SizeConfig.screenHeight * 0.85, radius: 32);
                 if (result == true) {
                   _bloc.add(EventGetListScheduleData());
                   _bloc.add(EventInitilize());
@@ -257,7 +269,7 @@ class _SchedulePageState extends BaseState<SchedulePage> {
                   GestureDetector(
                     onTap: () {
                       // thực hiện event lấy id cho vào state sau đó mơis gọi event xóa
-                      _bloc.add(EventChangeEventId(eventId:  schedule.eventId));
+                      _bloc.add(EventChangeEventId(eventId: schedule.eventId));
                       _bloc.add(EventDeleteSchedule());
                     },
                     behavior: HitTestBehavior.opaque,

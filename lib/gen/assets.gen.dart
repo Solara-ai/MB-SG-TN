@@ -96,6 +96,9 @@ class $LibResDrawablesGen {
   /// File path: lib/res/drawables/ic_empty_img_simple.svg
   String get icEmptyImgSimple => 'lib/res/drawables/ic_empty_img_simple.svg';
 
+  /// File path: lib/res/drawables/ic_event.svg
+  String get icEvent => 'lib/res/drawables/ic_event.svg';
+
   /// File path: lib/res/drawables/ic_expan_more.svg
   String get icExpanMore => 'lib/res/drawables/ic_expan_more.svg';
 
@@ -113,6 +116,10 @@ class $LibResDrawablesGen {
 
   /// File path: lib/res/drawables/ic_noti.svg
   String get icNoti => 'lib/res/drawables/ic_noti.svg';
+
+  /// File path: lib/res/drawables/ic_performance_evaluation.svg
+  String get icPerformanceEvaluation =>
+      'lib/res/drawables/ic_performance_evaluation.svg';
 
   /// File path: lib/res/drawables/ic_plan.svg
   String get icPlan => 'lib/res/drawables/ic_plan.svg';
@@ -170,6 +177,10 @@ class $LibResDrawablesGen {
   AssetGenImage get imgEvening =>
       const AssetGenImage('lib/res/drawables/img_evening.png');
 
+  /// File path: lib/res/drawables/img_heart.png
+  AssetGenImage get imgHeart =>
+      const AssetGenImage('lib/res/drawables/img_heart.png');
+
   /// File path: lib/res/drawables/img_logo_app.png
   AssetGenImage get imgLogoApp =>
       const AssetGenImage('lib/res/drawables/img_logo_app.png');
@@ -225,12 +236,14 @@ class $LibResDrawablesGen {
         icEdit,
         icEdit2,
         icEmptyImgSimple,
+        icEvent,
         icExpanMore,
         icGoalComplete,
         icHome,
         icLogout,
         icNotSeePassword,
         icNoti,
+        icPerformanceEvaluation,
         icPlan,
         icSchedule,
         icSearch,
@@ -248,6 +261,7 @@ class $LibResDrawablesGen {
         imgChatbot2,
         imgChatbot3,
         imgEvening,
+        imgHeart,
         imgLogoApp,
         imgLogoLogin,
         imgMorning,

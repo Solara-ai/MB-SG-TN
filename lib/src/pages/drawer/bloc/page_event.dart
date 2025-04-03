@@ -12,3 +12,5 @@ class EventNavigateSchedulePage extends PageEvent{}
 class EventNavigateEditProfilePage extends PageEvent{}
 
 class EventLogout extends PageEvent {}
+
+class EventNavigatePerfomanceEvaluation extends PageEvent{}

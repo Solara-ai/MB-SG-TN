@@ -13,6 +13,7 @@ class DrawerBloc extends BaseBloc<PageAction , PageEvent , PageState> {
     on<EventNavigateSettingsPage> (_handleEventNavigateSettingPage);
     on<EventNavigateSchedulePage> (_handleEventNavigateSchedulePage);
     on<EventNavigateEditProfilePage> (_handeEventNavigateEditProfilePage);
+    on<EventNavigatePerfomanceEvaluation> (_EventNavigatePerformance);
     on<EventLogout> (_handleEventLogout);
   }
 
@@ -35,6 +36,10 @@ class DrawerBloc extends BaseBloc<PageAction , PageEvent , PageState> {
   Future<void> _handleEventLogout (EventLogout event , Emitter emit) async{
     _sessionUsecase.clearSession();
     addAction(ActionLogout());
+  }
+
+  Future<void> _EventNavigatePerformance (EventNavigatePerfomanceEvaluation event , Emitter emit) async{
+    addAction(ActionNavigatePerformance());
   }
 
   Future<void> _handeEventNavigateEditProfilePage (EventNavigateEditProfilePage event , Emitter emit) async{

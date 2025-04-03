@@ -14,3 +14,5 @@ class ActionNavigateSchedulesPage extends PageAction{}
 class ActionNavigateEditProfilePage extends PageAction{}
 
 class ActionLogout extends PageAction {}
+
+class ActionNavigatePerformance extends PageAction{}

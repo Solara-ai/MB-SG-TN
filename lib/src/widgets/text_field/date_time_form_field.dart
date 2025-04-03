@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,7 +22,8 @@ class DateTimeFormFieldWidget extends StatefulWidget {
   final DateTime? lastDate;
   final TextEditingController? textController;
 
-  const DateTimeFormFieldWidget({super.key, 
+  const DateTimeFormFieldWidget({
+    super.key,
     required this.onSaved,
     this.hintText,
     this.hintStyle,
@@ -46,15 +45,21 @@ class DateTimeFormFieldWidget extends StatefulWidget {
 
 class _DateTimeFormFieldWidgetState extends State<DateTimeFormFieldWidget> {
   late final TextEditingController _textController;
-
   late DateTime selectedDate;
 
   @override
   void initState() {
-    selectedDate = widget.initialDate ?? DateTime.now();
-    _textController = widget.textController ??
-        TextEditingController(text: widget.initialDate?.formatToString(widget.dateFormatter.pattern));
     super.initState();
+
+    if (widget.textController != null && widget.textController!.text.isNotEmpty) {
+      selectedDate = widget.textController!.text.toDateTimeReal();
+    } else {
+      selectedDate = widget.initialDate ?? DateTime.now();
+    }
+
+    _textController = widget.textController ??
+        TextEditingController(
+            text: widget.initialDate?.formatToString(widget.dateFormatter.pattern));
   }
 
   @override
@@ -81,7 +86,10 @@ class _DateTimeFormFieldWidgetState extends State<DateTimeFormFieldWidget> {
           ),
           suffixIconConstraints: const BoxConstraints(minWidth: 50),
           onSaved: (newValue) {
-            widget.onSaved(selectedDate);
+            final savedDate = _textController.text.isNotEmpty
+                ? _textController.text.toDateTimeReal()
+                : selectedDate;
+            widget.onSaved(savedDate);
           },
           onTap: () async {
             final date = await showDatePicker(
@@ -105,10 +113,14 @@ class _DateTimeFormFieldWidgetState extends State<DateTimeFormFieldWidget> {
               lastDate: widget.lastDate ?? DateTime.now(),
               currentDate: selectedDate,
             );
+
             if (date != null) {
-              selectedDate = date;
-              _textController.text = date.formatToString(widget.dateFormatter.pattern);
+              setState(() {
+                selectedDate = date;
+                _textController.text = date.formatToString(widget.dateFormatter.pattern);
+              });
               widget.onChanged?.call(date);
+              widget.onSaved(date);
             }
           },
         ),

@@ -52,3 +52,7 @@ class EventChangeRepetEndDate extends PageEvent {
 class EventAddEvent extends PageEvent {}
 
 class EventNavigateAddCategory extends PageEvent {}
+
+class EventEnableRepetEndate extends PageEvent {}
+
+class EventdisableRepetEndate extends PageEvent{}

@@ -1,9 +1,11 @@
 import 'package:get_it/get_it.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/add_event_chat_bot_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/create_epic_request.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/auth/login_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/auth/register_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/category/create_category_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/category/get_list_category_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/chat/add_event_chatbot_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/chat/history_chat_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/chat/user_chat_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/epic/create_epic_usecase.dart';
@@ -21,6 +23,7 @@ import 'package:schedule_gen_and_time_management/domain/usecase/task/create_task
 import 'package:schedule_gen_and_time_management/domain/usecase/task/delete_task_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/task/detai_task_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/task/get_list_task_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/user/evaluate_schedule_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/get_profile_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/update_profile_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_bloc.dart';

@@ -25,6 +25,8 @@ class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
     on<EventChangeEndTime>(_handleEventChangeEndTime);
     on<EventChangeRepetEndDate>(_handleEventRepetEndtime);
     on<EventAddEvent>(_handleEventAddEvent);
+    on<EventEnableRepetEndate>(_handleEventEnableRepetEndate);
+    on<EventdisableRepetEndate>(_handleEventdisableRepetEndate);
     on<EventNavigateAddCategory> (_handleEventNavigateCategory);
     _eventInitilize();
   }
@@ -82,6 +84,7 @@ class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
   Future<void> _handleEventAddEvent (EventAddEvent event , Emitter emit) async{
     
     final result = await _createScheduleUsecase.call((categoryId: state.categoryId , date: state.date , description: state.description , endTime: state.endTime, startTime: state.startTime , remindMe: state.remindMe , repeat: state.repeat , repeatEndDate: state.repeatEnddate , name: state.name ));
+    print('state repet endate ${state.repeatEnddate}');
     result.when(success: (data){
       print('success');
       addAction(ActionAddEventSuccess());
@@ -92,5 +95,13 @@ class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
 
   Future<void> _handleEventNavigateCategory (EventNavigateAddCategory event , Emitter emit ) async{
     addAction(ActionNavigateAddCategory());
+  }
+
+  Future<void> _handleEventEnableRepetEndate (EventEnableRepetEndate event , Emitter emit) async{
+    emit(state.coppyWith(showDateFormFiledRepet: true));
+  }
+
+  Future<void> _handleEventdisableRepetEndate (EventdisableRepetEndate event , Emitter emit) async{
+    emit (state.coppyWith(showDateFormFiledRepet: false));
   }
 }

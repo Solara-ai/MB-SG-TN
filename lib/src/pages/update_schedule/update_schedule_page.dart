@@ -15,6 +15,7 @@ import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/bottom%20sheet/show_bottom_sheet_with_icon.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/dialogs/common_dialog.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/loading/loading_overlay.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_form.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_text_form_field.dart';
@@ -42,6 +43,7 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
   TextEditingController _controllerNameEpic = TextEditingController();
   TextEditingController _controllerDescriptionEpic = TextEditingController();
   TextEditingController _controllerDateEpic = TextEditingController();
+  TextEditingController _controllerRepetEndate = TextEditingController();
   TextEditingController _controllerStartTimeEpic = TextEditingController();
   TextEditingController _controllerEndTimeEpic = TextEditingController();
 
@@ -82,16 +84,17 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
     return BlocBuilder<UpdateScheduleBloc, PageState>(
       bloc: _bloc,
       builder: (context, state) {
+        _controllerRepetEndate.text =
+            state.repeatEnddate.formatToString(DateFormatType.ddMMyyyy.pattern);
         _dropDownControllerCategory.value = state.category;
         _dropDownControlleRepeat.value = _stringToRepeat(state.repeat);
         _controllerDateEpic.text = state.date.formatToString(DateFormatType.ddMMyyyy.pattern);
-        print('date state : ${_controllerDateEpic.text}');
-        print('date hien tai dang dung ${_controllerDateEpic.text.toDateTimeReal()}');
         _controllerEndTimeEpic.text = state.endTime.format(context);
         _controllerNameEpic.text = state.name;
         _controllerDescriptionEpic.text = state.description;
         _controllerStartTimeEpic.text = state.startTime.format(context);
         _dropDownControllerCategory.updateItemList(state.listCategory);
+        _checkEndateEnable(_dropDownControlleRepeat.value);
         return LoadingOverlay(
           isLoading: state.showLoading,
           child: Container(
@@ -124,7 +127,7 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                               _bloc.add(EventUserChangeNameEvent(name: newValue));
                             },
                             validator: (value) {
-                              value.isNullOrEmpty() ? R.strings.please_enter_event : null;
+                              return value.isNullOrEmpty() ? R.strings.please_enter_event : null;
                             }),
                         SizedBox(height: 12),
                         // DesCription
@@ -141,15 +144,26 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                         SizedBox(height: 12),
                         // Date
                         DateTimeFormFieldWidget(
-                          initialDate: _controllerDateEpic.text.toDateTimeReal(),
+                          // cái này dùng để xuất hiện ngày hiện tại của lịch đó
                           textController: _controllerDateEpic,
                           hintText: R.strings.date,
-                          onChanged: (value) {
-                          },
                           onSaved: (value) {
                             _bloc.add(EventUserChangeDate(date: value));
+                            if (!state.showEnable) {
+                              // Lấy giá trị hiện tại của endDate từ _controllerRepetEndate
+                              DateTime currentEndDate =
+                                  _controllerRepetEndate.text.toDateTimeReal();
+
+                              // Kiểm tra nếu endDate nhỏ hơn startDate + 1 ngày
+                              if (currentEndDate.isBefore(value.add(Duration(days: 1)))) {
+                                // Cập nhật endDate thành startDate + 1 ngày
+                                DateTime newEndDate = value.add(Duration(days: 1));
+                                _controllerRepetEndate.text = newEndDate.toLocal().toString();
+                                _bloc.add(EventChangeRepetEndDate(repetEndDate: newEndDate));
+                              }
+                            }
                           },
-                          firstDate: DateTime.now(),
+                          firstDate: _controllerDateEpic.text.toDateTimeReal(),
                           lastDate: DateTime(2090),
                         ),
                         SizedBox(height: 12),
@@ -161,20 +175,18 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                               width: 181,
                               child: TimeFormFieldWidget(
                                 textController: _controllerStartTimeEpic,
-                                initialTime: _controllerStartTimeEpic.text.toTimeOfDay(),
                                 onChanged: (time) {
-                                  setState(() {
-                                    if (_endTime != null && _compareTime(time, _endTime!) >= 0) {
-                                      ShowBottomSheetWithIcon.showBottomSheetWithIcon(
-                                          message: R.strings.start_time_must_be_less_than_end_time,
-                                          context: context,
-                                          icon: Icons.warning,
-                                          colorIcon: R.color.colorErrorBase);
-                                      _startTime = time; // Chỉ cập nhật nếu hợp lệ
-                                    } else {
-                                      _startTime = time; // Chỉ cập nhật nếu hợp lệ
-                                    }
-                                  });
+                                  if (_endTime != null && _compareTime(time, _endTime!) >= 0) {
+                                    ShowBottomSheetWithIcon.showBottomSheetWithIcon(
+                                      message: R.strings.start_time_must_be_less_than_end_time,
+                                      context: context,
+                                      icon: Icons.warning,
+                                      colorIcon: R.color.colorErrorBase,
+                                    );
+                                  }
+                                  _startTime = time;
+                                  _controllerStartTimeEpic.text = time.format(context);
+                                  _controllerStartTimeEpic.notifyListeners(); // Thêm dòng này
                                 },
                                 validator: (value) =>
                                     value == null ? R.strings.time_start_required : null,
@@ -187,21 +199,18 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                               width: 181,
                               child: TimeFormFieldWidget(
                                 textController: _controllerEndTimeEpic,
-                                initialTime: _controllerEndTimeEpic.text.toTimeOfDay(),
                                 onChanged: (time) {
-                                  setState(() {
-                                    if (_startTime != null &&
-                                        _compareTime(_startTime!, time) >= 0) {
-                                      ShowBottomSheetWithIcon.showBottomSheetWithIcon(
-                                          message: R.strings.start_time_must_be_less_than_end_time,
-                                          context: context,
-                                          icon: Icons.warning,
-                                          colorIcon: R.color.colorErrorBase);
-                                      _endTime = time;
-                                    } else {
-                                      _endTime = time;
-                                    }
-                                  });
+                                  if (_startTime != null && _compareTime(_startTime!, time) >= 0) {
+                                    ShowBottomSheetWithIcon.showBottomSheetWithIcon(
+                                      message: R.strings.start_time_must_be_less_than_end_time,
+                                      context: context,
+                                      icon: Icons.warning,
+                                      colorIcon: R.color.colorErrorBase,
+                                    );
+                                  }
+                                  _endTime = time;
+                                  _controllerEndTimeEpic.text = time.format(context);
+                                  _controllerEndTimeEpic.notifyListeners(); // Thêm dòng này
                                 },
                                 validator: (value) =>
                                     value == null ? R.strings.time_end_required : null,
@@ -248,12 +257,52 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                             SizedBox(
                               width: 165,
                               child: DropdownFormField<Repeat>(
+                                enabled: false,
                                 onSavedItem: (value) {
+                                  if (value == Repeat.NONE) {
+                                    _bloc.add(EventUserChangeRepeat(
+                                        repeat: _dropDownControlleRepeat.value!.value));
+                                  }
                                   _bloc.add(EventUserChangeRepeat(repeat: value?.value));
                                 },
-                                initialItem: _dropDownControlleRepeat.value,
                                 itemList: Repeat.values,
                                 controller: _dropDownControlleRepeat,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // repet endate
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                R.strings.repetEnddate,
+                                style: R.textStyle.inter_regular_16_400
+                                    .copyWith(color: R.color.timeEvent),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 220,
+                              child: DateTimeFormFieldWidget(
+                                textController: _controllerRepetEndate,
+                                isEnabled: state.showEnable,
+                                isRequired: state.showEnable,
+                                hintText: R.strings.repetEnddate,
+                                onSaved: (date) {
+                                  // Kiểm tra nếu endDate được enable và startDate > endDate
+                                  DateTime startDate = _controllerDateEpic.text.toDateTimeReal();
+                                  if (startDate.isAfter(date)) {
+                                    // Hiển thị thông báo lỗi nếu endDate nhỏ hơn startDate
+                                    showErrorDialog();
+                                  } else {
+                                    _bloc.add(EventChangeRepetEndDate(repetEndDate: date));
+                                  }
+                                },
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2026),
                               ),
                             ),
                           ],
@@ -342,6 +391,18 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
     return 0;
   }
 
+  void _checkEndateEnable(Repeat? repeat) {
+    if (repeat == null) {
+      _bloc.add(EventDontShowEnableRepetDate());
+    } else {
+      if (repeat != Repeat.NONE) {
+        _bloc.add(EventShowEnableRepetDate());
+      } else {
+        _bloc.add(EventDontShowEnableRepetDate());
+      }
+    }
+  }
+
   Repeat _stringToRepeat(String repeat) {
     if (repeat == Repeat.DAILY.value) {
       return Repeat.DAILY;
@@ -354,5 +415,12 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
     } else {
       return Repeat.NONE;
     }
+  }
+
+  void showErrorDialog() {
+    CommonDialog(
+      title: Text(R.strings.error),
+      description: (Text('End time must be greater than start time')),
+    );
   }
 }

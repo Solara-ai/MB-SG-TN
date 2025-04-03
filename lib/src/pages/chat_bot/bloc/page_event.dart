@@ -11,3 +11,10 @@ class EventUserSendMessage extends PageEvent {
 
 class EventInitialize extends PageEvent {}
 
+class EventDetailMessageAIChange extends PageEvent{
+  String messageAi ; 
+  EventDetailMessageAIChange({this.messageAi = ''});
+}
+
+class EventAddToCalendar extends PageEvent {
+}

@@ -33,6 +33,8 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     on<EventUpdateSchedule>(_handleEventUpdateSchedule);
     on<EventNavigateAddCategory>(_handleEventNavigateAddCategory);
     on<EventChangeUpdateType>(_handleEventChangeUpdateType);
+    on<EventShowEnableRepetDate>(_handleEventShowRepet);
+    on<EventDontShowEnableRepetDate>(_handleEventDontShowRepet);
     // on<EventChangeScheduleId> (_handleEventChangeScheduleId);
     on<EventLoadListCategory> (_handleEventLoadListCategory);
     _eventInitilize();
@@ -51,6 +53,7 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     final result = await _getScheduleByEventidUsecase.call((eventId: scheduleByDate.eventId));
     result.when(success: (data) {
       emit(state.coppyWith(
+          repeatEnddate: data.endDate.toDateTime(),
           name: data.eventName,
           description: data.description,
           date: data.date.toDateTime(),
@@ -61,7 +64,6 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
           categor: data.categories,
           showLoading: false,
           eventId: data.eventId));
-          print(  'date event itinize :  ${state.date}');
     }, failure: (error) {
       emit(state.coppyWith(showLoading: false));
       addAction(ActionLoaddedScheduleByEventIdFaild(message: error.errorMessage));
@@ -129,9 +131,11 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
       repeatEnddate: state.repeatEnddate,
       scheduleId: scheduleByDate.scheduleId
     ));
+        print('repetEndate luc duoc cap nhat la ${state.repeatEnddate}');
     _result.when(success: (
       data
     ) {
+    
       addAction(ActionUpdateScheduleSuccess());
     }, failure: (error){
       addAction(ActionUpdateScheduleFaild(error.errorMessage));
@@ -146,4 +150,13 @@ class UpdateScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
   Future<void> _handleEventNavigateAddCategory(EventNavigateAddCategory event, Emitter emit) async {
     addAction(ActionNavigateAddCategory());
   }
+
+  Future<void> _handleEventShowRepet (EventShowEnableRepetDate event , Emitter emit) async{
+    emit(state.coppyWith(showEnable: true));
+  }
+
+   Future<void> _handleEventDontShowRepet (EventDontShowEnableRepetDate event , Emitter emit) async{
+    emit(state.coppyWith(showEnable: false));
+  }
+
 }

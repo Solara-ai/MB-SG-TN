@@ -147,6 +147,37 @@ class _AppApi implements AppApi {
   }
 
   @override
+  Future<ApiResponse<EvaluateScheduleDto>> evaluateSchedule(
+      String user_id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<EvaluateScheduleDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/ai/performance/schedules/evaluate/${user_id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ApiResponse<EvaluateScheduleDto>.fromJson(
+      _result.data!,
+      (json) => EvaluateScheduleDto.fromJson(json as Map<String, dynamic>),
+    );
+    return _value;
+  }
+
+  @override
   Future<ApiResponse<UserProfileDto>> getmyProfile() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -193,6 +224,40 @@ class _AppApi implements AppApi {
             .compose(
               _dio.options,
               '/users/profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ApiResponse<EmptyData?>.fromJson(
+      _result.data!,
+      (json) => json == null
+          ? null
+          : EmptyData.fromJson(json as Map<String, dynamic>),
+    );
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<EmptyData?>> addEventChatBot(
+      AddEventChatBotRequest param) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(param.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<EmptyData>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/users/schedules/add-event',
               queryParameters: queryParameters,
               data: _data,
             )
