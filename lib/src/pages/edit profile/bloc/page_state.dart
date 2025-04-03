@@ -9,11 +9,13 @@ class PageState {
   final String hobbies;
   final String password;
   final String occupation;
+  final String email;
   final UserProfile? userProfile;
 
   PageState(
       {this.fullName = '',
       this.phone = '',
+      this.email = '',
       this.showLoading = false,
       DateTime? birthDay,
       this.gender = '',
@@ -25,6 +27,7 @@ class PageState {
 
   PageState copyWith(
           {String? fullName,
+          String ? email ,
           String? phone,
           bool? showLoading,
           DateTime? birthDay,
@@ -34,6 +37,7 @@ class PageState {
           String? occupation,
           UserProfile? userprofile}) =>
       PageState(
+          email: email ?? this.email,
           showLoading: showLoading ?? this.showLoading,
           fullName: fullName ?? this.fullName,
           phone: phone ?? this.phone,

@@ -70,6 +70,7 @@ class Strings {
   final String task_incomplete = 'Task incomplete';
   final String goal_incomplete = 'Goal incomplete';
   final String schedule = 'Schedule';
+  final String updateProfileSuceess = 'Update profile Success';
   final String select_category = 'Select category';
   final String next_event = 'Next event';
   final String event_name = 'Event name';
