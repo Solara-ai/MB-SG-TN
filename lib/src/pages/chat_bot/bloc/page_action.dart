@@ -13,3 +13,10 @@ class ActionInitializeFaild extends PageAction {
   String message ; 
   ActionInitializeFaild ({required this.message});
 }
+
+class ActionAddCalendarSuccess extends PageAction{}
+
+class ActionAddCalendarFaild extends PageAction {
+  String messsage ;
+  ActionAddCalendarFaild ({required this.messsage});
+}

@@ -8,6 +8,7 @@ import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/drawer/drawer_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/edit%20profile/edit_profile_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/performance_evaluation/performance_evaluation_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/profile/proflie_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/settings/settings_page.dart';
@@ -50,6 +51,8 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
             NavigatorUltils.pushAndRemoveUntilPage(context, TaskManagerPage());
           case ActionNavigateSettingsPage():
             NavigatorUltils.pushAndRemoveUntilPage(context, SettingsPage());
+          case ActionNavigatePerformance() :
+            NavigatorUltils.pushAndRemoveUntilPage(context, PerformanceEvaluationPage());
           case ActionNavigateSchedulesPage():
             NavigatorUltils.pushAndRemoveUntilPage(context, SchedulePage());
           case ActionNavigateEditProfilePage() : NavigatorUltils.navigatePage(context, ProfliePage());
@@ -121,11 +124,11 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
       padding: const EdgeInsets.only(top: 10),
       child: Column(
         children: [
-          ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_home),
-            title: Text(R.strings.home,
+             ListTile(
+            leading: SvgPicture.asset(R.drawables.ic_schedule),
+            title: Text(R.strings.schedule,
                 style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _NavigateHomePage
+            onTap: _NavigateSchedulePage
           ),
           SizedBox(
             height: 20,
@@ -148,11 +151,11 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
           SizedBox(
             height: 20,
           ),
-          ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_schedule),
-            title: Text(R.strings.schedule,
+            ListTile(
+            leading: SvgPicture.asset(R.drawables.ic_performance_evaluation),
+            title: Text(R.strings.performance_evaluation,
                 style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _NavigateSchedulePage
+            onTap: _NavigatePerformancePage
           ),
           SizedBox(
             height: 20,
@@ -193,6 +196,13 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
      _drawerBloc.add(EventNavigateSchedulePage());
      context.popScreen();
   }
+
+    void _NavigatePerformancePage () {
+     _drawerBloc.add(EventNavigatePerfomanceEvaluation());
+     context.popScreen();
+  }
+
+  
 
   void _Logout () {
     _drawerBloc.add(EventLogout());

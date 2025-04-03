@@ -7,6 +7,7 @@ import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/onboarding/on_boarding_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/start/start_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/size_config.dart';
 
@@ -53,7 +54,7 @@ class _AppState extends BaseState<App> {
           return OnBoardingPage();
         }
         else {
-          return HomePage();
+          return SchedulePage();
         }
     }
   }

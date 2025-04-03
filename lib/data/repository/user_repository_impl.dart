@@ -1,9 +1,13 @@
+import 'dart:math';
+
+import 'package:schedule_gen_and_time_management/data/dto/evaluate_schedule_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/history_message_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/list_message_user_ai_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/user_profile_dto.dart';
 import 'package:schedule_gen_and_time_management/data/repository/base/base_network_repository.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/app_api.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/helper/result.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/add_event_chat_bot_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/message_user_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/update_profile_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/response/empty_data.dart';
@@ -33,4 +37,14 @@ class UserRepositoryImpl extends BaseNetworkRepository implements UserRepository
     return execute(_api.updateProfile(profileRequest));
   }
 
+  @override
+  Future<Result<EvaluateScheduleDto>> evaluateSchedule(String user_id) {
+    return execute(_api.evaluateSchedule(user_id));
+  }
+
+  @override
+  Future<Result<EmptyData?>> addEventChatBot(AddEventChatBotRequest param) {
+    return execute(_api.addEventChatBot(param));
+    
+  }
 }

@@ -20,3 +20,5 @@ class ActionLoadedScheduleDataError extends PageAction {
 }
 
 class ActionDeletedEventSuccess extends PageAction {}
+
+class ActionNavigateChatAi extends PageAction {}

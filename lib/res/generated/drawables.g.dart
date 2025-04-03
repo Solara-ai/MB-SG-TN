@@ -25,12 +25,14 @@ class Drawables {
 	String get ic_edit => "lib/res/drawables/ic_edit.svg";
 	String get ic_edit_2 => "lib/res/drawables/ic_edit_2.svg";
 	String get ic_empty_img_simple => "lib/res/drawables/ic_empty_img_simple.svg";
+	String get ic_event => "lib/res/drawables/ic_event.svg";
 	String get ic_expan_more => "lib/res/drawables/ic_expan_more.svg";
 	String get ic_goal_complete => "lib/res/drawables/ic_goal_complete.svg";
 	String get ic_home => "lib/res/drawables/ic_home.svg";
 	String get ic_logout => "lib/res/drawables/ic_logout.svg";
 	String get ic_noti => "lib/res/drawables/ic_noti.svg";
 	String get ic_not_see_password => "lib/res/drawables/ic_not_see_password.svg";
+	String get ic_performance_evaluation => "lib/res/drawables/ic_performance_evaluation.svg";
 	String get ic_plan => "lib/res/drawables/ic_plan.svg";
 	String get ic_schedule => "lib/res/drawables/ic_schedule.svg";
 	String get ic_search => "lib/res/drawables/ic_search.svg";
@@ -48,6 +50,7 @@ class Drawables {
 	String get img_chatbot_2 => "lib/res/drawables/img_chatbot_2.png";
 	String get img_chatbot_3 => "lib/res/drawables/img_chatbot_3.png";
 	String get img_evening => "lib/res/drawables/img_evening.png";
+	String get img_heart => "lib/res/drawables/img_heart.png";
 	String get img_logo_app => "lib/res/drawables/img_logo_app.png";
 	String get img_logo_login => "lib/res/drawables/img_logo_login.png";
 	String get img_morning => "lib/res/drawables/img_morning.png";

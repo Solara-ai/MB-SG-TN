@@ -64,3 +64,7 @@ class EventUpdateSchedule extends PageEvent {}
 class EventNavigateAddCategory extends PageEvent {}
 
 class EventLoadListCategory extends PageEvent {}
+
+class EventShowEnableRepetDate extends PageEvent {}
+
+class EventDontShowEnableRepetDate extends PageEvent{}

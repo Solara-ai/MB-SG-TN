@@ -14,20 +14,22 @@ class PageState {
   final TimeOfDay startTime;
   final TimeOfDay endTime;
   final List<Category> listCategory;
-  final Category ? category ;
+  final Category? category;
   final bool showLoading;
-   PageState(
+  final bool showEnable;
+  PageState(
       {this.name = '',
       this.description = '',
       DateTime? date,
       this.repeat = '',
       this.eventId = '',
+      this.showEnable = false,
       DateTime? repeatEnddate,
       this.remindMe = false,
       this.updateType = 'THIS',
       this.scheduleId = '',
       this.categoryId = '',
-      this.showLoading = false ,
+      this.showLoading = false,
       TimeOfDay? startTime,
       TimeOfDay? endTime,
       this.category,
@@ -36,25 +38,27 @@ class PageState {
         date = date ?? DateTime(2025),
         startTime = startTime ?? TimeOfDay(hour: 10, minute: 10),
         endTime = endTime ?? TimeOfDay(hour: 10, minute: 10),
-        listCategory = listCategory ?? []; 
+        listCategory = listCategory ?? [];
 
-   PageState coppyWith(
+  PageState coppyWith(
       {String? name,
       String? description,
+      bool? showEnable,
       String? updateType,
       DateTime? date,
-      String ? scheduleId,
+      String? scheduleId,
       String? repeat,
-      String ? eventId,
+      String? eventId,
       DateTime? repeatEnddate,
       bool? remindMe,
       String? categoryId,
       TimeOfDay? startTime,
       TimeOfDay? endTime,
-      Category ? categor,
-      bool ? showLoading,
+      Category? categor,
+      bool? showLoading,
       List<Category>? listCategory}) {
     return PageState(
+        showEnable: showEnable ?? this.showEnable,
         scheduleId: scheduleId ?? this.scheduleId,
         updateType: updateType ?? this.updateType,
         name: name ?? this.name,

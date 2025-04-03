@@ -5,6 +5,7 @@ import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/chat_bot/chat_bot_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/onboarding/on_boarding_bloc.dart';
+import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
 
@@ -34,7 +35,7 @@ class _OnBoardingPageState extends BaseState<OnBoardingPage> {
       (action) {
         switch (action) {
           case ActionNavigateHomePage():
-            NavigatorUltils.navigatePage(context, HomePage());
+            NavigatorUltils.navigatePage(context, SchedulePage());
           case ActionNavigateChatPage():
             NavigatorUltils.navigatePage(context, ChatBotPage());
         }

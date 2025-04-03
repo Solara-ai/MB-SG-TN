@@ -27,6 +27,7 @@ class ScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     on<EventGetListScheduleData>(_handleEventGetListScheduleData);
     on<EventChangeEventId>(_handleEventChangeEventId);
     on<EventDeleteSchedule>(_handleEventDeleteSchedule);
+    on<EventNavigateChatAi>(_handleEventNavigateChatAi);
     _eventInitilize();
     _eventGetListScheduleData();
   }
@@ -46,16 +47,14 @@ class ScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     result.when(success: (data) {
       emit(state.copyWith(listScheduleData: data, showLoading: false));
     }, failure: (error) {
+      emit(state.copyWith(showLoading: false));
       addAction(ActionLoadedScheduleDataError(message: error.errorMessage));
     });
   }
 
   Future<void> _handleEventDeleteSchedule(EventDeleteSchedule event, Emitter emit) async {
     final result = await _deletedScheduleUsecase.call((eventId: state.eventId));
-    result.when(
-        success: (data) {
-        },
-        failure: (error) {});
+    result.when(success: (data) {}, failure: (error) {});
     _eventInitilize();
     _eventGetListScheduleData();
     addAction(ActionDeletedEventSuccess());
@@ -71,6 +70,7 @@ class ScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     result.when(success: (data) {
       emit(state.copyWith(listSchedulebydate: data, showLoading: false));
     }, failure: (error) {
+      emit(state.copyWith(showLoading: false));
       addAction(ActionLoaddedDataFaild(message: error.errorMessage));
     });
   }
@@ -96,5 +96,9 @@ class ScheduleBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     }, failure: (error) {
       addAction(ActionLoaddedDataFaild(message: error.errorMessage));
     });
+  }
+
+  Future<void> _handleEventNavigateChatAi(EventNavigateChatAi event, Emitter emit) async {
+    addAction(ActionNavigateChatAi());
   }
 }

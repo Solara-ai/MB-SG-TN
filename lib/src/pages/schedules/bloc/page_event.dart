@@ -34,3 +34,5 @@ class EventChangeEventId extends PageEvent {
   final String ? eventId ;
   EventChangeEventId ({this.eventId});
 }
+
+class EventNavigateChatAi extends PageEvent{}

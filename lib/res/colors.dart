@@ -31,6 +31,8 @@ class Colors {
   Color get colorFillContent => const Color(0x0F000000);
   Color get gray_black => const Color(0xFF212225);
   Color get item_event => const Color(0xFFe3defc);
+  Color get background_score => const Color (0xFF2b2a3a);
+  Color get color_backGround_for_chart => const Color (0xFFf9f9f9);
   // TEXT
   Color get text => const Color(0xFF0D0E0F);
   Color get textStatusDone => const Color(0xFF795CD0);
@@ -58,6 +60,8 @@ class Colors {
   Color get bgChatbot => const Color (0xFFf3f3f3);
   Color get timeEvent => const Color (0xFF707070);
   Color get addCategoryColor => const Color (0xFF6D29F6);
+  Color get colorEventForUser => const Color (0xFFfcfcfc);
+  Color get fdd5d7 => const Color (0xFFfdd5d7);
   // tab
   Color get selectTabItem => const Color(0XFF7F3DFF);
   Color get unselectedTab => const Color(0xFFEEE5FF);
@@ -85,4 +89,10 @@ class Colors {
   //Extension
   Color get black => const Color(0xFF000000);
   Color get white => const Color(0xFFFFFFFF);
+
+  //Color chart column 
+  Color get column1 => const Color (0xFF03bdde);
+  Color get column2 => const Color (0xFF5561f6);
+  Color get column3 => const Color (0xFFfd6f3d);
+  Color get column4 => const Color(0xFFbfbfbf);
 }

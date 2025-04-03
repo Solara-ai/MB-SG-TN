@@ -24,5 +24,6 @@ Future<void> configureUsecaseDependencies() async {
     GetIt.instance.registerFactory(() => DeleteEpicUsecase());
     GetIt.instance.registerFactory(() => UpdateProfileUsecase());
     GetIt.instance.registerFactory(() => TotalTaskAndPlanUsecase());
-    
+    GetIt.instance.registerFactory(() => EvaluateScheduleUsecase());
+    GetIt.instance.registerCachedFactory(() => AddEventChatbotUsecase());
 }

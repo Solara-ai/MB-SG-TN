@@ -13,4 +13,5 @@ abstract class ScheduleRepository {
   Future <Result<EmptyData?>> deleteScheduleByEventId (String eventId);
   Future <Result<List<SchedulesByDateDto>>> getListScheduleByDate (String date);
   Future<Result<List<ScheduleDataDto>>> getListDataSchedule (int year, int month);
+  
 }

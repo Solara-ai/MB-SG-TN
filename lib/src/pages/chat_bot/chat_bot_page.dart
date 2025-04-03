@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/chat_bot/chat_bot_bloc.dart';
+import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_page.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/string_extension.dart';
+import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/loading/loading_overlay.dart';
 
@@ -44,6 +46,10 @@ class _ChatBotPageState extends BaseState<ChatBotPage> {
           });
         case ActionInitializeFaild():
           ToastUtils.showErrorToast(context, message: action.message);
+        case ActionAddCalendarFaild() :
+        ToastUtils.showErrorToast(context, message: action.messsage);
+        case ActionAddCalendarSuccess():
+        NavigatorUltils.pushAndRemoveUntilPage(context, SchedulePage());
       }
     });
   }
@@ -227,7 +233,8 @@ class _ChatBotPageState extends BaseState<ChatBotPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print('add to calendar click');
+                      _bloc.add(EventDetailMessageAIChange(messageAi: text));
+                      _bloc.add(EventAddToCalendar());
                     },
                     child: Container(
                       alignment: Alignment.center,
