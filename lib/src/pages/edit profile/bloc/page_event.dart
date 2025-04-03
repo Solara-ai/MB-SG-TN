@@ -45,5 +45,10 @@ class EventUpdateProfile extends PageEvent {
   
 }
 
+class EventUserChangeEmail extends PageEvent {
+  String ? email ;
+  EventUserChangeEmail ({this.email});
+}
+
 
 
