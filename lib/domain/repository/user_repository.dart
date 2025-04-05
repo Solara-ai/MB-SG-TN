@@ -5,6 +5,7 @@ import 'package:schedule_gen_and_time_management/data/dto/user_profile_dto.dart'
 import 'package:schedule_gen_and_time_management/data/source/network/helper/result.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/add_event_chat_bot_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/message_user_request.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/send_feed_back_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/update_profile_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/response/empty_data.dart';
 
@@ -15,4 +16,5 @@ abstract class UserRepository {
    Future<Result<EmptyData?>> updateProfile(UpdateProfileRequest profileRequest);
    Future<Result<EvaluateScheduleDto>> evaluateSchedule (String user_id);
    Future<Result<EmptyData?>> addEventChatBot (AddEventChatBotRequest param);
+    Future<Result<EmptyData?>> sendFeedBack (SendFeedBackRequest param);
 }

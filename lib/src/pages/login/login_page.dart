@@ -6,7 +6,7 @@ import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
-import 'package:schedule_gen_and_time_management/src/pages/forgot%20password/forgot_password_page.dart';
+import 'package:schedule_gen_and_time_management/src/pages/forgot_password/forgot_password_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/login/login_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/onboarding/on_boarding_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/register/register_page.dart';

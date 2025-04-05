@@ -25,6 +25,7 @@ import 'package:schedule_gen_and_time_management/domain/usecase/task/detai_task_
 import 'package:schedule_gen_and_time_management/domain/usecase/task/get_list_task_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/evaluate_schedule_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/get_profile_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/user/send_feed_back_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/update_profile_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/pages/schedules/schedule_bloc.dart';
 
