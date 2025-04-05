@@ -151,6 +151,7 @@ class Strings {
   final String select_the_tasks = 'Select the tasks';
   final String select_task = 'Select task';
   final String send = 'Send';
+  final String send_feedback = 'Send feedback success';
   final String write_your_message = 'Write your message';
   final String write_description_here = 'Write description here...';
   final String good_afternoon = 'Good afternoon, ';

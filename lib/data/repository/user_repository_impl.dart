@@ -9,6 +9,7 @@ import 'package:schedule_gen_and_time_management/data/source/network/app_api.dar
 import 'package:schedule_gen_and_time_management/data/source/network/helper/result.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/add_event_chat_bot_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/message_user_request.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/send_feed_back_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/update_profile_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/response/empty_data.dart';
 import 'package:schedule_gen_and_time_management/domain/repository/user_repository.dart';
@@ -46,5 +47,10 @@ class UserRepositoryImpl extends BaseNetworkRepository implements UserRepository
   Future<Result<EmptyData?>> addEventChatBot(AddEventChatBotRequest param) {
     return execute(_api.addEventChatBot(param));
     
+  }
+
+  @override
+  Future<Result<EmptyData?>> sendFeedBack(SendFeedBackRequest param) {
+    return execute(_api.sendFeedBack(param));
   }
 }

@@ -20,6 +20,7 @@ import 'package:schedule_gen_and_time_management/data/source/network/request/cre
 import 'package:schedule_gen_and_time_management/data/source/network/request/login_user_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/message_user_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/register_user_request.dart';
+import 'package:schedule_gen_and_time_management/data/source/network/request/send_feed_back_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/update_profile_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/request/update_schedules_request.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/response/api_response.dart';
@@ -117,5 +118,8 @@ abstract class AppApi {
 
   @GET('/users/epic/total') 
   Future<ApiResponse<TotalTaskAndPlanDto>> getTotalTaskAndPlan (@Query('date') String date);
+
+  @POST('/users/feedback/send')
+  Future<ApiResponse<EmptyData?>> sendFeedBack (@Body() SendFeedBackRequest param);
   
 }
