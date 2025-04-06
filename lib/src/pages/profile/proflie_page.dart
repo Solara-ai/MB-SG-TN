@@ -32,9 +32,13 @@ class _ProfilePageState extends BaseState<ProfliePage> {
   
   void _setupBloc () {
     _bloc = ProfileBloc();
-    _bloc.listenAction(cancelSubOnDispose, (action) {
+    _bloc.listenAction(cancelSubOnDispose, (action) async{
       switch (action) {
-        case ActionNavigateProFilePage() : NavigatorUltils.navigatePage(context, EditProfilePage());
+        case ActionNavigateProFilePage() : 
+        final result = await NavigatorUltils.navigatePage<bool>(context, EditProfilePage());
+        if ( result == true) {
+          _bloc.add(InitilizeEvent());
+        }
         case ActionGetMyprofileError () : ToastUtils.showErrorToast(context, message: action.message);
       }
     });
@@ -79,6 +83,7 @@ class _ProfilePageState extends BaseState<ProfliePage> {
                   shape: BoxShape.circle,
                   image: DecorationImage(image: AssetImage(R.drawables.image_user_empty), fit: BoxFit.cover)),
             ),
+            // đoạn này là chỉnh sửa hình ảnh .
             Positioned(
               top: 70,
               left: 60,

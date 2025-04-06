@@ -268,7 +268,6 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                                     // Nếu không mở, lấy ngày chính + 1 ngày
                                     savedDate = (_selectedDate ?? DateTime.now())
                                         .add(const Duration(days: 1));
-                                    print('Ngày kết thúc tự động tính từ ngày chính: $savedDate');
                                   }
                                   _bloc.add(EventChangeRepetEndDate(repetEndDate: savedDate));
                                 },

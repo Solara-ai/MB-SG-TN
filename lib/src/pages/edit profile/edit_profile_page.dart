@@ -6,9 +6,7 @@ import 'package:schedule_gen_and_time_management/src/pages/edit%20profile/edit_p
 import 'package:schedule_gen_and_time_management/src/pages/register/model/gender.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/string_extension.dart';
-import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
-import 'package:schedule_gen_and_time_management/src/utils/validator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/custom_appbar.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_form.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_text_form_field.dart';
@@ -46,7 +44,7 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
           ToastUtils.showErrorToast(context, message: action.error);
         case ActionUpdateProfileSuccess():
           ToastUtils.showSuccessToast(context, message: R.strings.updateProfileSuceess);
-          popPage();
+          popPage(result: true);
       }
     });
   }
@@ -55,6 +53,7 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
   final DropDownController drController =
       DropDownController<MaleUser>(initialItemList: MaleUser.values);
   final TextEditingController _controllerfullName = TextEditingController();
+  final TextEditingController _controllerOcupation = TextEditingController();
   final TextEditingController _controllerbirthDay = TextEditingController();
   final TextEditingController _controllerphoneNumber = TextEditingController();
   final TextEditingController _controlleremail = TextEditingController();
@@ -67,8 +66,10 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
         builder: (context, state) {
           if (state.userProfile != null) {
             _controllerfullName.text = state.userProfile!.fullName;
-            _controllerbirthDay.text = state.userProfile!.birthday;
+            _controllerbirthDay.text =
+                state.birthDay.formatToString(DateFormatType.ddMMyyyy.pattern);
             _controllerphoneNumber.text = state.userProfile!.phone;
+            _controllerOcupation.text = state.userProfile!.occupation;
             _controllerhobbies.text = state.userProfile!.hobbies;
             _controlleremail.text = state.userProfile!.email;
             drController.value = maleUser(state.userProfile!.gender);
@@ -77,7 +78,11 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
             backgroundColor: R.color.white,
             appBar: appBar(R.strings.edit_profile, action: [
               GestureDetector(
-                onTap: _onSave,
+                onTap: () {
+                  print('required password: ${state.requiredPassword}');
+                  print('required password again: ${state.requiredPasswordAgain}');
+                  _onSave();
+                },
                 child: Container(
                   padding: EdgeInsets.only(right: 20),
                   child: Text(
@@ -176,29 +181,46 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
               SizedBox(
                 height: 16,
               ),
-              // email
               CommonTextFormField(
                 controller: _controllerhobbies,
                 label: R.strings.hobbies,
                 minLines: 5,
                 maxLines: 8,
                 hintText: R.strings.hobbies,
-                isRequired: true,
                 onSaved: (newValue) {
                   _bloc.add(EventUserChangeHobbies(hobbies: newValue));
                 },
               ),
+              SizedBox(
+                height: 16,
+              ),
+              CommonTextFormField(
+                controller: _controllerOcupation,
+                label: R.strings.occupation,
+                onSaved: (newValue) {
+                  _bloc.add(EventUserChangeoccupation(ocupation: newValue));
+                },
+              ),
+              SizedBox(
+                height: 16,
+              ),
               CommonTextFormField(
                 label: R.strings.password,
+                onChanged: (value) {
+                  _bloc.add(EventRequiredPaswordAgain());
+                },
                 hintText: R.strings.password,
-                isRequired: true,
+                isRequired: state.requiredPassword,
                 controller: _passwordControler,
               ),
               SizedBox(
                 height: 16,
               ),
               CommonTextFormField(
-                isRequired: true,
+                onChanged: (value) {
+                  _bloc.add(EventRequiredPassword());
+                },
+                isRequired: false,
                 label: R.strings.confirm_password,
                 hintText: R.strings.confirm_password,
                 validator: (value) => _checkConfirmPassword(value),
@@ -223,12 +245,12 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
 
   void _onSave() {
     if (_formkey.currentState?.validate() ?? false) {
-        _formkey.currentState?.save();
-        _bloc.add(EventUpdateProfile());
+      _formkey.currentState?.save();
+      _bloc.add(EventUpdateProfile());
     }
   }
 
-    String? _checkConfirmPassword(String? value) {
+  String? _checkConfirmPassword(String? value) {
     if (!value.isNullOrEmpty() && !_passwordControler.text.isNullOrEmpty()) {
       if (value == _passwordControler.text) {
         return null;
@@ -236,7 +258,6 @@ class _EditProfilePageState extends BaseState<EditProfilePage> {
         return R.strings.Passwords_must_match;
       }
     }
-    return ValidatorUltils.validatePassword(value);
+    return null;
   }
-
 }
