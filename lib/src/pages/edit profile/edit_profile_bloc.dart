@@ -4,6 +4,7 @@ import 'package:schedule_gen_and_time_management/domain/model/user_profile.dart'
 import 'package:schedule_gen_and_time_management/domain/usecase/user/get_profile_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/user/update_profile_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_bloc.dart';
+import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 
 part 'bloc/page_action.dart';
 part 'bloc/page_event.dart';
@@ -23,6 +24,8 @@ class EditProfileBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     on<EventUserChangeoccupation>(_handleEventUserChangeoccupation);
     on<EventUserChangeEmail>(_handleEventUserChangeEmail);
     on<EventUpdateProfile>(_updateProfile);
+    on<EventRequiredPaswordAgain>(_handleEventRequiredPasswordAgain);
+    on<EventRequiredPassword>(_handleEventRequiredPassword);
     _eventInitilize();
   }
 
@@ -35,6 +38,7 @@ class EditProfileBloc extends BaseBloc<PageAction, PageEvent, PageState> {
     final result = await _getProfileUsecase.call(());
     result.when(success: (data) {
       emit(state.copyWith(showLoading: false, userprofile: data));
+      emit (state.copyWith(birthDay: data.birthday.toDateTime()));
     }, failure: (error) {
       emit(state.copyWith(showLoading: false));
       addAction(ActionLoaddedProfileFaild(message: error.errorMessage));
@@ -92,5 +96,13 @@ class EditProfileBloc extends BaseBloc<PageAction, PageEvent, PageState> {
       emit(state.copyWith(showLoading: false));
       addAction(ActionUpdateProfileFaild(error: error.errorMessage));
     });
+  }
+
+  Future<void> _handleEventRequiredPasswordAgain (EventRequiredPaswordAgain event, Emitter emit) async{
+    emit(state.copyWith(requiredPassword: true));
+  }
+
+  Future<void>  _handleEventRequiredPassword (EventRequiredPassword event , Emitter emit) async{
+    emit(state.copyWith(requiredPasswordAgain: true));
   }
 }

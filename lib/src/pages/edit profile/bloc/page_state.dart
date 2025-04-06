@@ -8,13 +8,17 @@ class PageState {
   final String gender;
   final String hobbies;
   final String password;
+  final bool requiredPasswordAgain;
+  final bool requiredPassword;
   final String occupation;
   final String email;
   final UserProfile? userProfile;
 
   PageState(
       {this.fullName = '',
+      this.requiredPassword = false,
       this.phone = '',
+      this.requiredPasswordAgain = false ,
       this.email = '',
       this.showLoading = false,
       DateTime? birthDay,
@@ -27,6 +31,8 @@ class PageState {
 
   PageState copyWith(
           {String? fullName,
+          bool ? requiredPassword,
+        bool ? requiredPasswordAgain,
           String ? email ,
           String? phone,
           bool? showLoading,
@@ -37,6 +43,8 @@ class PageState {
           String? occupation,
           UserProfile? userprofile}) =>
       PageState(
+          requiredPassword: requiredPassword ?? this.requiredPassword,
+          requiredPasswordAgain: requiredPasswordAgain ?? this.requiredPasswordAgain,
           email: email ?? this.email,
           showLoading: showLoading ?? this.showLoading,
           fullName: fullName ?? this.fullName,

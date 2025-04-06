@@ -50,5 +50,7 @@ class EventUserChangeEmail extends PageEvent {
   EventUserChangeEmail ({this.email});
 }
 
+class EventRequiredPaswordAgain extends PageEvent {}
 
+class EventRequiredPassword extends PageEvent {}
 
