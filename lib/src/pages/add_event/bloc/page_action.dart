@@ -5,8 +5,7 @@ sealed class PageAction {
 class ActionAddEventSuccess extends PageAction {}
 
 class ActionAddEventFaild extends PageAction {
-  String message ;
-  ActionAddEventFaild (this.message);
+
 }
 
 class ActionLoadedFaild extends PageAction {
