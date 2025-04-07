@@ -37,4 +37,4 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
           mkdir -p /root/path/web_about_us/PAGE-SG-TM/downloads/
-          cp /root/path/web_about_us/PAGE-SG-TM/app-release.apk /root/path/web_about_us/PAGE-SG-TM/downloads/
+          cp /root/path/web_about_us/build/app/outputs/flutter-apk/app-release.apk /root/path/web_about_us/PAGE-SG-TM/downloads/
