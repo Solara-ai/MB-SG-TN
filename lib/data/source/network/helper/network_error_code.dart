@@ -15,8 +15,10 @@ enum NetworkErrorCode {
     EMAIL_HAS_BEEN_REGISTED('MSG1103'),
     // email đã được đăng ký
     INVALID_EMAIL_FORMAT('MSG1104'),
+    // BAD_REQUEST ('BAD_REQUEST'),
     // không đúng định dạng của email
     NOT_FOUND('NOT_FOUND');
+    
     const NetworkErrorCode(this.errorCode , {this.isGlobalError = false});
     final String errorCode; 
     final bool isGlobalError;
@@ -33,7 +35,8 @@ enum NetworkErrorCode {
             RESET_PASSWORD_OTP_CODE_INVALID_OR_EXPIRED => 'You have entered the wrong OTP code',
             EMAIL_HAS_BEEN_REGISTED => 'Email has been registered',
             INVALID_EMAIL_FORMAT => 'Incorrect email format',
-            NOT_FOUND => 'Password or email not match'
+            NOT_FOUND => 'Password or email not match',
+            // BAD_REQUEST => 'Event duplicate',
         };
     }
 }
