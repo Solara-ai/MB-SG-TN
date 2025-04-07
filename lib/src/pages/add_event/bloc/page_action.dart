@@ -15,3 +15,5 @@ class ActionLoadedFaild extends PageAction {
 }
 
 class ActionNavigateAddCategory extends PageAction {}
+
+class ActionGenEventAiSuccess extends PageAction{}

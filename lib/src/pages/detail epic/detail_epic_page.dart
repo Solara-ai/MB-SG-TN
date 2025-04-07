@@ -78,14 +78,6 @@ class _DetailEpicPageState extends BaseState<DetailEpicPage> {
         appBar: actionAppbar(
           backGroundColor: R.color.white,
           title: R.strings.detail_epic,
-          action: [
-            IconButton(
-              onPressed: () {
-                NavigatorUltils.navigatePage(context, EditEpicPage());
-              },
-              icon: SvgPicture.asset(R.drawables.ic_edit),
-            ),
-          ],
         ),
         floatingActionButton: buildFloatingButton(
             context: context,

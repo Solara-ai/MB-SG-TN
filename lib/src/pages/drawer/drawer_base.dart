@@ -6,7 +6,6 @@ import 'package:schedule_gen_and_time_management/domain/usecase/auth/session_use
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/drawer/drawer_bloc.dart';
-import 'package:schedule_gen_and_time_management/src/pages/edit%20profile/edit_profile_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/home/home_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/performance_evaluation/performance_evaluation_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/profile/proflie_page.dart';
@@ -24,13 +23,13 @@ class DrawerBase extends BasePage {
 }
 
 class _DrawerBaseState extends BaseState<DrawerBase> {
-  SessionUsecase _sessionUsecase = GetIt.I<SessionUsecase>();
   late DrawerBloc _drawerBloc;
 
   @override
   void initState() {
     _setupBloc();
     super.initState();
+    _drawerBloc.add(EventInitilize());
   }
 
   @override
@@ -51,11 +50,12 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
             NavigatorUltils.pushAndRemoveUntilPage(context, TaskManagerPage());
           case ActionNavigateSettingsPage():
             NavigatorUltils.pushAndRemoveUntilPage(context, SettingsPage());
-          case ActionNavigatePerformance() :
+          case ActionNavigatePerformance():
             NavigatorUltils.pushAndRemoveUntilPage(context, PerformanceEvaluationPage());
           case ActionNavigateSchedulesPage():
             NavigatorUltils.pushAndRemoveUntilPage(context, SchedulePage());
-          case ActionNavigateEditProfilePage() : NavigatorUltils.navigatePage(context, ProfliePage());
+          case ActionNavigateEditProfilePage():
+            NavigatorUltils.navigatePage(context, ProfliePage());
           case ActionLogout():
             NavigatorUltils.pushAndRemoveUntilPage(context, StartPage());
         }
@@ -65,9 +65,9 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DrawerBloc , PageState>(
+    return BlocBuilder<DrawerBloc, PageState>(
       bloc: _drawerBloc,
-      builder: (context, state) =>Drawer(
+      builder: (context, state) => Drawer(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -86,14 +86,17 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
         padding: const EdgeInsets.only(top: 40),
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage(R.drawables.image_user_empty),
+            CircleAvatar( 
               radius: 80,
+              child: SvgPicture.asset(R.drawables.ic_default_user),
             ),
             SizedBox(
               height: 15,
             ),
+            state.userProfile == null ?
             Text(R.strings.full_name,
+                style: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.white))
+                :  Text(state.userProfile!.fullName,
                 style: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.white)),
             SizedBox(
               height: 15,
@@ -124,87 +127,74 @@ class _DrawerBaseState extends BaseState<DrawerBase> {
       padding: const EdgeInsets.only(top: 10),
       child: Column(
         children: [
-             ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_schedule),
-            title: Text(R.strings.schedule,
-                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _NavigateSchedulePage
-          ),
+          ListTile(
+              leading: SvgPicture.asset(R.drawables.ic_schedule),
+              title: Text(R.strings.schedule,
+                  style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
+              onTap: _NavigateSchedulePage),
           SizedBox(
             height: 20,
           ),
           ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_task_manage),
-            title: Text(R.strings.task_manage,
-                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _NavigateTaskManagePage
-          ),
+              leading: SvgPicture.asset(R.drawables.ic_task_manage),
+              title: Text(R.strings.task_manage,
+                  style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
+              onTap: _NavigateTaskManagePage),
           SizedBox(
             height: 20,
           ),
           ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_settings),
-            title: Text(R.strings.settings,
-                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _NavigateSettingsPage
-          ),
-          SizedBox(
-            height: 20,
-          ),
-            ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_performance_evaluation),
-            title: Text(R.strings.performance_evaluation,
-                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _NavigatePerformancePage
-          ),
+              leading: SvgPicture.asset(R.drawables.ic_settings),
+              title: Text(R.strings.settings,
+                  style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
+              onTap: _NavigateSettingsPage),
           SizedBox(
             height: 20,
           ),
           ListTile(
-            leading: SvgPicture.asset(R.drawables.ic_logout),
-            title: Text(R.strings.logout,
-                style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
-            onTap: _Logout
+              leading: SvgPicture.asset(R.drawables.ic_performance_evaluation),
+              title: Text(R.strings.performance_evaluation,
+                  style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
+              onTap: _NavigatePerformancePage),
+          SizedBox(
+            height: 20,
           ),
+          ListTile(
+              leading: SvgPicture.asset(R.drawables.ic_logout),
+              title: Text(R.strings.logout,
+                  style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text)),
+              onTap: _Logout),
         ],
       ),
     );
   }
 
-  void _NavigateEditProfilePage () {
+  void _NavigateEditProfilePage() {
     _drawerBloc.add(EventNavigateEditProfilePage());
-    print('${_sessionUsecase.userId}'); 
     context.popScreen();
   }
 
-  void _NavigateHomePage () {
-    _drawerBloc.add(EventNavigateHomePage());
+  void _NavigateTaskManagePage() {
+    _drawerBloc.add(EventNavigateTaskManagePage());
     context.popScreen();
   }
 
-  void _NavigateTaskManagePage () {
-     _drawerBloc.add(EventNavigateTaskManagePage());
-     context.popScreen();
+  void _NavigateSettingsPage() {
+    _drawerBloc.add(EventNavigateSettingsPage());
+    context.popScreen();
   }
 
-    void _NavigateSettingsPage () {
-     _drawerBloc.add(EventNavigateSettingsPage());
-     context.popScreen();
+  void _NavigateSchedulePage() {
+    _drawerBloc.add(EventNavigateSchedulePage());
+    context.popScreen();
   }
 
-    void _NavigateSchedulePage () {
-     _drawerBloc.add(EventNavigateSchedulePage());
-     context.popScreen();
+  void _NavigatePerformancePage() {
+    _drawerBloc.add(EventNavigatePerfomanceEvaluation());
+    context.popScreen();
   }
 
-    void _NavigatePerformancePage () {
-     _drawerBloc.add(EventNavigatePerfomanceEvaluation());
-     context.popScreen();
-  }
-
-  
-
-  void _Logout () {
+  void _Logout() {
     _drawerBloc.add(EventLogout());
   }
 }

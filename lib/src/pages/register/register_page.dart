@@ -128,12 +128,14 @@ class _RegisterPageState extends BaseState<RegisterPage> {
                 label: R.strings.mobile_number,
                 keyboardType: TextInputType.number,
                 onSaved: (newValue) => _bloc.add(EventSavephonelUser(phoneNumber: newValue))),
+            SizedBox(height: 18),
             DropdownFormField(
               controller: _controller,
               label: R.strings.gender,
               isRequired: true,
               onSavedItem: (value) => _bloc.add(EventSaveGenderUser(gender: value?.gender)),
             ),
+            SizedBox(height: 18),
             CommonTextFormField(
                 isRequired: true,
                 maxLength: 500,
@@ -142,10 +144,11 @@ class _RegisterPageState extends BaseState<RegisterPage> {
                 label: R.strings.hobbies,
                 hintText: R.strings.enter_your_hobbies,
                 onSaved: (newValue) => _bloc.add(EventSavehobbieslUser(hobbies: newValue))),
+            SizedBox(height: 18),
             CommonTextFormField(
                 isRequired: true,
                 cursorColor: R.color.text,
-                maxLength: 10,
+                maxLength: 100,
                 label: R.strings.occupation,
                 hintText: R.strings.enter_your_ocupation,
                 onSaved: (newValue) => _bloc.add(EventSaveOccupationlUser(occupation: newValue))),

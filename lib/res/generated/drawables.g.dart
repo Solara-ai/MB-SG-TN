@@ -21,6 +21,7 @@ class Drawables {
 	String get ic_choose_image => "lib/res/drawables/ic_choose_image.svg";
 	String get ic_close => "lib/res/drawables/ic_close.svg";
 	String get ic_close2 => "lib/res/drawables/ic_close2.svg";
+	String get ic_default_user => "lib/res/drawables/ic_default_user.svg";
 	String get ic_delete => "lib/res/drawables/ic_delete.svg";
 	String get ic_edit => "lib/res/drawables/ic_edit.svg";
 	String get ic_edit_2 => "lib/res/drawables/ic_edit_2.svg";

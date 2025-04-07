@@ -31,7 +31,6 @@ class PerformanceEvaluationBloc extends BaseBloc <PageAction , PageEvent , PageS
       emit (state.copyWith(showLoading: false , evaluateSchedule: data));
     }, failure: (error){
       emit(state.copyWith(showLoading: false));
-      addAction(ActionLoaddataFaild(message: error.errorMessage));
     });  
   }
 

@@ -15,6 +15,7 @@ import 'package:schedule_gen_and_time_management/domain/usecase/epic/getListEpic
 import 'package:schedule_gen_and_time_management/domain/usecase/epic/total_task_and_plan_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/create_schedule_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/deleted_schedule_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/schedules/gen_event_ai_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/get_list_schedule_by_date_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/get_list_schedule_data_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/get_schedule_by_eventId_usecase.dart';

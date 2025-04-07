@@ -15,8 +15,7 @@ class ProfliePage extends BasePage {
 }
 
 class _ProfilePageState extends BaseState<ProfliePage> {
-
-  late final ProfileBloc _bloc ;
+  late final ProfileBloc _bloc;
 
   @override
   void initState() {
@@ -29,29 +28,30 @@ class _ProfilePageState extends BaseState<ProfliePage> {
     _bloc.close();
     super.dispose();
   }
-  
-  void _setupBloc () {
+
+  void _setupBloc() {
     _bloc = ProfileBloc();
-    _bloc.listenAction(cancelSubOnDispose, (action) async{
+    _bloc.listenAction(cancelSubOnDispose, (action) async {
       switch (action) {
-        case ActionNavigateProFilePage() : 
-        final result = await NavigatorUltils.navigatePage<bool>(context, EditProfilePage());
-        if ( result == true) {
-          _bloc.add(InitilizeEvent());
-        }
-        case ActionGetMyprofileError () : ToastUtils.showErrorToast(context, message: action.message);
+        case ActionNavigateProFilePage():
+          final result = await NavigatorUltils.navigatePage<bool>(context, EditProfilePage());
+          if (result == true) {
+            _bloc.add(InitilizeEvent());
+          }
+        case ActionGetMyprofileError():
+          ToastUtils.showErrorToast(context, message: action.message);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc , PageState>(
+    return BlocBuilder<ProfileBloc, PageState>(
       bloc: _bloc,
-      builder :(context, state) => Scaffold(
+      builder: (context, state) => Scaffold(
         appBar: appBar(R.strings.profile, action: [
           GestureDetector(
-            onTap:_navigatePage,
+            onTap: _navigatePage,
             child: Container(
               padding: EdgeInsets.only(right: 20),
               child: Text(
@@ -67,9 +67,10 @@ class _ProfilePageState extends BaseState<ProfliePage> {
     );
   }
 
-  void _navigatePage () {
+  void _navigatePage() {
     _bloc.add(EventNavigateEditProfilePage());
   }
+
   Widget _builbodyProfile(PageState state) {
     return Column(
       children: [
@@ -79,46 +80,24 @@ class _ProfilePageState extends BaseState<ProfliePage> {
               width: 100,
               height: 110,
               decoration: BoxDecoration(
-                  border: Border.all(color: R.color.colorBorder),
-                  shape: BoxShape.circle,
-                  image: DecorationImage(image: AssetImage(R.drawables.image_user_empty), fit: BoxFit.cover)),
-            ),
-            // đoạn này là chỉnh sửa hình ảnh .
-            Positioned(
-              top: 70,
-              left: 60,
-              child: GestureDetector(
-                onTap: () {
-                  print("Edit button clicked");
-                },
-                child: Container(
-                  padding: EdgeInsets.all(7),
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: R.color.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        spreadRadius: 0,
-                        blurRadius: 6,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                    border: Border.all(color: R.color.white),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: SvgPicture.asset(R.drawables.ic_edit_2),
+                border: Border.all(color: R.color.colorBorder),
+                shape: BoxShape.circle,
+                color: Colors.grey.shade200, // background cho đẹp
+              ),
+              child: ClipOval(
+                child: SvgPicture.asset(
+                  R.drawables.ic_default_user, // đường dẫn SVG
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
+            )
           ],
         ),
         SizedBox(
           height: 12,
         ),
         Text(
-          state.userProfile?.fullName ?? '' ,
+          state.userProfile?.fullName ?? '',
           style: R.textStyle.inter_medium_16_500.copyWith(color: R.color.text),
         ),
         SizedBox(
@@ -166,11 +145,11 @@ class _ProfilePageState extends BaseState<ProfliePage> {
             height: 24,
           ),
           _builInformation(R.strings.email, state.userProfile?.email ?? ''),
-           SizedBox(
+          SizedBox(
             height: 24,
           ),
           _builInformation(R.strings.hobbies, state.userProfile?.hobbies ?? ''),
-           SizedBox(
+          SizedBox(
             height: 24,
           ),
           _builInformation(R.strings.occupation, state.userProfile?.occupation ?? ''),

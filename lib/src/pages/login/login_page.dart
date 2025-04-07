@@ -6,7 +6,6 @@ import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/auth/auth_bloc.dart';
-import 'package:schedule_gen_and_time_management/src/pages/forgot_password/forgot_password_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/login/login_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/onboarding/on_boarding_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/register/register_page.dart';
@@ -159,18 +158,8 @@ class _LoginPageState extends BaseState<LoginPage> {
               title: R.strings.login,
               titleStyle: R.textStyle.inter_semibold_20_600.copyWith(color: R.color.textLight),
             ),
-            SizedBox(height: 30),
-            GestureDetector(
-              onTap: () => _navigatePage(context, ForgotPasswordPage()),
-              child: Text(
-                R.strings.forgot_password,
-                style: R.textStyle.inter_semibold_14_600
-                    .copyWith(decoration: TextDecoration.underline, color: R.color.text),
-              ),
-            ),
-            SizedBox(height: 30),
+            SizedBox(height: 60),
             ButtonWithIconWidget(
-              iconAsset: Assets.lib.res.drawables.icAdd,
               width: 207,
               onPressed: () {
                 _navigatePage(context, RegisterPage());

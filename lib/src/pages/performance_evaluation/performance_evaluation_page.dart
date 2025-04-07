@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/base_scafold/base_scaffold_page.dart';
@@ -167,7 +165,7 @@ class _PerformanceEvaluationPageState extends BaseState<PerformanceEvaluationPag
         : Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             width: double.infinity,
-            height: 300,
+            height: 333,
             decoration: BoxDecoration(
                 color: R.color.color_backGround_for_chart,
                 border: Border.all(color: R.color.color_backGround_for_chart),

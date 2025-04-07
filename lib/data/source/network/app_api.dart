@@ -6,6 +6,7 @@ import 'package:schedule_gen_and_time_management/data/dto/detail_schedules_dto.d
 import 'package:schedule_gen_and_time_management/data/dto/detail_task_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/epic_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/evaluate_schedule_dto.dart';
+import 'package:schedule_gen_and_time_management/data/dto/gen_event_ai_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/history_message_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/list_message_user_ai_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/list_task_dto.dart';
@@ -121,5 +122,8 @@ abstract class AppApi {
 
   @POST('/users/feedback/send')
   Future<ApiResponse<EmptyData?>> sendFeedBack (@Body() SendFeedBackRequest param);
+
+  @GET('/users/schedules/gen-event')
+  Future<ApiResponse<GenEventAiDto>>genEventAI(@Query('message') String message);
   
 }
