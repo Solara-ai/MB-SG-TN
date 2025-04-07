@@ -94,7 +94,7 @@ class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
       print('success');
       addAction(ActionAddEventSuccess());
     }, failure: (error){
-      addAction(ActionAddEventFaild(error.errorMessage));
+      addAction(ActionAddEventFaild());
     });
   }
 

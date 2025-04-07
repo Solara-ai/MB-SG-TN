@@ -58,7 +58,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
           ToastUtils.showSuccessToast(context, message: R.strings.add_Event_success);
           popPage(result: true);
         case ActionAddEventFaild():
-          ToastUtils.showErrorToast(context, message: action.message);
+          ToastUtils.showErrorToast(context, message: 'Sorry this event is duplicated.');
         case ActionLoadedFaild():
           ToastUtils.showErrorToast(context, message: action.message);
         case ActionNavigateAddCategory():
@@ -90,15 +90,12 @@ class _AddEventPageState extends BaseState<AddEventPage> {
         _textEditingControllerDate.text = state.date.formatToString(DateFormatType.ddMMyyyy.pattern);
         _textEditingControllerRepeatEndDate.text =
             state.repeatEnddate.formatToString(DateFormatType.ddMMyyyy.pattern);
-        _textEditingControllerEndTime.text = state.endTime.format(context);
-        _textEditingControllerStartTime.text = state.startTime.format(context);
         if (_textEditingControllerStartTime.text.isNullOrEmpty()) {
           _textEditingControllerStartTime.text = state.startTime.format(context);
         }
         if (_textEditingControllerEndTime.text.isNullOrEmpty()) {
           _textEditingControllerEndTime.text = state.endTime.format(context);
         }
-
         if (_textEditingControllerEventName.text.isNullOrEmpty()) {
           _textEditingControllerEventName.text = state.name;
         }
