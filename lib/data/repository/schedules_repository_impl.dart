@@ -1,4 +1,5 @@
 import 'package:schedule_gen_and_time_management/data/dto/detail_schedules_dto.dart';
+import 'package:schedule_gen_and_time_management/data/dto/gen_event_ai_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/schedule_data_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/schedules_by_date_dto.dart';
 import 'package:schedule_gen_and_time_management/data/repository/base/base_network_repository.dart';
@@ -43,5 +44,10 @@ class SchedulesRepositoryImpl extends BaseNetworkRepository implements ScheduleR
   @override
   Future<Result<List<ScheduleDataDto>>> getListDataSchedule(int year, int month) {
     return execute(_api.getListDataSchedule(year, month));
+  }
+
+  @override
+  Future<Result<GenEventAiDto>> genEventAi(String message) {
+    return execute(_api.genEventAI(message));
   }
 }

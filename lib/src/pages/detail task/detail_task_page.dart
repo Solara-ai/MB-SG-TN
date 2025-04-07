@@ -64,16 +64,6 @@ class _DetailTaskPageState extends BaseState<DetailTaskPage> {
               icon: Icon(Icons.arrow_back, color: R.color.text),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            action: [
-              IconButton(
-                onPressed: _navigateEditTaskPage,
-                icon: SvgPicture.asset(
-                  Assets.lib.res.drawables.icEdit,
-                  width: 22,
-                  height: 22,
-                ),
-              )
-            ],
           ),
           body: _buildBody(state)),
     );
@@ -105,7 +95,7 @@ class _DetailTaskPageState extends BaseState<DetailTaskPage> {
           ),
           SizedBox(height: 19),
           Text(
-            state.status,
+            R.strings.status,
             style: R.textStyle.inter_semibold_16_600.copyWith(color: R.color.text),
           ),
           SizedBox(height: 13),
@@ -115,7 +105,4 @@ class _DetailTaskPageState extends BaseState<DetailTaskPage> {
     );
   }
 
-  void _navigateEditTaskPage() {
-    _bloc.add(EventNavigateEditTask());
-  }
 }

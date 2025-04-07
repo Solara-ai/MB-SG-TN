@@ -56,3 +56,10 @@ class EventNavigateAddCategory extends PageEvent {}
 class EventEnableRepetEndate extends PageEvent {}
 
 class EventdisableRepetEndate extends PageEvent{}
+
+class EventSubmitMessageGenAi extends PageEvent {}
+
+class EventUserChangeMessageGenAi extends PageEvent {
+  String ? messageGenAi ; 
+  EventUserChangeMessageGenAi ({this.messageGenAi});
+}

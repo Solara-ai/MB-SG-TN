@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_gen_and_time_management/gen/assets.gen.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
-import 'package:schedule_gen_and_time_management/src/pages/forgot_password/forgot_password_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/login/login_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/register/register_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/start/start_bloc.dart';
@@ -90,16 +89,6 @@ class _StartPageState extends BaseState<StartPage> {
             SizedBox(
               height: 27,
             ),
-            SizedBox(
-              height: 40,
-              child: GestureDetector(
-                child: Text(
-                  R.strings.forgot_password,
-                  style: R.textStyle.inter_semibold_14_600.copyWith(color: R.color.SP363130),
-                ),
-                onTap: () => NavigatorUltils.navigatePage(context, ForgotPasswordPage()),
-              ),
-            )
           ],
         ),
       ),

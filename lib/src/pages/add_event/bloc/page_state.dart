@@ -8,13 +8,19 @@ class PageState {
   final bool remindMe;
   final DateTime repeatEnddate;
   final String categoryId;
+  final bool showLoading;
   final TimeOfDay startTime;
   final TimeOfDay endTime;
   final List<Category> listCategory;
+  final Category ? category;
   final bool showDateFormFiledRepet ;
+  final String messageGenAi;
 
   PageState(
       {this.name = '',
+      this.showLoading = false,
+      this.messageGenAi = '',
+      this.category,
       this.description = '',
       DateTime? date,
       this.showDateFormFiledRepet = false,
@@ -25,15 +31,18 @@ class PageState {
       TimeOfDay? startTime,
       TimeOfDay? endTime,
       List<Category>? listCategory})
-      : repeatEnddate = repeatEnddate ?? DateTime(2090),
-        date = date ?? DateTime(2025),
-        startTime = startTime ?? TimeOfDay(hour: 10, minute: 10),
-        endTime = endTime ?? TimeOfDay(hour: 10, minute: 10),
+      : repeatEnddate = repeatEnddate ?? DateTime.now().add(Duration(days: 1)),
+        date = date ?? DateTime.now(),
+        startTime = startTime ?? TimeOfDay.fromDateTime(DateTime.now()),
+        endTime = endTime ?? TimeOfDay.fromDateTime(DateTime.now()),
         listCategory = listCategory ?? []; 
       
 
   PageState coppyWith(
       {String? name,
+      bool? showLoading,
+      Category ? category,
+      String? messageGenAi,
       bool ? showDateFormFiledRepet,
       String? description,
       DateTime? date,
@@ -45,6 +54,9 @@ class PageState {
       TimeOfDay? endTime,
       List<Category>? listCategory}) {
     return PageState(
+        category: category ?? this.category,
+        showLoading: showLoading ?? this.showLoading,
+        messageGenAi: messageGenAi ?? this.messageGenAi,
         showDateFormFiledRepet: showDateFormFiledRepet ?? this.showDateFormFiledRepet,
         name: name ?? this.name,
         description: description ?? this.description,

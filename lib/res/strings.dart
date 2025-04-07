@@ -1,14 +1,16 @@
 class Strings {
-  final String ok = 'Ok';
+  final String ok = 'OK';
   final String yes = 'Yes';
   final String no = 'No';
   final String add = 'Add';
   final String add_event = 'Add event';
+  final String ai_support_add_event = 'AI supports event creation';
   final String add_tocalendar = 'Add to calendar';
   final String update_event = 'Update event';
   final String update_schedule_success = 'Update schedule success';
   final String add_new_category = '+Add new category';
   final String add_Event_success = 'Add event success';
+  final String write_add_event_here = ' Write event here...';
   final String add_categoryy = 'Add category';
   final String open = 'Open';
   final String repet = 'Repeat';

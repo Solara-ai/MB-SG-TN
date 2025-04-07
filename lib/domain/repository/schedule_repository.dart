@@ -1,4 +1,5 @@
 import 'package:schedule_gen_and_time_management/data/dto/detail_schedules_dto.dart';
+import 'package:schedule_gen_and_time_management/data/dto/gen_event_ai_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/schedule_data_dto.dart';
 import 'package:schedule_gen_and_time_management/data/dto/schedules_by_date_dto.dart';
 import 'package:schedule_gen_and_time_management/data/source/network/helper/result.dart';
@@ -13,5 +14,5 @@ abstract class ScheduleRepository {
   Future <Result<EmptyData?>> deleteScheduleByEventId (String eventId);
   Future <Result<List<SchedulesByDateDto>>> getListScheduleByDate (String date);
   Future<Result<List<ScheduleDataDto>>> getListDataSchedule (int year, int month);
-  
+  Future<Result<GenEventAiDto>> genEventAi (String message);
 }

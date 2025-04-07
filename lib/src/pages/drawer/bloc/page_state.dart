@@ -1,3 +1,17 @@
-part of '../drawer_bloc.dart'; 
+part of '../drawer_bloc.dart';
 
-class PageState {}
+class PageState {
+  final UserProfile? userProfile;
+
+  PageState({
+    this.userProfile,
+  });
+
+  PageState copyWith({
+    UserProfile? userProfile,
+  }) {
+    return PageState(
+      userProfile: userProfile ?? this.userProfile,
+    );
+  }
+}

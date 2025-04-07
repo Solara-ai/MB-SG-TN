@@ -4,7 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:schedule_gen_and_time_management/domain/model/category.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/category/get_list_category_usecase.dart';
 import 'package:schedule_gen_and_time_management/domain/usecase/schedules/create_schedule_usecase.dart';
+import 'package:schedule_gen_and_time_management/domain/usecase/schedules/gen_event_ai_usecase.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_bloc.dart';
+import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 
 part 'bloc/page_action.dart';
 part 'bloc/page_event.dart';
@@ -13,6 +15,7 @@ part 'bloc/page_state.dart';
 class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
   final GetListCategoryUsecase _getListCategoryUsecase = GetIt.I<GetListCategoryUsecase>();
   final CreateScheduleUsecase _createScheduleUsecase = GetIt.I<CreateScheduleUsecase>();
+  final GenEventAiUsecase _genEventAiUsecase = GetIt.I<GenEventAiUsecase>();
   AddEventBloc() : super (PageState()) {
     on<EventInitilize>(_handleEventInitilize);
     on<EventUserChangeNameEvent> (_handleEventUserChangeNameEvent);
@@ -28,6 +31,8 @@ class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
     on<EventEnableRepetEndate>(_handleEventEnableRepetEndate);
     on<EventdisableRepetEndate>(_handleEventdisableRepetEndate);
     on<EventNavigateAddCategory> (_handleEventNavigateCategory);
+    on<EventUserChangeMessageGenAi>(_handleEventSubmitMessageGenAi);
+    on<EventSubmitMessageGenAi>(_handleEventGenAi);
     _eventInitilize();
   }
 
@@ -103,5 +108,21 @@ class AddEventBloc extends BaseBloc <PageAction , PageEvent , PageState> {
 
   Future<void> _handleEventdisableRepetEndate (EventdisableRepetEndate event , Emitter emit) async{
     emit (state.coppyWith(showDateFormFiledRepet: false));
+  }
+
+  Future<void> _handleEventSubmitMessageGenAi (EventUserChangeMessageGenAi event , Emitter emit) async{
+    emit(state.coppyWith(messageGenAi: event.messageGenAi));
+  }
+
+  Future<void> _handleEventGenAi (EventSubmitMessageGenAi event , Emitter emit) async{
+    emit (state.coppyWith(showLoading: true));
+    final result = await _genEventAiUsecase.call((message: state.messageGenAi));
+    result.when(success: (data){
+      emit(state.coppyWith(name: data.eventName , description: data.description , date: data.date.toDateTime() , startTime: data.startTime.toTimeOfDay() , endTime: data.endTime.toTimeOfDay() , repeat: data.repeat , repeatEnddate: data.enDate.toDateTime() , remindMe: data.remindMe , category: data.categories, showLoading: false ));
+      addAction(ActionGenEventAiSuccess());
+    }, failure: (error){
+      addAction(ActionLoadedFaild(error.errorMessage));
+      emit(state.coppyWith(showLoading: false));
+    });
   }
 }

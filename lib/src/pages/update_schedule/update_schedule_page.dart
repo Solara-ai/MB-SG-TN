@@ -40,12 +40,12 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
   final DropDownController<Category> _dropDownControllerCategory =
       DropDownController(initialItemList: []);
 
-  TextEditingController _controllerNameEpic = TextEditingController();
-  TextEditingController _controllerDescriptionEpic = TextEditingController();
-  TextEditingController _controllerDateEpic = TextEditingController();
-  TextEditingController _controllerRepetEndate = TextEditingController();
-  TextEditingController _controllerStartTimeEpic = TextEditingController();
-  TextEditingController _controllerEndTimeEpic = TextEditingController();
+  final TextEditingController _controllerNameEpic = TextEditingController();
+  final TextEditingController _controllerDescriptionEpic = TextEditingController();
+  final TextEditingController _controllerDateEpic = TextEditingController();
+  final TextEditingController _controllerRepetEndate = TextEditingController();
+  final TextEditingController _controllerStartTimeEpic = TextEditingController();
+  final TextEditingController _controllerEndTimeEpic = TextEditingController();
 
   @override
   void initState() {
@@ -84,15 +84,28 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
     return BlocBuilder<UpdateScheduleBloc, PageState>(
       bloc: _bloc,
       builder: (context, state) {
+        _controllerDateEpic.text = state.date.formatToString(DateFormatType.ddMMyyyy.pattern);
         _controllerRepetEndate.text =
             state.repeatEnddate.formatToString(DateFormatType.ddMMyyyy.pattern);
-        _dropDownControllerCategory.value = state.category;
-        _dropDownControlleRepeat.value = _stringToRepeat(state.repeat);
-        _controllerDateEpic.text = state.date.formatToString(DateFormatType.ddMMyyyy.pattern);
         _controllerEndTimeEpic.text = state.endTime.format(context);
-        _controllerNameEpic.text = state.name;
-        _controllerDescriptionEpic.text = state.description;
         _controllerStartTimeEpic.text = state.startTime.format(context);
+        _dropDownControlleRepeat.value = _stringToRepeat(state.repeat);
+        if (_controllerStartTimeEpic.text.isNullOrEmpty()) {
+          _controllerStartTimeEpic.text = state.startTime.format(context);
+        }
+        if (_controllerEndTimeEpic.text.isNullOrEmpty()) {
+          _controllerEndTimeEpic.text = state.endTime.format(context);
+        }
+
+        if (_controllerNameEpic.text.isNullOrEmpty()) {
+          _controllerNameEpic.text = state.name;
+        }
+        if (_controllerDescriptionEpic.text.isNullOrEmpty()) {
+          _controllerDescriptionEpic.text = state.description;
+        }
+        if (_dropDownControllerCategory.value == null) {
+          _dropDownControllerCategory.value = state.category;
+        }
         _dropDownControllerCategory.updateItemList(state.listCategory);
         _checkEndateEnable(_dropDownControlleRepeat.value);
         return LoadingOverlay(
@@ -126,6 +139,9 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                             onSaved: (newValue) {
                               _bloc.add(EventUserChangeNameEvent(name: newValue));
                             },
+                            onChanged: (newValue) {
+                              _bloc.add(EventUserChangeNameEvent(name: newValue));
+                            },
                             validator: (value) {
                               return value.isNullOrEmpty() ? R.strings.please_enter_event : null;
                             }),
@@ -134,6 +150,9 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                         CommonTextFormField(
                           controller: _controllerDescriptionEpic,
                           onSaved: (newValue) {
+                            _bloc.add(EventUserChangeDescription(desCription: newValue));
+                          },
+                          onChanged: (newValue) {
                             _bloc.add(EventUserChangeDescription(desCription: newValue));
                           },
                           hintText: R.strings.description,
@@ -185,8 +204,7 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                                     );
                                   }
                                   _startTime = time;
-                                  _controllerStartTimeEpic.text = time.format(context);
-                                  _controllerStartTimeEpic.notifyListeners(); // Thêm dòng này
+                                  _bloc.add(EventChangeStartTime(startTime: _startTime));
                                 },
                                 validator: (value) =>
                                     value == null ? R.strings.time_start_required : null,
@@ -209,8 +227,7 @@ class _UpdateSchedulePageState extends BaseState<UpdateSchedulePage> {
                                     );
                                   }
                                   _endTime = time;
-                                  _controllerEndTimeEpic.text = time.format(context);
-                                  _controllerEndTimeEpic.notifyListeners(); // Thêm dòng này
+                                  _bloc.add(EventChangeEndTime(endTime: _endTime));
                                 },
                                 validator: (value) =>
                                     value == null ? R.strings.time_end_required : null,

@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:schedule_gen_and_time_management/domain/model/category.dart';
 import 'package:schedule_gen_and_time_management/res/R.dart';
 import 'package:schedule_gen_and_time_management/src/base/base_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_category/add_category_page.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_event/add_event_bloc.dart';
 import 'package:schedule_gen_and_time_management/src/pages/add_event/model/repeat.dart';
+import 'package:schedule_gen_and_time_management/src/utils/extensions/date_time_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/drop_down_controller_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/extensions/string_extension.dart';
 import 'package:schedule_gen_and_time_management/src/utils/navigator_ultils.dart';
 import 'package:schedule_gen_and_time_management/src/utils/toast_ultil.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/bottom%20sheet/show_bottom_sheet_with_icon.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/button/button_with_icon.dart';
+import 'package:schedule_gen_and_time_management/src/widgets/dialogs/common_dialog.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_form.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/common_text_form_field.dart';
 import 'package:schedule_gen_and_time_management/src/widgets/text_field/date_time_form_field.dart';
@@ -49,6 +52,8 @@ class _AddEventPageState extends BaseState<AddEventPage> {
     _bloc = AddEventBloc();
     _bloc.listenAction(cancelSubOnDispose, (action) {
       switch (action) {
+        case ActionGenEventAiSuccess():
+          ToastUtils.showSuccessToast(context, message: 'Event Ai gen success');
         case ActionAddEventSuccess():
           ToastUtils.showSuccessToast(context, message: R.strings.add_Event_success);
           popPage(result: true);
@@ -67,14 +72,45 @@ class _AddEventPageState extends BaseState<AddEventPage> {
       DropDownController(initialItem: Repeat.NONE, initialItemList: Repeat.values);
   final DropDownController<Category> _dropDownControllerCategory =
       DropDownController(initialItemList: []);
+  final TextEditingController _textEditingControllerEventName = TextEditingController();
+  final TextEditingController _textEditingControllerDescription = TextEditingController();
+  final TextEditingController _textEditingControllerDate = TextEditingController();
+  final TextEditingController _textEditingControllerStartTime = TextEditingController();
+  final TextEditingController _textEditingControllerEndTime = TextEditingController();
+  final TextEditingController _textEditingControllerRepeatEndDate = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  final _formKeyAddEventBot = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddEventBloc, PageState>(
       bloc: _bloc,
       builder: (context, state) {
         _dropDownControllerCategory.updateItemList(state.listCategory);
+        _textEditingControllerDate.text = state.date.formatToString(DateFormatType.ddMMyyyy.pattern);
+        _textEditingControllerRepeatEndDate.text =
+            state.repeatEnddate.formatToString(DateFormatType.ddMMyyyy.pattern);
+        _textEditingControllerEndTime.text = state.endTime.format(context);
+        _textEditingControllerStartTime.text = state.startTime.format(context);
+        if (_textEditingControllerStartTime.text.isNullOrEmpty()) {
+          _textEditingControllerStartTime.text = state.startTime.format(context);
+        }
+        if (_textEditingControllerEndTime.text.isNullOrEmpty()) {
+          _textEditingControllerEndTime.text = state.endTime.format(context);
+        }
+
+        if (_textEditingControllerEventName.text.isNullOrEmpty()) {
+          _textEditingControllerEventName.text = state.name;
+        }
+        if (_textEditingControllerDescription.text.isNullOrEmpty()) {
+          _textEditingControllerDescription.text = state.description;
+        }
+        if (_dropDownControlleRepeat.value == null) {
+          _dropDownControlleRepeat.value = _stringToRepeat(state.repeat);
+        }
+        if (_dropDownControllerCategory.value == null) {
+          _dropDownControllerCategory.value = state.category;
+        }
         return SingleChildScrollView(
           child: StatefulBuilder(
             builder: (context, setState) => Container(
@@ -87,19 +123,45 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            R.strings.add_event,
-                            style: R.textStyle.inter_medium_20_500.copyWith(color: R.color.text),
-                            textAlign: TextAlign.center,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 35,
+                              height: 35,
+                            ),
+                            Expanded(
+                              child: Text(
+                                R.strings.add_event,
+                                style:
+                                    R.textStyle.inter_medium_20_500.copyWith(color: R.color.text),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            // bot add event
+                            GestureDetector(
+                              onTap: () async {
+                                final result = await _showDialogAddEventBot();
+                                if (result) {
+                                  _bloc.add(EventSubmitMessageGenAi());
+                                }
+                              },
+                              child: SizedBox(
+                                  width: 35,
+                                  height: 35,
+                                  child: SvgPicture.asset(
+                                    R.drawables.ic_ai,
+                                    color: R.color.app_color,
+                                  )),
+                            )
+                          ],
                         ),
                         SizedBox(
                           height: 25,
                         ),
                         // event name
                         CommonTextFormField(
+                          controller: _textEditingControllerEventName,
                           hintText: R.strings.event_name,
                           onSaved: (newValue) =>
                               _bloc.add(EventUserChangeNameEvent(name: newValue)),
@@ -109,6 +171,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                         SizedBox(height: 12),
                         // DesCription
                         CommonTextFormField(
+                          controller: _textEditingControllerDescription,
                           onSaved: (newValue) =>
                               _bloc.add(EventUserChangeDescription(desCription: newValue)),
                           hintText: R.strings.description,
@@ -119,6 +182,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                         SizedBox(height: 12),
                         // Date
                         DateTimeFormFieldWidget(
+                          textController: _textEditingControllerDate,
                           hintText: R.strings.date,
                           onSaved: (date) {
                             _selectedDate = date;
@@ -135,6 +199,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                             SizedBox(
                               width: 181,
                               child: TimeFormFieldWidget(
+                                textController: _textEditingControllerStartTime,
                                 onChanged: (time) {
                                   setState(() {
                                     if (_endTime != null && _compareTime(time, _endTime!) >= 0) {
@@ -159,6 +224,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                             SizedBox(
                               width: 181,
                               child: TimeFormFieldWidget(
+                                textController: _textEditingControllerEndTime,
                                 onChanged: (time) {
                                   setState(() {
                                     if (_startTime != null &&
@@ -222,6 +288,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                                 onChangedItem: (item, isReset) {
                                   if (item != Repeat.NONE) {
                                     _bloc.add(EventEnableRepetEndate());
+                                    _bloc.add(EventUserChangeRepeat(repeat: item?.value));
                                   } else {
                                     _bloc.add(EventdisableRepetEndate());
                                   }
@@ -252,6 +319,7 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                             SizedBox(
                               width: 220,
                               child: DateTimeFormFieldWidget(
+                                textController: _textEditingControllerRepeatEndDate,
                                 isEnabled: state.showDateFormFiledRepet,
                                 isRequired: state.showDateFormFiledRepet,
                                 hintText: R.strings.repetEnddate,
@@ -260,7 +328,6 @@ class _AddEventPageState extends BaseState<AddEventPage> {
                                 },
                                 onSaved: (date) {
                                   DateTime savedDate;
-
                                   if (state.showDateFormFiledRepet) {
                                     // Nếu người dùng chọn ngày trong Repet End Date thì lưu ngày đó
                                     savedDate = date;
@@ -352,6 +419,61 @@ class _AddEventPageState extends BaseState<AddEventPage> {
         ],
       ),
     );
+  }
+
+  // xu ly addEventBot o day .
+  Future<bool> _showDialogAddEventBot() async {
+    final result = await NavigatorUltils.pushDialog<bool>(context,
+        dialog: CommonDialog(
+          title: Text(R.strings.ai_support_add_event),
+          description: CommonForm(
+              key: _formKeyAddEventBot,
+              child: CommonTextFormField(
+                isRequired: true,
+                hintText: R.strings.write_add_event_here,
+                minLines: 5,
+                onSaved: (value) => _bloc.add(EventUserChangeMessageGenAi(messageGenAi: value)),
+                maxLines: 7,
+                maxLength: 200,
+              )),
+          actionButtons: [
+            // trong truong hop nhan vao oke thi phai kiem tra form xem co hop le hay khong
+            ButtonWithIconWidget(
+              onPressed: addEventBot,
+              title: R.strings.ok,
+              radius: 10,
+            ),
+            // trong truong hop nhan vao cancle thi k can kiem tra form
+            ButtonWithIconWidget(
+              onPressed: () => NavigatorUltils.safePop(context, false),
+              title: R.strings.cancel,
+              radius: 10,
+            )
+          ],
+        ));
+    return result ?? false;
+  }
+
+  void addEventBot() {
+    if (_formKeyAddEventBot.currentState?.validate() ?? false) {
+      _formKeyAddEventBot.currentState?.save();
+      NavigatorUltils.safePop(context, true);
+      // _bloc.add(EventSubmitMessageGenAi());
+    }
+  }
+
+  Repeat _stringToRepeat(String repeat) {
+    if (repeat == Repeat.DAILY.value) {
+      return Repeat.DAILY;
+    } else if (repeat == Repeat.MONTHLY.value) {
+      return Repeat.MONTHLY;
+    } else if (repeat == Repeat.WEEKLY.value) {
+      return Repeat.WEEKLY;
+    } else if (repeat == Repeat.YEARLY.value) {
+      return Repeat.YEARLY;
+    } else {
+      return Repeat.NONE;
+    }
   }
 
   int _compareTime(TimeOfDay? t1, TimeOfDay? t2) {
