@@ -1,0 +1,40 @@
+name: Build and Deploy APK to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.27.1'
+
+    - name: Build APK
+      run: flutter build apk --release
+
+    - name: Upload APK via appleboy/scp-action
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        source: "build/app/outputs/flutter-apk/app-release.apk"
+        target: "/root/path/web_about_us/"
+    - name: Move APK to downloads folder via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        script: |
+          mkdir -p /root/path/web_about_us/PAGE-SG-TM/downloads/
+          cp /root/path/web_about_us/build/app/outputs/flutter-apk/app-release.apk /root/path/web_about_us/PAGE-SG-TM/downloads/
