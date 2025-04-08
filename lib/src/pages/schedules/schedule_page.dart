@@ -172,7 +172,7 @@ class _SchedulePageState extends BaseState<SchedulePage> {
   Widget _buildTableCalendar(PageState state) {
     return TableCalendar(
       focusedDay: state.focusDate,
-      firstDay: DateTime.now(),
+      firstDay: DateTime(1974),
       lastDay: DateTime(2099),
       calendarFormat: state.calendarFormat,
       onDaySelected: (selectedDay, focusedDay) {
